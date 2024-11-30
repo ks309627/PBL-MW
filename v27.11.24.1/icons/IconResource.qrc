@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="Menu">
-    <file>menu/Graph.png</file>
-    <file>menu/Measure.png</file>
-    <file>menu/Settings.png</file>
-    <file>menu/Error.png</file>
-  </qresource>
-</RCC>
