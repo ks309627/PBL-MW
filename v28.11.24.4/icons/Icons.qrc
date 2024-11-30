@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="Menu">
+    <file>menu/Error.png</file>
+    <file>menu/Graph.png</file>
+    <file>menu/Measure.png</file>
+    <file>menu/Settings.png</file>
+  </qresource>
+  <qresource prefix="Logo">
+    <file>logo/mt.png</file>
+    <file>logo/polsl.png</file>
+  </qresource>
+</RCC>
