@@ -110,7 +110,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../icons/Icons.qrc">
+        <iconset resource="icons/Icons.qrc">
          <normaloff>:/Menu/menu/Measure.png</normaloff>:/Menu/menu/Measure.png</iconset>
        </property>
        <property name="iconSize">
@@ -129,7 +129,7 @@
         <bool>false</bool>
        </property>
        <property name="autoExclusive">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -166,7 +166,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../icons/Icons.qrc">
+        <iconset resource="icons/Icons.qrc">
          <normaloff>:/Menu/menu/Graph.png</normaloff>:/Menu/menu/Graph.png</iconset>
        </property>
        <property name="iconSize">
@@ -185,7 +185,7 @@
         <bool>false</bool>
        </property>
        <property name="autoExclusive">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -222,7 +222,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../icons/Icons.qrc">
+        <iconset resource="icons/Icons.qrc">
          <normaloff>:/Menu/menu/Settings.png</normaloff>:/Menu/menu/Settings.png</iconset>
        </property>
        <property name="iconSize">
@@ -241,7 +241,7 @@
         <bool>false</bool>
        </property>
        <property name="autoExclusive">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -278,7 +278,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../icons/Icons.qrc">
+        <iconset resource="icons/Icons.qrc">
          <normaloff>:/Menu/menu/Error.png</normaloff>:/Menu/menu/Error.png</iconset>
        </property>
        <property name="iconSize">
@@ -297,7 +297,7 @@
         <bool>false</bool>
        </property>
        <property name="autoExclusive">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -361,7 +361,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Screen_Logo">
        <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -422,7 +422,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../icons/Icons.qrc">:/Logo/logo/polsl.png</pixmap>
+            <pixmap resource="icons/Icons.qrc">:/Logo/logo/polsl.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -462,7 +462,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../icons/Icons.qrc">:/Logo/logo/mt.png</pixmap>
+            <pixmap resource="icons/Icons.qrc">:/Logo/logo/mt.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -636,7 +636,7 @@
          <string>Zatrzymaj</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="btn_TestLeft">
+       <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
           <x>70</x>
@@ -647,6 +647,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Futura Std Book</family>
           <pointsize>20</pointsize>
          </font>
         </property>
@@ -654,7 +655,7 @@
          <string>Obrót w Lewo</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="btn_TestRight">
+       <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -665,6 +666,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Futura Std Book</family>
           <pointsize>20</pointsize>
          </font>
         </property>
@@ -703,6 +705,32 @@
          <number>-1</number>
         </property>
        </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>440</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Refresh</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelConnectionStatus">
+        <property name="geometry">
+         <rect>
+          <x>590</x>
+          <y>400</y>
+          <width>47</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="Screen_Graphs">
        <widget class="QLabel" name="title_Graphs">
@@ -734,16 +762,6 @@
         </property>
         <property name="indent">
          <number>-1</number>
-        </property>
-       </widget>
-       <widget class="QChartView" name="graph_Test">
-        <property name="geometry">
-         <rect>
-          <x>90</x>
-          <y>130</y>
-          <width>701</width>
-          <height>341</height>
-         </rect>
         </property>
        </widget>
       </widget>
@@ -818,14 +836,9 @@
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QGraphicsView</extends>
-   <header>qchartview.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
+  <include location="icons/Icons.qrc"/>
+  <include location="icons/Icons.qrc"/>
   <include location="../icons/Icons.qrc"/>
  </resources>
  <connections/>

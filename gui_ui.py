@@ -3,12 +3,11 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCharts import QChartView
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -63,7 +62,7 @@ class Ui_Main(object):
         self.btn_Measure.setCheckable(True)
         self.btn_Measure.setChecked(True)
         self.btn_Measure.setAutoRepeat(False)
-        self.btn_Measure.setAutoExclusive(True)
+        self.btn_Measure.setAutoExclusive(False)
         self.btn_Measure.setAutoDefault(False)
         self.btn_Measure.setFlat(True)
 
@@ -84,7 +83,7 @@ class Ui_Main(object):
         self.btn_Graphs.setCheckable(True)
         self.btn_Graphs.setChecked(False)
         self.btn_Graphs.setAutoRepeat(False)
-        self.btn_Graphs.setAutoExclusive(True)
+        self.btn_Graphs.setAutoExclusive(False)
         self.btn_Graphs.setAutoDefault(False)
         self.btn_Graphs.setFlat(True)
 
@@ -105,7 +104,7 @@ class Ui_Main(object):
         self.btn_Settings.setCheckable(True)
         self.btn_Settings.setChecked(False)
         self.btn_Settings.setAutoRepeat(False)
-        self.btn_Settings.setAutoExclusive(True)
+        self.btn_Settings.setAutoExclusive(False)
         self.btn_Settings.setAutoDefault(False)
         self.btn_Settings.setFlat(True)
 
@@ -126,7 +125,7 @@ class Ui_Main(object):
         self.btn_Errors.setCheckable(True)
         self.btn_Errors.setChecked(False)
         self.btn_Errors.setAutoRepeat(False)
-        self.btn_Errors.setAutoExclusive(True)
+        self.btn_Errors.setAutoExclusive(False)
         self.btn_Errors.setAutoDefault(False)
         self.btn_Errors.setFlat(True)
 
@@ -245,16 +244,17 @@ class Ui_Main(object):
         self.btn_StopMeasure.setGeometry(QRect(680, 190, 281, 91))
         self.btn_StopMeasure.setFont(font2)
         self.btn_StopMeasure.setStyleSheet(u"background-color: rgb(191, 191, 191);")
-        self.btn_TestLeft = QPushButton(self.Screen_MeasureProgress)
-        self.btn_TestLeft.setObjectName(u"btn_TestLeft")
-        self.btn_TestLeft.setGeometry(QRect(70, 280, 201, 191))
+        self.pushButton = QPushButton(self.Screen_MeasureProgress)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(70, 280, 201, 191))
         font4 = QFont()
+        font4.setFamilies([u"Futura Std Book"])
         font4.setPointSize(20)
-        self.btn_TestLeft.setFont(font4)
-        self.btn_TestRight = QPushButton(self.Screen_MeasureProgress)
-        self.btn_TestRight.setObjectName(u"btn_TestRight")
-        self.btn_TestRight.setGeometry(QRect(310, 280, 201, 191))
-        self.btn_TestRight.setFont(font4)
+        self.pushButton.setFont(font4)
+        self.pushButton_2 = QPushButton(self.Screen_MeasureProgress)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setGeometry(QRect(310, 280, 201, 191))
+        self.pushButton_2.setFont(font4)
         self.title_MeasureProgress_2 = QLabel(self.Screen_MeasureProgress)
         self.title_MeasureProgress_2.setObjectName(u"title_MeasureProgress_2")
         self.title_MeasureProgress_2.setGeometry(QRect(40, 190, 491, 71))
@@ -263,6 +263,12 @@ class Ui_Main(object):
         self.title_MeasureProgress_2.setScaledContents(False)
         self.title_MeasureProgress_2.setWordWrap(False)
         self.title_MeasureProgress_2.setIndent(-1)
+        self.pushButton_3 = QPushButton(self.Screen_MeasureProgress)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(570, 440, 91, 31))
+        self.labelConnectionStatus = QLabel(self.Screen_MeasureProgress)
+        self.labelConnectionStatus.setObjectName(u"labelConnectionStatus")
+        self.labelConnectionStatus.setGeometry(QRect(590, 400, 47, 13))
         self.Screen.addWidget(self.Screen_MeasureProgress)
         self.Screen_Graphs = QWidget()
         self.Screen_Graphs.setObjectName(u"Screen_Graphs")
@@ -274,9 +280,6 @@ class Ui_Main(object):
         self.title_Graphs.setScaledContents(False)
         self.title_Graphs.setWordWrap(False)
         self.title_Graphs.setIndent(-1)
-        self.graph_Test = QChartView(self.Screen_Graphs)
-        self.graph_Test.setObjectName(u"graph_Test")
-        self.graph_Test.setGeometry(QRect(90, 130, 701, 341))
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
@@ -310,7 +313,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(3)
+        self.Screen.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Main)
@@ -329,9 +332,11 @@ class Ui_Main(object):
         self.btn_MeasureToGraph.setText(QCoreApplication.translate("Main", u"Przejd\u017a do poprzedniego Pomiaru", None))
         self.title_MeasureProgress.setText(QCoreApplication.translate("Main", u"Wykonywanie Pomiaru", None))
         self.btn_StopMeasure.setText(QCoreApplication.translate("Main", u"Zatrzymaj", None))
-        self.btn_TestLeft.setText(QCoreApplication.translate("Main", u"Obr\u00f3t w Lewo", None))
-        self.btn_TestRight.setText(QCoreApplication.translate("Main", u"Obr\u00f3t w Prawo", None))
+        self.pushButton.setText(QCoreApplication.translate("Main", u"Obr\u00f3t w Lewo", None))
+        self.pushButton_2.setText(QCoreApplication.translate("Main", u"Obr\u00f3t w Prawo", None))
         self.title_MeasureProgress_2.setText(QCoreApplication.translate("Main", u"Tymczasowo do test\u00f3w:", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Main", u"Refresh", None))
+        self.labelConnectionStatus.setText(QCoreApplication.translate("Main", u"TextLabel", None))
         self.title_Graphs.setText(QCoreApplication.translate("Main", u"Wykresy", None))
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
         self.title_Errors.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
