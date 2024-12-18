@@ -22,6 +22,15 @@ class ScreenControler:
         gui.pushButton_2.clicked.connect(self.send_right_command)
         gui.pushButton_3.clicked.connect(self.connect)
 
+        self.graphControler = None
+        gui.btn_Graph_left.clicked.connect(self.move_graph_left)
+        gui.btn_Graph_right.clicked.connect(self.move_graph_right)
+        gui.btn_Graph_up.clicked.connect(self.move_graph_up)
+        gui.btn_Graph_down.clicked.connect(self.move_graph_down)
+        gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
+        gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
+        gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
+
         #Additional Screen switch actions
     def ScreenSwitch_StartUp(self, gui:Ui_Main):
         gui.Menu.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -69,3 +78,34 @@ class ScreenControler:
     def connect(self):
         response = self.communicator.connect()
         print(f"[INFO]: {response}")
+
+    def set_graph_controler(self, graphControler):
+        self.graphControler = graphControler
+
+    def move_graph_left(self):
+        if self.graphControler:
+            self.graphControler.scroll_left()
+
+    def move_graph_right(self):
+        if self.graphControler:
+            self.graphControler.scroll_right()
+
+    def move_graph_up(self):
+        if self.graphControler:
+            self.graphControler.scroll_up()
+
+    def move_graph_down(self):
+        if self.graphControler:
+            self.graphControler.scroll_down()
+
+    def zoom_graph_in(self):
+        if self.graphControler:
+            self.graphControler.zoom_in()
+
+    def zoom_graph_out(self):
+        if self.graphControler:
+            self.graphControler.zoom_out()
+
+    def view_graph_reset(self):
+        if self.graphControler:
+            self.graphControler.reset()

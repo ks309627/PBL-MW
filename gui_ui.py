@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,9 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QLayout, QProgressBar, QPushButton, QSizePolicy,
-    QStackedWidget, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
+    QLabel, QLayout, QProgressBar, QPushButton,
+    QSizePolicy, QStackedWidget, QWidget)
 from icons import Icons_rc
 
 class Ui_Main(object):
@@ -284,6 +284,47 @@ class Ui_Main(object):
         self.graph_Test = QChartView(self.Screen_Graphs)
         self.graph_Test.setObjectName(u"graph_Test")
         self.graph_Test.setGeometry(QRect(90, 130, 701, 341))
+        self.gridLayoutWidget = QWidget(self.Screen_Graphs)
+        self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
+        self.gridLayoutWidget.setGeometry(QRect(798, 210, 239, 141))
+        self.gridLayout = QGridLayout(self.gridLayoutWidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.btn_Graph_up = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_up.setObjectName(u"btn_Graph_up")
+
+        self.gridLayout.addWidget(self.btn_Graph_up, 0, 1, 1, 1)
+
+        self.btn_Graph_down = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_down.setObjectName(u"btn_Graph_down")
+
+        self.gridLayout.addWidget(self.btn_Graph_down, 1, 1, 1, 1)
+
+        self.btn_Graph_left = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_left.setObjectName(u"btn_Graph_left")
+
+        self.gridLayout.addWidget(self.btn_Graph_left, 1, 0, 1, 1)
+
+        self.btn_Graph_right = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_right.setObjectName(u"btn_Graph_right")
+
+        self.gridLayout.addWidget(self.btn_Graph_right, 1, 2, 1, 1)
+
+        self.btn_Graph_zout = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_zout.setObjectName(u"btn_Graph_zout")
+
+        self.gridLayout.addWidget(self.btn_Graph_zout, 0, 0, 1, 1)
+
+        self.btn_Graph_zin = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_zin.setObjectName(u"btn_Graph_zin")
+
+        self.gridLayout.addWidget(self.btn_Graph_zin, 0, 2, 1, 1)
+
+        self.btn_Graph_resetview = QPushButton(self.gridLayoutWidget)
+        self.btn_Graph_resetview.setObjectName(u"btn_Graph_resetview")
+
+        self.gridLayout.addWidget(self.btn_Graph_resetview, 2, 1, 1, 1)
+
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
@@ -342,6 +383,13 @@ class Ui_Main(object):
         self.pushButton_3.setText(QCoreApplication.translate("Main", u"Refresh", None))
         self.labelConnectionStatus.setText(QCoreApplication.translate("Main", u"TextLabel", None))
         self.title_Graphs.setText(QCoreApplication.translate("Main", u"Wykresy", None))
+        self.btn_Graph_up.setText(QCoreApplication.translate("Main", u"G\u00f3ra", None))
+        self.btn_Graph_down.setText(QCoreApplication.translate("Main", u"D\u00f3\u0142", None))
+        self.btn_Graph_left.setText(QCoreApplication.translate("Main", u"Lewo", None))
+        self.btn_Graph_right.setText(QCoreApplication.translate("Main", u"Prawo", None))
+        self.btn_Graph_zout.setText(QCoreApplication.translate("Main", u"Zoom out", None))
+        self.btn_Graph_zin.setText(QCoreApplication.translate("Main", u"Zoom in", None))
+        self.btn_Graph_resetview.setText(QCoreApplication.translate("Main", u"Graph Reset", None))
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
         self.title_Errors.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
     # retranslateUi
