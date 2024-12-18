@@ -7,33 +7,56 @@ class GraphControler(QMainWindow):
     def __init__(self, gui:Ui_Main):
         super().__init__()
         self.Graph = QtCharts.QChart()
-        self.Graph.setTitle("Siła w Czasie")
+        self.Graph.setTitle("Wykres siły w czasie")
+        self.current_offset = 0
+        self.gui = gui
         self.update_Graph(gui)
+
 
     def update_Graph(self, gui:Ui_Main):
         sekundy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
         siła = [10, 13, 15, 18, 21, 23, 24, 25, 25, 20, 0, 0, 0]
 
+        self.Graph.removeAllSeries()
+        for axis in self.Graph.axes():
+            self.Graph.removeAxis(axis)
+
         self.series = QtCharts.QLineSeries()
-        for i in range(len(sekundy)):
-            self.series.append(i, siła[i])
+        for i, s in enumerate(siła):
+            self.series.append(sekundy[i], s)
+
         self.Graph.addSeries(self.series)
 
-        #Add asxis and set allignemt
-        axis_x = QtCharts.QBarCategoryAxis()
-        axis_x.append(sekundy)
+        axis_x = QtCharts.QValueAxis()
+        axis_x.setRange(self.current_offset + sekundy[0], self.current_offset + sekundy[-1])
         self.Graph.addAxis(axis_x, Qt.AlignBottom)
+        self.series.attachAxis(axis_x)
 
         axis_y = QtCharts.QValueAxis()
-
-        #Min max values
-        min_y = min(siła)-1
-        max_y = max(siła)+1
-        axis_y.setRange(min_y, max_y)
+        axis_y.setRange(self.current_offset + min(siła) + 1, self.current_offset + min(siła) - 1)
         self.Graph.addAxis(axis_y, Qt.AlignLeft)
-        
-        #Attach axes to series
-        self.series.attachAxis(axis_x)
         self.series.attachAxis(axis_y)
 
         gui.graph_Test.setChart(self.Graph)
+
+    def scroll_left(self):
+        self.Graph.scroll(-10, 0)
+
+    def scroll_right(self):
+        self.Graph.scroll(10, 0)
+
+    def scroll_up(self):
+        self.Graph.scroll(0, 10)
+
+    def scroll_down(self):
+        self.Graph.scroll(0, -10)
+
+    def zoom_in(self):
+        self.Graph.zoomIn()
+
+    def zoom_out(self):
+        self.Graph.zoomOut()
+
+    def reset(self):
+        self.Graph.zoomReset()
+        self.Graph.scroll(0, 0)

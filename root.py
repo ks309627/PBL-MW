@@ -27,6 +27,8 @@ class MainWindow(QWidget):
         # v30.11.24.2 - added serial_comunicator
         self.serial_communicator = SerialCommunicator()
         self.screenControler = ScreenControler(self.ui, self.serial_communicator)
+
+        self.screenControler.set_graph_controler(self.graphControler)
     
         #v30.11.24.2
     def closeEvent(self, event):
