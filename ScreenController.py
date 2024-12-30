@@ -2,6 +2,7 @@ from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
 # v30.11.24.2
 from EspCom import SerialCommunicator
+from FC500Com import FC500Com
 
 class ScreenControler:
     def __init__(self, gui:Ui_Main, communicator): #
@@ -30,6 +31,12 @@ class ScreenControler:
         gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
+
+        # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
+        self.fc500 = None
+        gui.btn_FC500Com_cmd_zero.clicked.connect(self.fc500_zero)
+
+
 
         #Additional Screen switch actions
     def ScreenSwitch_StartUp(self, gui:Ui_Main):
@@ -109,3 +116,8 @@ class ScreenControler:
     def view_graph_reset(self):
         if self.graphControler:
             self.graphControler.reset()
+
+    # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
+    def fc500_zero(self):
+        if self.fc500:
+            self.fc500.cmd_zero()

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -270,6 +270,15 @@ class Ui_Main(object):
         self.labelConnectionStatus = QLabel(self.Screen_MeasureProgress)
         self.labelConnectionStatus.setObjectName(u"labelConnectionStatus")
         self.labelConnectionStatus.setGeometry(QRect(590, 400, 47, 13))
+        self.btn_FC500Com_cmd_zero = QPushButton(self.Screen_MeasureProgress)
+        self.btn_FC500Com_cmd_zero.setObjectName(u"btn_FC500Com_cmd_zero")
+        self.btn_FC500Com_cmd_zero.setGeometry(QRect(780, 350, 81, 81))
+        self.labelConnectionStatus_2 = QLabel(self.Screen_MeasureProgress)
+        self.labelConnectionStatus_2.setObjectName(u"labelConnectionStatus_2")
+        self.labelConnectionStatus_2.setGeometry(QRect(750, 290, 151, 51))
+        font5 = QFont()
+        font5.setPointSize(16)
+        self.labelConnectionStatus_2.setFont(font5)
         self.Screen.addWidget(self.Screen_MeasureProgress)
         self.Screen_Graphs = QWidget()
         self.Screen_Graphs.setObjectName(u"Screen_Graphs")
@@ -358,7 +367,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(3)
+        self.Screen.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(Main)
@@ -382,6 +391,8 @@ class Ui_Main(object):
         self.title_MeasureProgress_2.setText(QCoreApplication.translate("Main", u"Tymczasowo do test\u00f3w:", None))
         self.pushButton_3.setText(QCoreApplication.translate("Main", u"Refresh", None))
         self.labelConnectionStatus.setText(QCoreApplication.translate("Main", u"TextLabel", None))
+        self.btn_FC500Com_cmd_zero.setText(QCoreApplication.translate("Main", u"Zeruj", None))
+        self.labelConnectionStatus_2.setText(QCoreApplication.translate("Main", u"FC500 COM", None))
         self.title_Graphs.setText(QCoreApplication.translate("Main", u"Wykresy", None))
         self.btn_Graph_up.setText(QCoreApplication.translate("Main", u"G\u00f3ra", None))
         self.btn_Graph_down.setText(QCoreApplication.translate("Main", u"D\u00f3\u0142", None))
