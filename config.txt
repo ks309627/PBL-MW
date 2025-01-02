@@ -1,0 +1,4 @@
+devMode = 1
+graphSavePath = babaisyou
+COMPath = COM1
+COMPathESP = COM5
