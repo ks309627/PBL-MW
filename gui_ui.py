@@ -17,8 +17,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLayout, QProgressBar, QPushButton,
-    QSizePolicy, QStackedWidget, QWidget)
+    QLabel, QLayout, QLineEdit, QProgressBar,
+    QPushButton, QSizePolicy, QStackedWidget, QTextEdit,
+    QVBoxLayout, QWidget)
 from icons import Icons_rc
 
 class Ui_Main(object):
@@ -270,15 +271,6 @@ class Ui_Main(object):
         self.labelConnectionStatus = QLabel(self.Screen_MeasureProgress)
         self.labelConnectionStatus.setObjectName(u"labelConnectionStatus")
         self.labelConnectionStatus.setGeometry(QRect(590, 400, 47, 13))
-        self.btn_FC500Com_cmd_zero = QPushButton(self.Screen_MeasureProgress)
-        self.btn_FC500Com_cmd_zero.setObjectName(u"btn_FC500Com_cmd_zero")
-        self.btn_FC500Com_cmd_zero.setGeometry(QRect(780, 350, 81, 81))
-        self.labelConnectionStatus_2 = QLabel(self.Screen_MeasureProgress)
-        self.labelConnectionStatus_2.setObjectName(u"labelConnectionStatus_2")
-        self.labelConnectionStatus_2.setGeometry(QRect(750, 290, 151, 51))
-        font5 = QFont()
-        font5.setPointSize(16)
-        self.labelConnectionStatus_2.setFont(font5)
         self.Screen.addWidget(self.Screen_MeasureProgress)
         self.Screen_Graphs = QWidget()
         self.Screen_Graphs.setObjectName(u"Screen_Graphs")
@@ -348,14 +340,37 @@ class Ui_Main(object):
         self.Screen.addWidget(self.Screen_Settings)
         self.Screen_Errors = QWidget()
         self.Screen_Errors.setObjectName(u"Screen_Errors")
-        self.title_Errors = QLabel(self.Screen_Errors)
-        self.title_Errors.setObjectName(u"title_Errors")
-        self.title_Errors.setGeometry(QRect(60, 50, 491, 71))
-        self.title_Errors.setFont(font1)
-        self.title_Errors.setTextFormat(Qt.AutoText)
-        self.title_Errors.setScaledContents(False)
-        self.title_Errors.setWordWrap(False)
-        self.title_Errors.setIndent(-1)
+        self.verticalLayoutWidget = QWidget(self.Screen_Errors)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(0, -4, 1021, 531))
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setSpacing(10)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(20, 20, 20, 20)
+        self.title_Graphs_2 = QLabel(self.verticalLayoutWidget)
+        self.title_Graphs_2.setObjectName(u"title_Graphs_2")
+        self.title_Graphs_2.setFont(font1)
+        self.title_Graphs_2.setTextFormat(Qt.AutoText)
+        self.title_Graphs_2.setScaledContents(False)
+        self.title_Graphs_2.setWordWrap(False)
+        self.title_Graphs_2.setIndent(-1)
+
+        self.verticalLayout.addWidget(self.title_Graphs_2)
+
+        self.lineEdit = QLineEdit(self.verticalLayoutWidget)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setMinimumSize(QSize(0, 50))
+
+        self.verticalLayout.addWidget(self.lineEdit)
+
+        self.textEdit = QTextEdit(self.verticalLayoutWidget)
+        self.textEdit.setObjectName(u"textEdit")
+        self.textEdit.setTabletTracking(True)
+        self.textEdit.setAutoFillBackground(False)
+        self.textEdit.setReadOnly(True)
+
+        self.verticalLayout.addWidget(self.textEdit)
+
         self.Screen.addWidget(self.Screen_Errors)
 
         self.horizontalLayout_2.addWidget(self.Screen)
@@ -367,7 +382,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(2)
+        self.Screen.setCurrentIndex(5)
 
 
         QMetaObject.connectSlotsByName(Main)
@@ -391,8 +406,6 @@ class Ui_Main(object):
         self.title_MeasureProgress_2.setText(QCoreApplication.translate("Main", u"Tymczasowo do test\u00f3w:", None))
         self.pushButton_3.setText(QCoreApplication.translate("Main", u"Refresh", None))
         self.labelConnectionStatus.setText(QCoreApplication.translate("Main", u"TextLabel", None))
-        self.btn_FC500Com_cmd_zero.setText(QCoreApplication.translate("Main", u"Zeruj", None))
-        self.labelConnectionStatus_2.setText(QCoreApplication.translate("Main", u"FC500 COM", None))
         self.title_Graphs.setText(QCoreApplication.translate("Main", u"Wykresy", None))
         self.btn_Graph_up.setText(QCoreApplication.translate("Main", u"G\u00f3ra", None))
         self.btn_Graph_down.setText(QCoreApplication.translate("Main", u"D\u00f3\u0142", None))
@@ -402,6 +415,7 @@ class Ui_Main(object):
         self.btn_Graph_zin.setText(QCoreApplication.translate("Main", u"Zoom in", None))
         self.btn_Graph_resetview.setText(QCoreApplication.translate("Main", u"Graph Reset", None))
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
-        self.title_Errors.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
+        self.title_Graphs_2.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
+        self.textEdit.setPlaceholderText("")
     # retranslateUi
 

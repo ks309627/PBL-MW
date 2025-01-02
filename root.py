@@ -10,6 +10,8 @@ from EspCom import SerialCommunicator
 # v30.11.24.3
 from GraphControler import GraphControler
 
+# v02.01.24.1
+from ErrorHandler import ErrorLogger
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -38,13 +40,14 @@ class MainWindow(QWidget):
         
 #Running the app
 
+error_logger = ErrorLogger()
+error_logger.log_debug("Uruchomienie Programu")
+
 app = QApplication(sys.argv)
 MyApp = MainWindow()
 MyApp.show()
 
 MyApp.screenControler.ScreenSwitch_StartUp(MyApp.ui)
 
-try:
-    sys.exit(app.exec())
-except SystemExit:
-    print("[PBL MW]: Koniec")
+sys.exit(app.exec())
+print("[PBL MW]: Koniec")
