@@ -5,7 +5,7 @@ class Settings:
         self.config_file = os.path.abspath(config_file)
         self.default_settings = {
             "devMode": 0,
-            "graphSavePath": "test",
+            "graphSavePath": os.getcwd(), # v03.01.25.1
             "COMPath": "COM1",
             "COMPathESP": "COM2"
         }
@@ -39,3 +39,10 @@ class Settings:
 
     def set(self, key, value):
         self.settings[key] = value
+
+    def get_graph_save_path(self):
+        path = self.get("graphSavePath")
+        if not os.path.exists(path):
+            print(f"Ścieżka {path} nie istnieje. Używana będzie domyślna ścieżka: {self.default_settings['graphSavePath']}")
+            return self.default_settings["graphSavePath"]
+        return path

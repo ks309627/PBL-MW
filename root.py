@@ -15,15 +15,15 @@ class MainWindow(QWidget):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
-        self.settings = Settings() #v02.01.25.1
+        self.settings = Settings()
         self.serial_communicator = SerialCommunicator(self.settings)
    
         self.setWindowTitle("Maszyna Wytrzymałościowa")
         self.setWindowIcon(QIcon(":/Menu/menu/Graph.png"))
         self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
-        self.graphControler = GraphControler(self.ui)
+        self.graphControler = GraphControler(self.ui, self.settings)
 
-        self.screenControler = ScreenControler(self.ui, self.serial_communicator, self.settings) #v02.01.25.1 added self.settings
+        self.screenControler = ScreenControler(self.ui, self.serial_communicator, self.settings)
         self.screenControler.set_graph_controler(self.graphControler)
 
     def closeEvent(self, event):

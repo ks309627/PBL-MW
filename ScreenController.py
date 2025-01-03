@@ -3,6 +3,7 @@ from PySide6.QtCore import QTimer
 from EspCom import SerialCommunicator
 from PySide6.QtWidgets import QCheckBox
 from settings import Settings
+from PySide6.QtWidgets import QFileDialog # v03.01.25.1
 
 class ScreenControler:
     def __init__(self, gui:Ui_Main, communicator, settings:Settings):
@@ -32,6 +33,11 @@ class ScreenControler:
         gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
+
+        #\/    v03.01.25.1
+        gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
+        gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
+        #/\
 
         self.devMode = gui.devMode
         self.devMode.setChecked(bool(self.settings.get("devMode")))
@@ -91,7 +97,6 @@ class ScreenControler:
         response = self.communicator.send_right_command()
         print(f"[INFO]: {response}")
 
-    #\/    v02.01.25.1
     def connect(self):
         self.settings.load_settings()
         new_port = self.settings.get("COMPathESP")
@@ -102,7 +107,7 @@ class ScreenControler:
             print(f"[INFO]: {response}")
         else:
             print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
-    #/\
+            
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler
 
@@ -134,7 +139,6 @@ class ScreenControler:
         if self.graphControler:
             self.graphControler.reset()
 
-    #\/    v02.01.25.1
     def restore_settings(self):
         self.settings.reset_to_defaults()
         self.devMode.setChecked(bool(self.settings.get("devMode")))
@@ -148,4 +152,23 @@ class ScreenControler:
         self.settings.set("COMPath", self.COMPath.text())
         self.settings.set("COMPathESP", self.COMPathESP.text())
         self.settings.save_settings()
+    
+    #\/    v03.01.25.1
+    def set_graph_controler(self, graphControler):
+        self.graphControler = graphControler
+
+    def handle_save_graph(self):
+        if self.graphControler:
+            file_path = self.graphControler.save_graph()
+            if file_path:
+                print(f"Graph successfully saved: {file_path}")
+
+    def handle_load_graph(self):
+        if self.graphControler:
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getOpenFileName(
+                None, "Wczytaj wykres", "", "JSON Files (*.json)"
+            )
+            if file_path:
+                self.graphControler.load_graph(file_path)
     #/\
