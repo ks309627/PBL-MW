@@ -1,9 +1,10 @@
 from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
-# v30.11.24.2
 from EspCom import SerialCommunicator
-from FC500Com import FC500Com
+from PySide6.QtWidgets import QCheckBox, QFileDialog
+from settings import Settings
 
+from FC500Com import FC500Com
 from MeasureProcess import MeasureProcess
 import asyncio
 
@@ -12,12 +13,16 @@ from LoggingHandler import ErrorLogger
 
 
 class ScreenControler:
-    def __init__(self, gui:Ui_Main, communicator): #
-        
+    def __init__(self, gui:Ui_Main, communicator, settings:Settings):
+
+        self.gui = gui
+        self.communicator = communicator
+        self.graphControler = None
+        self.settings = settings
+
         self.logger = ErrorLogger()
         self.measureProcess = MeasureProcess()
-        
-            #Screen switch buttons
+
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
         gui.btn_Graphs.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Graphs))
         gui.btn_Settings.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Settings))
@@ -35,7 +40,6 @@ class ScreenControler:
         # gui.pushButton_2.clicked.connect(self.send_right_command)
         # gui.pushButton_3.clicked.connect(self.connect)
 
-        self.graphControler = None
         gui.btn_Graph_left.clicked.connect(self.move_graph_left)
         gui.btn_Graph_right.clicked.connect(self.move_graph_right)
         gui.btn_Graph_up.clicked.connect(self.move_graph_up)
@@ -43,6 +47,26 @@ class ScreenControler:
         gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
+
+        #\/    v03.01.25.1
+        gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
+        gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
+        #/\
+
+        self.devMode = gui.devMode
+        self.devMode.setChecked(bool(self.settings.get("devMode")))
+
+        self.graphSavePath = gui.graphSavePath
+        self.graphSavePath.setText(self.settings.get("graphSavePath"))
+
+        self.COMPath = gui.COMPath
+        self.COMPath.setText(self.settings.get("COMPath"))
+
+        self.COMPathESP = gui.COMPathESP
+        self.COMPathESP.setText(self.settings.get("COMPathESP"))
+
+        gui.btn_settingsDefault.clicked.connect(self.restore_settings)
+        gui.btn_settingsSave.clicked.connect(self.save_settings_to_file)
 
         # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
         #self.fc500 = None
@@ -110,7 +134,6 @@ class ScreenControler:
             self.gui.btn_Settings.setEnabled(True)
             self.gui.btn_Errors.setEnabled(True)
 
-    # v30.11.24.2
     def send_left_command(self):
         response = self.communicator.send_left_command()
         print(f"[INFO]: {response}")
@@ -120,9 +143,16 @@ class ScreenControler:
         print(f"[INFO]: {response}")
 
     def connect(self):
-        response = self.communicator.connect()
-        print(f"[INFO]: {response}")
+        self.settings.load_settings()
+        new_port = self.settings.get("COMPathESP")
 
+        if new_port:
+            self.communicator.update_com_path(new_port)
+            response = self.communicator.connect()
+            print(f"[INFO]: {response}")
+        else:
+            print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
+            
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler
 
@@ -153,6 +183,40 @@ class ScreenControler:
     def view_graph_reset(self):
         if self.graphControler:
             self.graphControler.reset()
+
+    def restore_settings(self):
+        self.settings.reset_to_defaults()
+        self.devMode.setChecked(bool(self.settings.get("devMode")))
+        self.graphSavePath.setText(self.settings.get("graphSavePath"))
+        self.COMPath.setText(self.settings.get("COMPath"))
+        self.COMPathESP.setText(self.settings.get("COMPathESP"))
+
+    def save_settings_to_file(self):
+        self.settings.set("devMode", int(self.devMode.isChecked()))
+        self.settings.set("graphSavePath", self.graphSavePath.text())
+        self.settings.set("COMPath", self.COMPath.text())
+        self.settings.set("COMPathESP", self.COMPathESP.text())
+        self.settings.save_settings()
+    
+    #\/    v03.01.25.1
+    def set_graph_controler(self, graphControler):
+        self.graphControler = graphControler
+
+    def handle_save_graph(self):
+        if self.graphControler:
+            file_path = self.graphControler.save_graph()
+            if file_path:
+                print(f"Graph successfully saved: {file_path}")
+
+    def handle_load_graph(self):
+        if self.graphControler:
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getOpenFileName(
+                None, "Wczytaj wykres", "", "JSON Files (*.json)"
+            )
+            if file_path:
+                self.graphControler.load_graph(file_path)
+    #/\
 
     # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
     # def fc500_zero(self):

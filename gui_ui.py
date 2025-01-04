@@ -16,9 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLayout, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QStackedWidget, QTextEdit,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QFrame,
+    QGridLayout, QHBoxLayout, QLabel, QLayout,
+    QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QStackedWidget, QTextEdit,
     QVBoxLayout, QWidget)
 from icons import Icons_rc
 
@@ -401,6 +402,22 @@ class Ui_Main(object):
 
         self.gridLayout.addWidget(self.btn_Graph_resetview, 2, 1, 1, 1)
 
+        self.btn_SaveGraph = QPushButton(self.Screen_Graphs)
+        self.btn_SaveGraph.setObjectName(u"btn_SaveGraph")
+        self.btn_SaveGraph.setGeometry(QRect(800, 410, 101, 61))
+        self.btn_SaveGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon4 = QIcon()
+        icon4.addFile(u"icons/menu/Save.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_SaveGraph.setIcon(icon4)
+        self.btn_SaveGraph.setIconSize(QSize(48, 48))
+        self.btn_LoadGraph = QPushButton(self.Screen_Graphs)
+        self.btn_LoadGraph.setObjectName(u"btn_LoadGraph")
+        self.btn_LoadGraph.setGeometry(QRect(910, 410, 101, 61))
+        self.btn_LoadGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon5 = QIcon()
+        icon5.addFile(u"icons/menu/Load.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_LoadGraph.setIcon(icon5)
+        self.btn_LoadGraph.setIconSize(QSize(48, 48))
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
@@ -412,6 +429,78 @@ class Ui_Main(object):
         self.title_Settings.setScaledContents(False)
         self.title_Settings.setWordWrap(False)
         self.title_Settings.setIndent(-1)
+        self.formLayoutWidget_2 = QWidget(self.Screen_Settings)
+        self.formLayoutWidget_2.setObjectName(u"formLayoutWidget_2")
+        self.formLayoutWidget_2.setGeometry(QRect(100, 120, 341, 241))
+        self.formLayout_2 = QFormLayout(self.formLayoutWidget_2)
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.label_7 = QLabel(self.formLayoutWidget_2)
+        self.label_7.setObjectName(u"label_7")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_7)
+
+        self.graphSavePath = QLineEdit(self.formLayoutWidget_2)
+        self.graphSavePath.setObjectName(u"graphSavePath")
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.graphSavePath)
+
+        self.label_8 = QLabel(self.formLayoutWidget_2)
+        self.label_8.setObjectName(u"label_8")
+
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_8)
+
+        self.COMPath = QLineEdit(self.formLayoutWidget_2)
+        self.COMPath.setObjectName(u"COMPath")
+
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.COMPath)
+
+        self.label_9 = QLabel(self.formLayoutWidget_2)
+        self.label_9.setObjectName(u"label_9")
+
+        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_9)
+
+        self.devMode = QCheckBox(self.formLayoutWidget_2)
+        self.devMode.setObjectName(u"devMode")
+
+        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.devMode)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(5, QFormLayout.LabelRole, self.verticalSpacer_7)
+
+        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(5, QFormLayout.FieldRole, self.verticalSpacer_10)
+
+        self.btn_settingsSave = QPushButton(self.formLayoutWidget_2)
+        self.btn_settingsSave.setObjectName(u"btn_settingsSave")
+
+        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.btn_settingsSave)
+
+        self.btn_settingsDefault = QPushButton(self.formLayoutWidget_2)
+        self.btn_settingsDefault.setObjectName(u"btn_settingsDefault")
+
+        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.btn_settingsDefault)
+
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(4, QFormLayout.FieldRole, self.verticalSpacer_8)
+
+        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(6, QFormLayout.FieldRole, self.verticalSpacer_9)
+
+        self.label_10 = QLabel(self.formLayoutWidget_2)
+        self.label_10.setObjectName(u"label_10")
+
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_10)
+
+        self.COMPathESP = QLineEdit(self.formLayoutWidget_2)
+        self.COMPathESP.setObjectName(u"COMPathESP")
+
+        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.COMPathESP)
+
         self.Screen.addWidget(self.Screen_Settings)
         self.Screen_Errors = QWidget()
         self.Screen_Errors.setObjectName(u"Screen_Errors")
@@ -700,7 +789,16 @@ class Ui_Main(object):
         self.btn_Graph_zout.setText(QCoreApplication.translate("Main", u"Zoom out", None))
         self.btn_Graph_zin.setText(QCoreApplication.translate("Main", u"Zoom in", None))
         self.btn_Graph_resetview.setText(QCoreApplication.translate("Main", u"Graph Reset", None))
+        self.btn_SaveGraph.setText("")
+        self.btn_LoadGraph.setText("")
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
+        self.label_7.setText(QCoreApplication.translate("Main", u"\u015acie\u017cka do zapisu wykres\u00f3w", None))
+        self.label_8.setText(QCoreApplication.translate("Main", u"Port COM si\u0142omierza", None))
+        self.label_9.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
+        self.devMode.setText(QCoreApplication.translate("Main", u"CheckBox", None))
+        self.btn_settingsSave.setText(QCoreApplication.translate("Main", u"Zapisz ustawienia", None))
+        self.btn_settingsDefault.setText(QCoreApplication.translate("Main", u"Przywr\u00f3\u0107 domy\u015blne ustawienia", None))
+        self.label_10.setText(QCoreApplication.translate("Main", u"Port COM mikrokontrolera", None))
         self.title_Errors_basic.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
         self.btn_Errors_InstanceHistory_basic.setText("")
         self.btn_Errors_AllHistory_basic.setText("")
