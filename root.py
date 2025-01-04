@@ -30,7 +30,7 @@ class MainWindow(QWidget):
         self.graphControler = GraphControler(self.ui, self.settings)
 
         # v30.11.24.2 - added serial_comunicator
-        self.serial_communicator = SerialCommunicator() 
+        #self.serial_communicator = SerialCommunicator() 
         self.screenControler = ScreenControler(self.ui, self.serial_communicator, self.settings)
 
         self.screenControler.set_graph_controler(self.graphControler)
