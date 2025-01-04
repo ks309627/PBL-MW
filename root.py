@@ -11,7 +11,11 @@ from EspCom import SerialCommunicator
 from GraphControler import GraphControler
 
 # v02.01.24.1
-from ErrorHandler import ErrorLogger
+from LoggingHandler import ErrorLogger
+
+from TerminalControler import TerminalControler
+
+from Measure_ProgressBar import Step_Measure
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -27,10 +31,18 @@ class MainWindow(QWidget):
         self.graphControler = GraphControler(self.ui)
 
         # v30.11.24.2 - added serial_comunicator
-        self.serial_communicator = SerialCommunicator()
+        self.serial_communicator = SerialCommunicator() 
         self.screenControler = ScreenControler(self.ui, self.serial_communicator)
 
         self.screenControler.set_graph_controler(self.graphControler)
+
+        self.TerminalControler = TerminalControler(self.ui)
+
+        self.step_measure = Step_Measure()
+        self.step_measure.Set_True(1, self)
+        self.step_measure.Set_False(2, self)
+        self.step_measure.Set_Processing_True(3, self, toggle=True)
+        self.step_measure.Set_Processing(4, self, toggle=True)
     
         #v30.11.24.2
     def closeEvent(self, event):

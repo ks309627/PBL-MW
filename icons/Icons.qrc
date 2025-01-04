@@ -5,6 +5,19 @@
     <file>menu/Measure.png</file>
     <file>menu/Settings.png</file>
   </qresource>
+  <qresource prefix="Progress">
+    <file>progress/Checkmark.png</file>
+    <file>progress/Empty.png</file>
+    <file>progress/False.png</file>
+    <file>progress/True.png</file>
+    <file>progress/Processing.png</file>
+  </qresource>
+  <qresource prefix="Errors">
+    <file>errors/refresh.png</file>
+    <file>errors/all history.png</file>
+    <file>errors/current history.png</file>
+    <file>errors/send.png</file>
+  </qresource>
   <qresource prefix="Logo">
     <file>logo/mt.png</file>
     <file>logo/polsl.png</file>
