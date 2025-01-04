@@ -1,9 +1,16 @@
 from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
 from EspCom import SerialCommunicator
-from PySide6.QtWidgets import QCheckBox
+from PySide6.QtWidgets import QCheckBox, QFileDialog
 from settings import Settings
-from PySide6.QtWidgets import QFileDialog # v03.01.25.1
+
+from FC500Com import FC500Com
+from MeasureProcess import MeasureProcess
+import asyncio
+
+from TerminalControler import TerminalControler
+from LoggingHandler import ErrorLogger
+
 
 class ScreenControler:
     def __init__(self, gui:Ui_Main, communicator, settings:Settings):
@@ -13,18 +20,25 @@ class ScreenControler:
         self.graphControler = None
         self.settings = settings
 
+        self.logger = ErrorLogger()
+        self.measureProcess = MeasureProcess()
+
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
         gui.btn_Graphs.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Graphs))
         gui.btn_Settings.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Settings))
-        gui.btn_Errors.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Errors))
+        gui.btn_Errors.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Errors), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
         
         gui.btn_MeasureToGraph.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Graphs), self.ScreenSwitch_CategoryGraphs(gui)))
-        gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui)))
-        gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui)))
+        gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
+        gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure()))
 
-        gui.pushButton.clicked.connect(self.send_left_command)
-        gui.pushButton_2.clicked.connect(self.send_right_command)
-        gui.pushButton_3.clicked.connect(self.connect)
+
+        # v30.11.24.2 - added comunicator v30.11.24.2
+        self.gui = gui
+        self.communicator = communicator
+        # gui.pushButton.clicked.connect(self.send_left_command)
+        # gui.pushButton_2.clicked.connect(self.send_right_command)
+        # gui.pushButton_3.clicked.connect(self.connect)
 
         gui.btn_Graph_left.clicked.connect(self.move_graph_left)
         gui.btn_Graph_right.clicked.connect(self.move_graph_right)
@@ -53,6 +67,21 @@ class ScreenControler:
 
         gui.btn_settingsDefault.clicked.connect(self.restore_settings)
         gui.btn_settingsSave.clicked.connect(self.save_settings_to_file)
+
+        # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
+        #self.fc500 = None
+        #gui.btn_FC500Com_cmd_zero.clicked.connect(self.fc500_zero)
+
+        self.terminalControler = TerminalControler(gui)
+        gui.btn_Errors_AllHistory_basic.clicked.connect(self.ButtonSwitch_Errors_AllH_basic)
+        gui.btn_Errors_InstanceHistory_basic.clicked.connect(self.ButtonSwitch_Errors_InsH_basic)
+        gui.btn_Errors_AllHistory_admin.clicked.connect(self.ButtonSwitch_Errors_AllH_admin)
+        gui.btn_Errors_InstanceHistory_admin.clicked.connect(self.ButtonSwitch_Errors_InsH_admin)
+        gui.btn_Errors_Refresh_basic.clicked.connect(self.Errors_Refresh_Loop)
+        gui.btn_Errors_Refresh_admin.clicked.connect(self.Errors_Refresh_Loop)
+
+        gui.btn_Errors_Send_admin.clicked.connect(self.Errors_Command)
+
 
         #Additional Screen switch actions
     def ScreenSwitch_StartUp(self, gui:Ui_Main):
@@ -88,6 +117,22 @@ class ScreenControler:
         gui.btn_Graphs.setChecked(0)
         gui.btn_Settings.setChecked(0)
         gui.btn_Errors.setChecked(1)
+
+    def BeginMeasure(self):
+        if self.measureProcess:
+            asyncio.run(self.measureProcess.MeasureCycle())
+            self.gui.btn_Measure.setEnabled(False)
+            self.gui.btn_Graphs.setEnabled(False)
+            self.gui.btn_Settings.setEnabled(False)
+            self.gui.btn_Errors.setEnabled(False)
+    
+    def StopMeasure(self):
+        if self.measureProcess:
+            self.measureProcess.StopCycle()
+            self.gui.btn_Measure.setEnabled(True)
+            self.gui.btn_Graphs.setEnabled(True)
+            self.gui.btn_Settings.setEnabled(True)
+            self.gui.btn_Errors.setEnabled(True)
 
     def send_left_command(self):
         response = self.communicator.send_left_command()
@@ -172,3 +217,44 @@ class ScreenControler:
             if file_path:
                 self.graphControler.load_graph(file_path)
     #/\
+
+    # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
+    # def fc500_zero(self):
+    #     if self.fc500:
+    #         self.fc500.cmd_zero()
+
+    def ButtonSwitch_Errors_AllH_basic(self):
+        if self.terminalControler:
+            self.terminalControler.JoinedLogs_basic()
+        self.gui.btn_Errors_AllHistory_basic.setChecked(1)
+        self.gui.btn_Errors_InstanceHistory_basic.setChecked(0)
+
+    def ButtonSwitch_Errors_InsH_basic(self):
+        if self.terminalControler:
+            self.terminalControler.SingleLog_basic()
+        self.gui.btn_Errors_AllHistory_basic.setChecked(0)
+        self.gui.btn_Errors_InstanceHistory_basic.setChecked(1)
+
+    def ButtonSwitch_Errors_AllH_admin(self):
+        if self.terminalControler:
+            self.terminalControler.JoinedLogs_admin()
+        self.gui.btn_Errors_AllHistory_admin.setChecked(1)
+        self.gui.btn_Errors_InstanceHistory_admin.setChecked(0)
+
+    def ButtonSwitch_Errors_InsH_admin(self):
+        if self.terminalControler:
+            self.terminalControler.SingleLog_admin()
+        self.gui.btn_Errors_AllHistory_admin.setChecked(0)
+        self.gui.btn_Errors_InstanceHistory_admin.setChecked(1)
+
+    def Errors_Refresh_Loop(self):
+        if self.terminalControler:
+            self.terminalControler.Refresh_Loop()
+
+    def Errors_Refresh(self):
+        if self.terminalControler:
+            self.terminalControler.Perform_Refresh()
+
+    def Errors_Command(self):
+        if self.terminalControler:
+            self.terminalControler.Send_Command_admin()
