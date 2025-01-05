@@ -1,15 +1,16 @@
 import os
 import glob
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer, QEvent, Qt
 from PySide6.QtGui import QTextCursor
 from gui_ui import Ui_Main
 from datetime import datetime
 from LoggingHandler import ErrorLogger
 from CommandHandler import CommandInterpreter
+from settings import Settings
 
 class TerminalControler(QMainWindow):
-    def __init__(self, gui:Ui_Main):
+    def __init__(self, gui:Ui_Main, settings:Settings):
         super().__init__()
         self.gui = gui
         self.error_logger = ErrorLogger()
@@ -20,7 +21,12 @@ class TerminalControler(QMainWindow):
         self.refresh_timer.timeout.connect(self.Refresh_Loop)
 
         self.gui.terminal_typefield_admin.returnPressed.connect(self.Send_Command_admin)
-        self.CommandReceiver = CommandInterpreter()
+        self.CommandReceiver = CommandInterpreter(settings)
+
+        self.command_history = []
+        self.command_history_index = 0
+        self.gui.terminal_typefield_admin.installEventFilter(self)
+        
 
     def SingleLog_basic(self):
         try:
@@ -30,7 +36,7 @@ class TerminalControler(QMainWindow):
                 return
             most_recent_file = max(log_files, key=os.path.getctime)
 
-            with open(most_recent_file, 'r') as file:
+            with open(most_recent_file, 'r', encoding='utf-8', errors='replace') as file:
                 text = file.read()
                 scrollbar_position = self.text_edit_basic.verticalScrollBar().value()
                 self.text_edit_basic.setText(text)
@@ -43,7 +49,7 @@ class TerminalControler(QMainWindow):
         try:
             self.error_logger.join_logs('logs/JoinedLogs.log')
             file_path = 'logs/JoinedLogs.log'
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r', encoding='utf-8', errors='replace') as file:
                 text = file.read()
                 scrollbar_position = self.text_edit_basic.verticalScrollBar().value()
                 self.text_edit_basic.setText(text)
@@ -59,7 +65,7 @@ class TerminalControler(QMainWindow):
                 return
             most_recent_file = max(log_files, key=os.path.getctime)
 
-            with open(most_recent_file, 'r') as file:
+            with open(most_recent_file, 'r', encoding='utf-8', errors='replace') as file:
                 text = file.read()
                 scrollbar_position = self.text_edit_admin.verticalScrollBar().value()
                 self.text_edit_admin.setText(text)
@@ -72,7 +78,7 @@ class TerminalControler(QMainWindow):
         try:
             self.error_logger.join_logs('logs/JoinedLogs.log')
             file_path = 'logs/JoinedLogs.log'
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r', encoding='utf-8', errors='replace') as file:
                 text = file.read()
                 scrollbar_position = self.text_edit_admin.verticalScrollBar().value()
                 self.text_edit_admin.setText(text)
@@ -82,13 +88,13 @@ class TerminalControler(QMainWindow):
 
     def Refresh_Loop(self):
         try:
-            if self.gui.Subscreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
+            if self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
                 if self.gui.btn_Errors_Refresh_basic.isChecked():
                     self.refresh_timer.start(10)
                     self.Perform_Refresh()
                 else:
                     self.refresh_timer.stop()
-            elif self.gui.Subscreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
+            elif self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
                 if self.gui.btn_Errors_Refresh_admin.isChecked():
                     self.refresh_timer.start(10)
                     self.Perform_Refresh()
@@ -101,7 +107,7 @@ class TerminalControler(QMainWindow):
 
     def Perform_Refresh(self):
         try:
-            if self.gui.Subscreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
+            if self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
                 try:
                     if self.gui.btn_Errors_InstanceHistory_basic.isChecked():
                         self.SingleLog_basic()
@@ -109,7 +115,7 @@ class TerminalControler(QMainWindow):
                         self.JoinedLogs_basic()
                 except Exception as e:
                     self.error_logger.log_error(f"An error occured while trying to refresh basic terminal: {str(e)}")
-            elif self.gui.Subscreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
+            elif self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
                 try:
                     if self.gui.btn_Errors_InstanceHistory_admin.isChecked():
                         self.SingleLog_admin()
@@ -120,6 +126,23 @@ class TerminalControler(QMainWindow):
         except Exception as e:
             self.error_logger.log_error(f"An error occured while trying to refresh: {str(e)}")
         return
+    
+    def eventFilter(self, obj, event):
+        if obj == self.gui.terminal_typefield_admin and event.type() == QEvent.KeyPress:
+            if event.key() == Qt.Key_Up:
+                if self.command_history:
+                    self.command_history_index = max(0, self.command_history_index - 1)
+                    self.gui.terminal_typefield_admin.setText(self.command_history[self.command_history_index])
+                    return True
+            elif event.key() == Qt.Key_Down:
+                if self.command_history:
+                    self.command_history_index = min(len(self.command_history), self.command_history_index + 1)
+                    if self.command_history_index == len(self.command_history):
+                        self.gui.terminal_typefield_admin.setText("")
+                    else:
+                        self.gui.terminal_typefield_admin.setText(self.command_history[self.command_history_index])
+                    return True
+        return False
 
     def Send_Command_admin(self):
         command = self.gui.terminal_typefield_admin.text()
@@ -127,4 +150,6 @@ class TerminalControler(QMainWindow):
             self.error_logger.log_user(command)
             self.CommandReceiver.receiver(command)
             self.Perform_Refresh()
+            self.command_history.append(command)
+            self.command_history_index = len(self.command_history)
             self.gui.terminal_typefield_admin.setText("")

@@ -90,7 +90,7 @@ class Step_Measure:
                 if disp_number in self.timers:
                     self.timers[disp_number].stop()
                     del self.timers[disp_number]
-                button.setIcon(icon2)
+                button.setIcon(icon1)
         else:
             self.logger.log_warning("Nie znaleziono przycisku")
 
@@ -99,9 +99,9 @@ class Step_Measure:
         button = parent.findChild(QPushButton, button_name)
         if button:
             current_icon = button.icon()
-            if current_icon.cacheKey() == icon1.cacheKey():
-                button.setIcon(icon2)
-            else:
+            if current_icon.cacheKey() == icon2.cacheKey():
                 button.setIcon(icon1)
+            else:
+                button.setIcon(icon2)
 
     

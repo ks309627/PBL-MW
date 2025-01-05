@@ -33,7 +33,7 @@ class ErrorLogger:
                 cls._instance._clean_up_old_logs()
                 timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
                 log_file = f'{log_dir}/log_{timestamp}.log'
-                cls._instance.file_handler = logging.FileHandler(log_file)
+                cls._instance.file_handler = logging.FileHandler(log_file, encoding="utf-8")
                 cls._instance.file_handler.setLevel(logging.DEBUG)
                 cls._instance.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
                 cls._instance.file_handler.setFormatter(cls._instance.formatter)

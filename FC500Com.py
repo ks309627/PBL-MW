@@ -1,13 +1,17 @@
 import serial
 import time
+from settings import Settings
+from ErrorHandler import ErrorLogger
 
 class FC500Com:
-    def __init__(self, port= '/dev/ttyUSB0', baudrate=9600, timeout=0.2, max_time=0.5):
-        self.port = port
+    def __init__(self, settings:Settings, baudrate=9600, timeout=0.2, max_time=0.5):
+        self.logger = ErrorLogger()
+        self.settings = settings
+        self.port = self.settings.get("COMPathFC")  
         self.baudrate = baudrate
         self.timeout = timeout
         self.max_time = max_time
-        self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
+        #self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
 
     def connection_check(self):
         start_time = time.time()
@@ -16,52 +20,54 @@ class FC500Com:
                 return True
         return False
 
-
     def read_data(self):
         self.ser.flush()
-        data = ''
-        while True:
-            if self.connection_check():
-                data = self.ser.readline().decode('utf-8').rstrip()
-                print(f"Received data: {data}")
-            else:
-                break
-        return 1
+        data = "If you're seing this, something went wrong with Read Data."
+        while self.connection_check():
+            data = self.ser.readline().decode('utf-8').rstrip()
+            self.logger.log_info(data)
+        return data
 
     def close(self):
         self.ser.close()
 
+    def cmd_custom(self, command):
+        self.ser.write((command+"\r\n").encode())
+        response = self.read_data()
+        return response
+
     #Set the baseline for measurement
     def cmd_zero(self):
-        command = 'ST'
+        command = 'ST\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
 
     #Turn off FC500 (needs manual turning on) - DON'T USE
     def cmd_OFF(self):
-        command = 'SS'
+        command = 'SS\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
 
     #Put FC500 to sleep or wake it up - preferable to cmd_OFF
     def cmd_sleep(self):
-        command = 'Ss'
+        command = 'Ss\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
+        self.logger.log_info(response)
         return response
 
     #Get a measurement
     def cmd_measure(self):
-        command = 'Sx1'
+        command = 'Sx1\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
 
     #Ping FC500 if it is connected
     def cmd_ping(self):
-        command = 'SJ'
+        command = 'SJ\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
@@ -69,7 +75,7 @@ class FC500Com:
     #Set the unit of measurement
     def cmd_setunit(self):
         unit = 'N'
-        command = 'Su' + unit
+        command = 'Su\r\n' + unit
         self.ser.write(command.encode())
         response = self.read_data()
         return response
@@ -77,7 +83,7 @@ class FC500Com:
     #Set how fast FC500 measures per second - needs testing
     def cmd_sethz(self):
         hz = '1000'
-        command = 'St' + hz
+        command = 'St\r\n' + hz
         self.ser.write(command.encode())
         response = self.read_data()
         return response
@@ -85,7 +91,7 @@ class FC500Com:
     #Set the gravity constant - DON'T USE
     def cmd_setgravity(self):
         gravity = 9.81
-        command = 'Sn' + gravity
+        command = 'Sn\r\n' + gravity
         self.ser.write(command.encode())
         response = self.read_data()
         return response
@@ -100,21 +106,21 @@ class FC500Com:
     
     #Check the clock
     def cmd_getclock(self):
-        command = 'Sd&t?'
+        command = 'Sd&t?\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
 
     #Check hz of measurement
     def cmd_gethz(self):
-        command = 'St?'
+        command = 'St?\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response
 
     #Check battery level
     def cmd_getbattery(self):
-        command = 'Sb'
+        command = 'Sb\r\n'
         self.ser.write(command.encode())
         response = self.read_data()
         return response

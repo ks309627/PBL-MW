@@ -7,13 +7,10 @@ from PySide6.QtGui import QIcon
 from EspCom import SerialCommunicator
 from GraphControler import GraphControler
 from settings import Settings
-
-# v02.01.24.1
 from LoggingHandler import ErrorLogger
-
 from TerminalControler import TerminalControler
-
 from Measure_ProgressBar import Step_Measure
+from FC500Com import FC500Com
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -35,9 +32,11 @@ class MainWindow(QWidget):
 
         self.screenControler.set_graph_controler(self.graphControler)
 
-        self.TerminalControler = TerminalControler(self.ui)
+        self.TerminalControler = TerminalControler(self.ui, self.settings)
 
         self.step_measure = Step_Measure()
+
+        self.FC500Com = FC500Com(self.settings)
     
         #v30.11.24.2
     def closeEvent(self, event):

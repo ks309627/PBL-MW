@@ -6,7 +6,7 @@ class Settings:
         self.default_settings = {
             "devMode": 0,
             "graphSavePath": os.getcwd(), # v03.01.25.1
-            "COMPath": "COM1",
+            "COMPathFC": "COM1",
             "COMPathESP": "COM2"
         }
         self.settings = self.default_settings.copy()

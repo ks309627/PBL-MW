@@ -21,7 +21,9 @@ class ScreenControler:
         self.settings = settings
 
         self.logger = ErrorLogger()
-        self.measureProcess = MeasureProcess()
+        self.measureProcess = MeasureProcess(gui, settings)
+        self.FC500 = FC500Com(settings)
+
 
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
         gui.btn_Graphs.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Graphs))
@@ -32,6 +34,10 @@ class ScreenControler:
         gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
         gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure()))
 
+        gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), asyncio.run(self.measureProcess.MeasureCycle())))
+
+        gui.btn_Measure_Step1_Error_Errors.clicked.connect(lambda:(self.StopMeasure(), gui.Screen.setCurrentWidget(gui.Screen_Errors), self.ScreenSwitch_CategoryErrors(gui), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
+        gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
 
         # v30.11.24.2 - added comunicator v30.11.24.2
         self.gui = gui
@@ -59,8 +65,8 @@ class ScreenControler:
         self.graphSavePath = gui.graphSavePath
         self.graphSavePath.setText(self.settings.get("graphSavePath"))
 
-        self.COMPath = gui.COMPath
-        self.COMPath.setText(self.settings.get("COMPath"))
+        self.COMPathFC = gui.COMPathFC
+        self.COMPathFC.setText(self.settings.get("COMPathFC"))
 
         self.COMPathESP = gui.COMPathESP
         self.COMPathESP.setText(self.settings.get("COMPathESP"))
@@ -68,11 +74,7 @@ class ScreenControler:
         gui.btn_settingsDefault.clicked.connect(self.restore_settings)
         gui.btn_settingsSave.clicked.connect(self.save_settings_to_file)
 
-        # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
-        #self.fc500 = None
-        #gui.btn_FC500Com_cmd_zero.clicked.connect(self.fc500_zero)
-
-        self.terminalControler = TerminalControler(gui)
+        self.terminalControler = TerminalControler(gui, settings)
         gui.btn_Errors_AllHistory_basic.clicked.connect(self.ButtonSwitch_Errors_AllH_basic)
         gui.btn_Errors_InstanceHistory_basic.clicked.connect(self.ButtonSwitch_Errors_InsH_basic)
         gui.btn_Errors_AllHistory_admin.clicked.connect(self.ButtonSwitch_Errors_AllH_admin)
@@ -120,6 +122,7 @@ class ScreenControler:
 
     def BeginMeasure(self):
         if self.measureProcess:
+            self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1) 
             asyncio.run(self.measureProcess.MeasureCycle())
             self.gui.btn_Measure.setEnabled(False)
             self.gui.btn_Graphs.setEnabled(False)
@@ -133,6 +136,14 @@ class ScreenControler:
             self.gui.btn_Graphs.setEnabled(True)
             self.gui.btn_Settings.setEnabled(True)
             self.gui.btn_Errors.setEnabled(True)
+
+    def MeasureComRefresh(self):
+        if self.measureProcess:
+            asyncio.run(self.measureProcess.Measure_Step1_Error_Refresh())
+
+
+
+
 
     def send_left_command(self):
         response = self.communicator.send_left_command()
@@ -153,6 +164,8 @@ class ScreenControler:
         else:
             print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
+
+
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler
 
@@ -188,13 +201,13 @@ class ScreenControler:
         self.settings.reset_to_defaults()
         self.devMode.setChecked(bool(self.settings.get("devMode")))
         self.graphSavePath.setText(self.settings.get("graphSavePath"))
-        self.COMPath.setText(self.settings.get("COMPath"))
+        self.COMPathFC.setText(self.settings.get("COMPathFC"))
         self.COMPathESP.setText(self.settings.get("COMPathESP"))
 
     def save_settings_to_file(self):
         self.settings.set("devMode", int(self.devMode.isChecked()))
         self.settings.set("graphSavePath", self.graphSavePath.text())
-        self.settings.set("COMPath", self.COMPath.text())
+        self.settings.set("COMPathFC", self.COMPathFC.text())
         self.settings.set("COMPathESP", self.COMPathESP.text())
         self.settings.save_settings()
     
