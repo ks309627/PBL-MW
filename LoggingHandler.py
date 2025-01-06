@@ -9,7 +9,7 @@ import os
 logging.USER = 25
 logging.addLevelName(logging.USER, "USER")
 
-class ErrorLogger:
+class Logger:
     _instance = None
     _lock = threading.Lock()
     logger: logging.Logger
@@ -19,10 +19,10 @@ class ErrorLogger:
     max_files: int
     join_files: int
 
-    def __new__(cls, log_dir='logs') -> 'ErrorLogger':
+    def __new__(cls, log_dir='logs') -> 'Logger':
         with cls._lock:
             if cls._instance is None:
-                cls._instance = super(ErrorLogger, cls).__new__(cls)
+                cls._instance = super(Logger, cls).__new__(cls)
                 cls._instance.logger = logging.getLogger(__name__)
                 cls._instance.logger.setLevel(logging.DEBUG)
                 cls._instance.log_dir = log_dir
@@ -78,15 +78,19 @@ class ErrorLogger:
         if os.path.exists(output_file):
             os.remove(output_file)
         log_files = [f for f in os.listdir(self.log_dir) if f.startswith('log_') and f.endswith('.log')]
-        log_files.sort(reverse=True)
+        log_files.sort(reverse=False)  # Set reverse to False explicitly
         with open(output_file, 'w') as output:
-            for file in log_files[:self.join_files]:  # Use join_files instance variable
+            for i, file in enumerate(log_files[:self.join_files]):
                 with open(os.path.join(self.log_dir, file), 'r') as log_file:
+                    # Add a header line with the log file number and name
+                    output.write(f"--- {i+1}{'st' if i == 0 else 'nd' if i == 1 else 'rd' if i == 2 else 'th'} log file: {file} ---\n\n")
                     output.write(log_file.read())
-                    output.write('\n\n')
+                    if i < len(log_files[:self.join_files]) - 1:  # Only add newlines between log files
+                        output.write('\n\n')
+
 
 def excepthook(exc_type, exc_value, exc_traceback):
-    error_logger = ErrorLogger()
+    error_logger = Logger()
     error_logger.handle_exception(exc_type, exc_value, exc_traceback)
 
 sys.excepthook = excepthook

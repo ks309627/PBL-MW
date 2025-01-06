@@ -9,7 +9,7 @@ from MeasureProcess import MeasureProcess
 import asyncio
 
 from TerminalControler import TerminalControler
-from LoggingHandler import ErrorLogger
+from LoggingHandler import Logger
 
 
 class ScreenControler:
@@ -20,7 +20,7 @@ class ScreenControler:
         self.graphControler = None
         self.settings = settings
 
-        self.logger = ErrorLogger()
+        self.logger = Logger()
         self.measureProcess = MeasureProcess(gui, settings)
         self.FC500 = FC500Com(settings)
 
@@ -32,7 +32,7 @@ class ScreenControler:
         
         gui.btn_MeasureToGraph.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Graphs), self.ScreenSwitch_CategoryGraphs(gui)))
         gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
-        gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure()))
+        gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure_Safety()))
 
         gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), asyncio.run(self.measureProcess.MeasureCycle())))
 
@@ -122,6 +122,7 @@ class ScreenControler:
 
     def BeginMeasure(self):
         if self.measureProcess:
+            self.measureProcess.Step_Flags = 0
             self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1) 
             asyncio.run(self.measureProcess.MeasureCycle())
             self.gui.btn_Measure.setEnabled(False)
@@ -136,6 +137,11 @@ class ScreenControler:
             self.gui.btn_Graphs.setEnabled(True)
             self.gui.btn_Settings.setEnabled(True)
             self.gui.btn_Errors.setEnabled(True)
+    
+    def StopMeasure_Safety(self):
+        if self.measureProcess:
+            self.logger.log_warning("Safety Mushroom Pressed!")
+            self.StopMeasure()
 
     def MeasureComRefresh(self):
         if self.measureProcess:
@@ -238,25 +244,25 @@ class ScreenControler:
 
     def ButtonSwitch_Errors_AllH_basic(self):
         if self.terminalControler:
-            self.terminalControler.JoinedLogs_basic()
+            self.terminalControler.read_log_file(self.terminalControler.text_edit_basic, 'logs/JoinedLogs.log')
         self.gui.btn_Errors_AllHistory_basic.setChecked(1)
         self.gui.btn_Errors_InstanceHistory_basic.setChecked(0)
 
     def ButtonSwitch_Errors_InsH_basic(self):
         if self.terminalControler:
-            self.terminalControler.SingleLog_basic()
+            self.terminalControler.read_log_file(self.terminalControler.text_edit_basic)
         self.gui.btn_Errors_AllHistory_basic.setChecked(0)
         self.gui.btn_Errors_InstanceHistory_basic.setChecked(1)
 
     def ButtonSwitch_Errors_AllH_admin(self):
         if self.terminalControler:
-            self.terminalControler.JoinedLogs_admin()
+            self.terminalControler.read_log_file(self.terminalControler.text_edit_admin, 'logs/JoinedLogs.log')
         self.gui.btn_Errors_AllHistory_admin.setChecked(1)
         self.gui.btn_Errors_InstanceHistory_admin.setChecked(0)
 
     def ButtonSwitch_Errors_InsH_admin(self):
         if self.terminalControler:
-            self.terminalControler.SingleLog_admin()
+            self.terminalControler.read_log_file(self.terminalControler.text_edit_admin)
         self.gui.btn_Errors_AllHistory_admin.setChecked(0)
         self.gui.btn_Errors_InstanceHistory_admin.setChecked(1)
 

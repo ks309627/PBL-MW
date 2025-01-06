@@ -7,7 +7,7 @@ from PySide6.QtGui import QIcon
 from EspCom import SerialCommunicator
 from GraphControler import GraphControler
 from settings import Settings
-from LoggingHandler import ErrorLogger
+from LoggingHandler import Logger
 from TerminalControler import TerminalControler
 from Measure_ProgressBar import Step_Measure
 from FC500Com import FC500Com
@@ -47,8 +47,10 @@ class MainWindow(QWidget):
         
 #Running the app
 
-error_logger = ErrorLogger()
+error_logger = Logger()
+error_logger.log_debug("=====================")
 error_logger.log_debug("Uruchomienie Programu")
+error_logger.log_debug("=====================")
 
 app = QApplication(sys.argv)
 MyApp = MainWindow()

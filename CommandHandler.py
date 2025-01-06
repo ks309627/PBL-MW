@@ -1,5 +1,5 @@
 import sys
-from LoggingHandler import ErrorLogger
+from LoggingHandler import Logger
 from FC500Com import FC500Com
 from settings import Settings
 
@@ -7,7 +7,7 @@ class CommandInterpreter:
     def __init__(self, settings:Settings):
         self.settings = settings
         self.fc500Com = FC500Com(settings)
-        self.logger = ErrorLogger()
+        self.logger = Logger()
         self.commands = {
             "com": self.handle_com,
             "help": self.handle_help,
@@ -60,10 +60,23 @@ class CommandInterpreter:
         self.logger.log_info("  help or ?             - Display this help message")
 
     def handle_log(self, args):
-        if len(args) < 2:
-            self.logger.log_info("LOG command requires level and message arguments. Type 'help' or '?' for command list.")
-            return
+        log_levels = {
+            "USER": self.logger.log_user,
+            "DEBUG": self.logger.log_debug,
+            "INFO": self.logger.log_info,
+            "WARNING": self.logger.log_warning,
+            "ERROR": self.logger.log_error,
+            "CRITICAL": self.logger.log_critical
+        }
 
+        if len(args) < 2:
+            self.logger.log_info(f"LOG command requires two arguments: log level ({', '.join(log_levels.keys())}) and message.")
+            return
+        
         level = args[0].upper()
         message = " ".join(args[1:])
-        self.logger.log_info(f"{level}: {message}")
+        if level not in log_levels:
+            self.logger.log_error(f"Invalid log level: {level}. Allowed levels are: {', '.join(log_levels.keys())}")
+            return
+        
+        log_levels[level](message)

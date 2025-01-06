@@ -1,11 +1,11 @@
 import serial
 import time
 from settings import Settings
-from ErrorHandler import ErrorLogger
+from LoggingHandler import Logger
 
 class FC500Com:
     def __init__(self, settings:Settings, baudrate=9600, timeout=0.2, max_time=0.5):
-        self.logger = ErrorLogger()
+        self.logger = Logger()
         self.settings = settings
         self.port = self.settings.get("COMPathFC")  
         self.baudrate = baudrate

@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt, QTimer, QEvent, Qt
 from PySide6.QtGui import QTextCursor
 from gui_ui import Ui_Main
 from datetime import datetime
-from LoggingHandler import ErrorLogger
+from LoggingHandler import Logger
 from CommandHandler import CommandInterpreter
 from settings import Settings
 
@@ -13,7 +13,7 @@ class TerminalControler(QMainWindow):
     def __init__(self, gui:Ui_Main, settings:Settings):
         super().__init__()
         self.gui = gui
-        self.error_logger = ErrorLogger()
+        self.logger = Logger()
         self.Text = ""
         self.text_edit_basic = gui.terminal_basic
         self.text_edit_admin = gui.terminal_admin
@@ -22,69 +22,63 @@ class TerminalControler(QMainWindow):
 
         self.gui.terminal_typefield_admin.returnPressed.connect(self.Send_Command_admin)
         self.CommandReceiver = CommandInterpreter(settings)
+        self.settings = settings
 
         self.command_history = []
         self.command_history_index = 0
         self.gui.terminal_typefield_admin.installEventFilter(self)
-        
 
-    def SingleLog_basic(self):
+    def read_log_file(self, text_edit, file_path=None):
         try:
-            log_files = glob.glob('logs/log_*.log')
-            if not log_files:
-                self.error_logger.log_warning("No log files found in the 'logs' directory.")
-                return
-            most_recent_file = max(log_files, key=os.path.getctime)
+            if file_path is None:
+                log_files = glob.glob('logs/log_*.log')
+                if not log_files:
+                    self.logger.log_warning("No log files found in the 'logs' directory.")
+                    return
+                file_path = max(log_files, key=os.path.getctime)
+            elif file_path == 'logs/JoinedLogs.log':
+                self.logger.join_logs(file_path)
 
-            with open(most_recent_file, 'r', encoding='utf-8', errors='replace') as file:
-                text = file.read()
-                scrollbar_position = self.text_edit_basic.verticalScrollBar().value()
-                self.text_edit_basic.setText(text)
-                max_scrollbar_position = self.text_edit_basic.verticalScrollBar().maximum()
-                self.text_edit_basic.verticalScrollBar().setValue(min(scrollbar_position, max_scrollbar_position))
-        except Exception as e:
-            self.error_logger.log_error(f"An error occurred while reading the file: {str(e)}")
-        
-    def JoinedLogs_basic(self):
-        try:
-            self.error_logger.join_logs('logs/JoinedLogs.log')
-            file_path = 'logs/JoinedLogs.log'
             with open(file_path, 'r', encoding='utf-8', errors='replace') as file:
-                text = file.read()
-                scrollbar_position = self.text_edit_basic.verticalScrollBar().value()
-                self.text_edit_basic.setText(text)
-                self.text_edit_basic.verticalScrollBar().setValue(scrollbar_position)
-        except Exception as e:
-            self.error_logger.log_error(f"An error occurred while reading the file: {str(e)}")
+                lines = file.readlines()
+                reversed_lines = lines[::-1]
 
-    def SingleLog_admin(self):
-        try:
-            log_files = glob.glob('logs/log_*.log')
-            if not log_files:
-                self.error_logger.log_warning("No log files found in the 'logs' directory.")
-                return
-            most_recent_file = max(log_files, key=os.path.getctime)
+                # Define a dictionary to map message types to styles
+                style_map = {
+                    'USER': {'color': '#444444', 'bold': False},
+                    'DEBUG': {'color': '#00B6D5', 'bold': False},
+                    'INFO': {'color': '#3E78FF', 'bold': False},
+                    'WARNING': {'color': '#E2CD2B', 'bold': True},
+                    'ERROR': {'color': '#FF7F00', 'bold': True},
+                    'CRITICAL': {'color': '#FF0000', 'bold': True}
+                }
 
-            with open(most_recent_file, 'r', encoding='utf-8', errors='replace') as file:
-                text = file.read()
-                scrollbar_position = self.text_edit_admin.verticalScrollBar().value()
-                self.text_edit_admin.setText(text)
-                max_scrollbar_position = self.text_edit_admin.verticalScrollBar().maximum()
-                self.text_edit_admin.verticalScrollBar().setValue(min(scrollbar_position, max_scrollbar_position))
+                # Initialize an empty string to store the HTML formatted text
+                html_text = ''
+
+                # Iterate over each line and format it according to the message type
+                for line in reversed_lines:
+                    components = line.split(' - ')
+                    if len(components) >= 4:
+                        message_type = components[2]
+                        for style_type, style in style_map.items():
+                            if message_type == style_type:
+                                font_weight = 'bold' if style['bold'] else 'normal'
+                                html_text += f'<font color="{style["color"]}" style="font-weight: {font_weight}">{line.rstrip()}</font><br>'
+                                break
+                        else:
+                            # If no message type is found, use black color by default
+                            html_text += f'<font color="#000000">{line.rstrip()}</font><br>'
+                    else:
+                        # If the line doesn't have the expected format, use black color by default
+                        html_text += f'<font color="#000000">{line.rstrip()}</font><br>'
+
+                scrollbar_position = text_edit.verticalScrollBar().value()
+                text_edit.setHtml(html_text)
+                max_scrollbar_position = text_edit.verticalScrollBar().maximum()
+                text_edit.verticalScrollBar().setValue(min(scrollbar_position, max_scrollbar_position))
         except Exception as e:
-            self.error_logger.log_error(f"An error occurred while reading the file: {str(e)}")
-    
-    def JoinedLogs_admin(self):
-        try:
-            self.error_logger.join_logs('logs/JoinedLogs.log')
-            file_path = 'logs/JoinedLogs.log'
-            with open(file_path, 'r', encoding='utf-8', errors='replace') as file:
-                text = file.read()
-                scrollbar_position = self.text_edit_admin.verticalScrollBar().value()
-                self.text_edit_admin.setText(text)
-                self.text_edit_admin.verticalScrollBar().setValue(scrollbar_position)
-        except Exception as e:
-            self.error_logger.log_error(f"An error occurred while reading the file: {str(e)}")
+            self.logger.log_error(f"An error occurred while reading the file: {str(e)}")
 
     def Refresh_Loop(self):
         try:
@@ -103,28 +97,32 @@ class TerminalControler(QMainWindow):
             else:
                 return
         except Exception as e:
-            self.error_logger.log_error(f"An error occurred while initializing refresh loop: {str(e)}")
+            self.logger.log_error(f"An error occurred while initializing refresh loop: {str(e)}")
 
     def Perform_Refresh(self):
+        if self.settings.get("devMode") == 1:
+            self.gui.SubScreens_Errors.setCurrentWidget(self.gui.SubScreen_Errors_Admin)
+        else:
+            self.gui.SubScreens_Errors.setCurrentWidget(self.gui.SubScreen_Errors_Basic)
         try:
             if self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
                 try:
                     if self.gui.btn_Errors_InstanceHistory_basic.isChecked():
-                        self.SingleLog_basic()
+                        self.read_log_file(self.text_edit_basic)
                     elif self.gui.btn_Errors_AllHistory_basic.isChecked():
-                        self.JoinedLogs_basic()
+                        self.read_log_file(self.text_edit_basic, 'logs/JoinedLogs.log')
                 except Exception as e:
-                    self.error_logger.log_error(f"An error occured while trying to refresh basic terminal: {str(e)}")
+                    self.logger.log_error(f"An error occured while trying to refresh basic terminal: {str(e)}")
             elif self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
                 try:
                     if self.gui.btn_Errors_InstanceHistory_admin.isChecked():
-                        self.SingleLog_admin()
+                        self.read_log_file(self.text_edit_admin)
                     elif self.gui.btn_Errors_AllHistory_admin.isChecked():
-                        self.JoinedLogs_admin()
+                        self.read_log_file(self.text_edit_admin, 'logs/JoinedLogs.log')
                 except Exception as e:
-                    self.error_logger.log_error(f"An error occured while trying to refresh administrator terminal: {str(e)}")
+                    self.logger.log_error(f"An error occured while trying to refresh administrator terminal: {str(e)}")
         except Exception as e:
-            self.error_logger.log_error(f"An error occured while trying to refresh: {str(e)}")
+            self.logger.log_error(f"An error occured while trying to refresh: {str(e)}")
         return
     
     def eventFilter(self, obj, event):
@@ -147,8 +145,9 @@ class TerminalControler(QMainWindow):
     def Send_Command_admin(self):
         command = self.gui.terminal_typefield_admin.text()
         if command:
-            self.error_logger.log_user(command)
-            self.CommandReceiver.receiver(command)
+            self.logger.log_user(command)
+            if command.startswith('/'):
+                self.CommandReceiver.receiver(command[1:])
             self.Perform_Refresh()
             self.command_history.append(command)
             self.command_history_index = len(self.command_history)

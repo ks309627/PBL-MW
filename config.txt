@@ -1,4 +1,5 @@
 devMode = 1
 graphSavePath = babaisyou
-COMPath = COM1
+COMPathFC = COM1
 COMPathESP = COM5
+COMPath = COM1
