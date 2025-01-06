@@ -9,7 +9,7 @@ class Step_Measure:
         self.timers = {}
 
     def Set_Empty(self, disp_number, parent):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon = QIcon()
@@ -19,7 +19,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
 
     def Set_True(self, disp_number, parent):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon = QIcon()
@@ -29,7 +29,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
             
     def Set_False(self, disp_number, parent):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon = QIcon()
@@ -39,7 +39,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
     
     def Set_Processing_True(self, disp_number, parent, toggle=True):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon1 = QIcon()
@@ -61,7 +61,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
 
     def Set_Processing_False(self, disp_number, parent, toggle=True):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon1 = QIcon()
@@ -83,7 +83,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
 
     def Set_Processing(self, disp_number, parent, toggle=True):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             icon1 = QIcon()
@@ -105,7 +105,7 @@ class Step_Measure:
             self.logger.log_warning("Nie znaleziono przycisku")
 
     def _toggle_icon(self, disp_number, parent, icon1, icon2):
-        button_name = f"Dsp_MeasureProgress_Step_{disp_number}"
+        button_name = f"dsp_MeasureProgress_Step_{disp_number}"
         button = parent.findChild(QPushButton, button_name)
         if button:
             current_icon = button.icon()

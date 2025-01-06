@@ -7,6 +7,8 @@
   </qresource>
   <qresource prefix="Progress">
     <file>progress/Checkmark.png</file>
+    <file>progress/Locked.png</file>
+    <file>progress/Unlocked.png</file>
     <file>progress/Empty.png</file>
     <file>progress/False.png</file>
     <file>progress/True.png</file>

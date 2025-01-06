@@ -33,8 +33,8 @@ class MeasureProcess:
 
     def CycleCleanUp(self):
         self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1)
-        self.Step_Light.Set_Empty("1_1", self.gui.Dsp_MeasureProgress_Step_1_1.parentWidget())
-        self.Step_Light.Set_Empty("1_2", self.gui.Dsp_MeasureProgress_Step_1_1.parentWidget())
+        self.Step_Light.Set_Empty("1_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
+        self.Step_Light.Set_Empty("1_2", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
 
         parent_widget = self.gui.LightIndicatorContainer.parentWidget()
         toggle = False
@@ -71,8 +71,8 @@ class MeasureProcess:
                 #     pass #TMQ jakiś connection check dla esp + dodać tab poniżej
                 if self.gui.SubScreens_Measure.currentWidget() != self.gui.SubScreen_Measure_Step1_Error:
                     await self.safety_unlock()
-                    self.Step_Light.Set_Processing(1, self.gui.Dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
-                    self.Step_Light.Set_Processing_True(1, self.gui.Dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
+                    self.Step_Light.Set_Processing(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
+                    self.Step_Light.Set_Processing_True(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
                     self.gui.btn_Measure_Step1_ObjectReady.setEnabled(True)
                     self.MeasureCycle()
                 # except:
@@ -86,7 +86,7 @@ class MeasureProcess:
         self.logger.log_error("Measure: Nie można połączyć się z FC500. Proszę sprawdzić kabel oraz stan urządzenia. Odłączenie i ponowne podłączenie kabla lub/oraz restart programu mogą być wymagane.")
         self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
         self.Step_Light.Set_Processing_False(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
-        self.Step_Light.Set_False("1_1", self.gui.Dsp_MeasureProgress_Step_1_1.parentWidget())
+        self.Step_Light.Set_False("1_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
         if self.gui.SubScreens_Measure.currentWidget() != self.gui.SubScreen_Measure_Step1_Error:
             self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1_Error)
     
@@ -94,7 +94,7 @@ class MeasureProcess:
         self.logger.log_error("ESP") #TMQ Tu jakiś error pasujący do ESP
         self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
         self.Step_Light.Set_Processing_False(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
-        self.Step_Light.Set_False("1_2", self.gui.Dsp_MeasureProgress_Step_1_1.parentWidget())
+        self.Step_Light.Set_False("1_2", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
         if self.gui.SubScreens_Measure.currentWidget() != self.gui.SubScreen_Measure_Step1_Error:
             self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1_Error)
     
@@ -117,9 +117,9 @@ class MeasureProcess:
 
     async def Measure_Step2(self):
         self.logger.log_info("Measure Process: Step 2")
-        self.Step_Light.Set_Processing_True(1, self.gui.Dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing_True(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
         self.Step_Light.Set_True(1, self.gui.LightIndicatorContainer.parentWidget())
-        self.Step_Light.Set_Processing(2, self.gui.Dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
+        self.Step_Light.Set_Processing(2, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
         
         
       
