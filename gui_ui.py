@@ -16,10 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QLayout, QLineEdit,
-    QProgressBar, QPushButton, QSizePolicy, QSpacerItem,
-    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
+    QLabel, QLayout, QLineEdit, QProgressBar,
+    QPushButton, QSizePolicy, QSpacerItem, QStackedWidget,
+    QTextEdit, QVBoxLayout, QWidget)
 from icons import Icons_rc
 
 class Ui_Main(object):
@@ -563,7 +563,7 @@ class Ui_Main(object):
         self.Screen_Graphs.setObjectName(u"Screen_Graphs")
         self.title_Graphs = QLabel(self.Screen_Graphs)
         self.title_Graphs.setObjectName(u"title_Graphs")
-        self.title_Graphs.setGeometry(QRect(60, 40, 491, 71))
+        self.title_Graphs.setGeometry(QRect(21, 21, 491, 60))
         self.title_Graphs.setFont(font3)
         self.title_Graphs.setTextFormat(Qt.AutoText)
         self.title_Graphs.setScaledContents(False)
@@ -632,87 +632,91 @@ class Ui_Main(object):
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
-        self.title_Settings = QLabel(self.Screen_Settings)
+        self.verticalLayoutWidget_4 = QWidget(self.Screen_Settings)
+        self.verticalLayoutWidget_4.setObjectName(u"verticalLayoutWidget_4")
+        self.verticalLayoutWidget_4.setGeometry(QRect(0, 0, 551, 371))
+        self.verticalLayout_3 = QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_3.setSpacing(10)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(20, 20, 20, 20)
+        self.title_Settings = QLabel(self.verticalLayoutWidget_4)
         self.title_Settings.setObjectName(u"title_Settings")
-        self.title_Settings.setGeometry(QRect(100, 50, 491, 71))
         self.title_Settings.setFont(font3)
         self.title_Settings.setTextFormat(Qt.AutoText)
         self.title_Settings.setScaledContents(False)
         self.title_Settings.setWordWrap(False)
         self.title_Settings.setIndent(-1)
-        self.formLayoutWidget_2 = QWidget(self.Screen_Settings)
-        self.formLayoutWidget_2.setObjectName(u"formLayoutWidget_2")
-        self.formLayoutWidget_2.setGeometry(QRect(100, 120, 341, 241))
-        self.formLayout_2 = QFormLayout(self.formLayoutWidget_2)
-        self.formLayout_2.setObjectName(u"formLayout_2")
-        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.label_7 = QLabel(self.formLayoutWidget_2)
-        self.label_7.setObjectName(u"label_7")
 
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_7)
+        self.verticalLayout_3.addWidget(self.title_Settings)
 
-        self.graphSavePath = QLineEdit(self.formLayoutWidget_2)
-        self.graphSavePath.setObjectName(u"graphSavePath")
-
-        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.graphSavePath)
-
-        self.label_8 = QLabel(self.formLayoutWidget_2)
-        self.label_8.setObjectName(u"label_8")
-
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_8)
-
-        self.COMPathFC = QLineEdit(self.formLayoutWidget_2)
-        self.COMPathFC.setObjectName(u"COMPathFC")
-
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.COMPathFC)
-
-        self.label_10 = QLabel(self.formLayoutWidget_2)
-        self.label_10.setObjectName(u"label_10")
-
-        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_10)
-
-        self.COMPathESP = QLineEdit(self.formLayoutWidget_2)
-        self.COMPathESP.setObjectName(u"COMPathESP")
-
-        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.COMPathESP)
-
-        self.btn_settingsSave = QPushButton(self.formLayoutWidget_2)
-        self.btn_settingsSave.setObjectName(u"btn_settingsSave")
-
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.btn_settingsSave)
-
-        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(4, QFormLayout.FieldRole, self.verticalSpacer_8)
-
-        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(5, QFormLayout.LabelRole, self.verticalSpacer_7)
-
-        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(5, QFormLayout.FieldRole, self.verticalSpacer_10)
-
-        self.btn_settingsDefault = QPushButton(self.formLayoutWidget_2)
-        self.btn_settingsDefault.setObjectName(u"btn_settingsDefault")
-
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.btn_settingsDefault)
-
-        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(6, QFormLayout.FieldRole, self.verticalSpacer_9)
-
-        self.devMode = QPushButton(self.formLayoutWidget_2)
+        self.gridLayout_4 = QGridLayout()
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.devMode = QPushButton(self.verticalLayoutWidget_4)
         self.devMode.setObjectName(u"devMode")
+        font5 = QFont()
+        font5.setFamilies([u"Futura Std Book"])
+        font5.setPointSize(16)
+        self.devMode.setFont(font5)
         self.devMode.setCheckable(True)
         self.devMode.setAutoExclusive(True)
         self.devMode.setFlat(False)
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.devMode)
+        self.gridLayout_4.addWidget(self.devMode, 3, 0, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.graphSavePath = QLineEdit(self.verticalLayoutWidget_4)
+        self.graphSavePath.setObjectName(u"graphSavePath")
+        self.graphSavePath.setFont(font5)
 
-        self.formLayout_2.setItem(3, QFormLayout.FieldRole, self.verticalSpacer)
+        self.gridLayout_4.addWidget(self.graphSavePath, 0, 1, 1, 3)
+
+        self.label_7 = QLabel(self.verticalLayoutWidget_4)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.label_7, 0, 0, 1, 1)
+
+        self.label_10 = QLabel(self.verticalLayoutWidget_4)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.label_10, 2, 0, 1, 1)
+
+        self.label_8 = QLabel(self.verticalLayoutWidget_4)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.label_8, 1, 0, 1, 1)
+
+        self.btn_settingsSave = QPushButton(self.verticalLayoutWidget_4)
+        self.btn_settingsSave.setObjectName(u"btn_settingsSave")
+        self.btn_settingsSave.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.btn_settingsSave, 5, 0, 1, 1)
+
+        self.COMPathFC = QLineEdit(self.verticalLayoutWidget_4)
+        self.COMPathFC.setObjectName(u"COMPathFC")
+        self.COMPathFC.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.COMPathFC, 1, 1, 1, 2)
+
+        self.btn_settingsDefault = QPushButton(self.verticalLayoutWidget_4)
+        self.btn_settingsDefault.setObjectName(u"btn_settingsDefault")
+        self.btn_settingsDefault.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.btn_settingsDefault, 6, 0, 1, 1)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.gridLayout_4.addItem(self.verticalSpacer_2, 4, 0, 1, 1)
+
+        self.COMPathESP = QLineEdit(self.verticalLayoutWidget_4)
+        self.COMPathESP.setObjectName(u"COMPathESP")
+        self.COMPathESP.setFont(font5)
+
+        self.gridLayout_4.addWidget(self.COMPathESP, 2, 1, 1, 2)
+
+
+        self.verticalLayout_3.addLayout(self.gridLayout_4)
 
         self.Screen.addWidget(self.Screen_Settings)
         self.Screen_Errors = QWidget()
@@ -752,10 +756,10 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_basic.setSizePolicy(sizePolicy2)
         self.btn_Errors_InstanceHistory_basic.setMinimumSize(QSize(300, 60))
         self.btn_Errors_InstanceHistory_basic.setMaximumSize(QSize(150, 60))
-        font5 = QFont()
-        font5.setFamilies([u"MS Shell Dlg 2"])
-        font5.setPointSize(20)
-        self.btn_Errors_InstanceHistory_basic.setFont(font5)
+        font6 = QFont()
+        font6.setFamilies([u"MS Shell Dlg 2"])
+        font6.setPointSize(20)
+        self.btn_Errors_InstanceHistory_basic.setFont(font6)
         self.btn_Errors_InstanceHistory_basic.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.btn_Errors_InstanceHistory_basic.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         icon12 = QIcon()
@@ -854,7 +858,7 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_admin.setSizePolicy(sizePolicy2)
         self.btn_Errors_InstanceHistory_admin.setMinimumSize(QSize(300, 60))
         self.btn_Errors_InstanceHistory_admin.setMaximumSize(QSize(150, 60))
-        self.btn_Errors_InstanceHistory_admin.setFont(font5)
+        self.btn_Errors_InstanceHistory_admin.setFont(font6)
         self.btn_Errors_InstanceHistory_admin.setAutoFillBackground(False)
         self.btn_Errors_InstanceHistory_admin.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.btn_Errors_InstanceHistory_admin.setIcon(icon12)
@@ -909,10 +913,7 @@ class Ui_Main(object):
         self.terminal_typefield_admin = QLineEdit(self.verticalLayoutWidget_2)
         self.terminal_typefield_admin.setObjectName(u"terminal_typefield_admin")
         self.terminal_typefield_admin.setMinimumSize(QSize(0, 50))
-        font6 = QFont()
-        font6.setFamilies([u"Futura Std Book"])
-        font6.setPointSize(16)
-        self.terminal_typefield_admin.setFont(font6)
+        self.terminal_typefield_admin.setFont(font5)
         self.terminal_typefield_admin.setClearButtonEnabled(False)
 
         self.horizontalLayout_8.addWidget(self.terminal_typefield_admin)
@@ -962,7 +963,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(4)
+        self.Screen.setCurrentIndex(3)
         self.SubScreens_Errors.setCurrentIndex(1)
 
 
@@ -1036,12 +1037,12 @@ class Ui_Main(object):
         self.btn_SaveGraph.setText("")
         self.btn_LoadGraph.setText("")
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
+        self.devMode.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
         self.label_7.setText(QCoreApplication.translate("Main", u"\u015acie\u017cka do zapisu wykres\u00f3w", None))
-        self.label_8.setText(QCoreApplication.translate("Main", u"Port COM si\u0142omierza", None))
         self.label_10.setText(QCoreApplication.translate("Main", u"Port COM mikrokontrolera", None))
+        self.label_8.setText(QCoreApplication.translate("Main", u"Port COM si\u0142omierza", None))
         self.btn_settingsSave.setText(QCoreApplication.translate("Main", u"Zapisz ustawienia", None))
         self.btn_settingsDefault.setText(QCoreApplication.translate("Main", u"Przywr\u00f3\u0107 domy\u015blne ustawienia", None))
-        self.devMode.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
         self.title_Errors_basic.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
         self.btn_Errors_InstanceHistory_basic.setText("")
         self.btn_Errors_AllHistory_basic.setText("")
