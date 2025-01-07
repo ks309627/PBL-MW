@@ -1,5 +1,4 @@
-devMode = 1
-graphSavePath = babaisyou
+devMode = 0
+graphSavePath = zmiento123
 COMPathFC = COM1
-COMPathESP = COM5
-COMPath = COM1
+COMPathESP = COM2

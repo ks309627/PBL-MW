@@ -12,6 +12,7 @@ class FC500Com:
         self.timeout = timeout
         self.max_time = max_time
         #self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
+        #self.ser = serial.Serial(port = "COM10", baudrate=9600, timeout=0.2)
 
     def connection_check(self):
         start_time = time.time()
