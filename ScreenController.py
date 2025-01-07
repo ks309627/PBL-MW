@@ -204,7 +204,7 @@ class ScreenControler:
 
     def restore_settings(self):
         self.settings.reset_to_defaults()
-        self.devMode.setChecked(bool(self.settings.get("devMode")))
+        self.gui.devMode.setChecked(bool(self.settings.get("devMode")))
         self.graphSavePath.setText(self.settings.get("graphSavePath"))
         self.COMPathFC.setText(self.settings.get("COMPathFC"))
         self.COMPathESP.setText(self.settings.get("COMPathESP"))
