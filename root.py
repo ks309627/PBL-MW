@@ -4,13 +4,13 @@ from PySide6.QtCore import Qt
 from gui_ui import Ui_Main
 from ScreenController import ScreenControler
 from PySide6.QtGui import QIcon
-from EspCom import SerialCommunicator
 from GraphControler import GraphControler
 from settings import Settings
 from LoggingHandler import Logger
 from TerminalControler import TerminalControler
 from Measure_ProgressBar import Step_Measure
 from FC500Com import FC500Com
+from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -19,16 +19,13 @@ class MainWindow(QWidget):
         self.ui.setupUi(self)
 
         self.settings = Settings()
-        self.serial_communicator = SerialCommunicator(self.settings)
    
         self.setWindowTitle("Maszyna Wytrzymałościowa")
         self.setWindowIcon(QIcon(":/Menu/menu/Graph.png"))
         self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
         self.graphControler = GraphControler(self.ui, self.settings)
 
-        # v30.11.24.2 - added serial_comunicator
-        #self.serial_communicator = SerialCommunicator() 
-        self.screenControler = ScreenControler(self.ui, self.serial_communicator, self.settings)
+        self.screenControler = ScreenControler(self.ui, self.settings)
 
         self.screenControler.set_graph_controler(self.graphControler)
 
@@ -37,10 +34,12 @@ class MainWindow(QWidget):
         self.step_measure = Step_Measure()
 
         self.FC500Com = FC500Com(self.settings)
+
+        self.ESPCom = ESPCom(self.settings) #changed SerialCommunicator to ESPCom
     
         #v30.11.24.2
     def closeEvent(self, event):
-        self.serial_communicator.close()
+        self.ESPCom.close()
         self.settings.save_settings()
         event.accept()
 

@@ -1,6 +1,6 @@
 from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
-from EspCom import SerialCommunicator
+from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
 from PySide6.QtWidgets import QCheckBox, QFileDialog
 from settings import Settings
 
@@ -13,10 +13,10 @@ from LoggingHandler import Logger
 
 
 class ScreenControler:
-    def __init__(self, gui:Ui_Main, communicator, settings:Settings):
+    def __init__(self, gui:Ui_Main, settings:Settings):
 
         self.gui = gui
-        self.communicator = communicator
+        #self.communicator = communicator
         self.graphControler = None
         self.settings = settings
 
@@ -41,7 +41,7 @@ class ScreenControler:
 
         # v30.11.24.2 - added comunicator v30.11.24.2
         self.gui = gui
-        self.communicator = communicator
+        #self.communicator = communicator
         # gui.pushButton.clicked.connect(self.send_left_command)
         # gui.pushButton_2.clicked.connect(self.send_right_command)
         # gui.pushButton_3.clicked.connect(self.connect)
@@ -150,25 +150,26 @@ class ScreenControler:
 
 
 
+#   to jest do usunięcia, ale można jeszcze zostawić w razie czego
 
-    def send_left_command(self):
-        response = self.communicator.send_left_command()
-        print(f"[INFO]: {response}")
+    # def send_left_command(self):
+    #     response = self.communicator.send_left_command()
+    #     print(f"[INFO]: {response}")
 
-    def send_right_command(self):
-        response = self.communicator.send_right_command()
-        print(f"[INFO]: {response}")
+    # def send_right_command(self):
+    #     response = self.communicator.send_right_command()
+    #     print(f"[INFO]: {response}")
 
-    def connect(self):
-        self.settings.load_settings()
-        new_port = self.settings.get("COMPathESP")
+    # def connect(self):
+    #     self.settings.load_settings()
+    #     new_port = self.settings.get("COMPathESP")
 
-        if new_port:
-            self.communicator.update_com_path(new_port)
-            response = self.communicator.connect()
-            print(f"[INFO]: {response}")
-        else:
-            print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
+    #     if new_port:
+    #         self.communicator.update_com_path(new_port)
+    #         response = self.communicator.connect()
+    #         print(f"[INFO]: {response}")
+    #     else:
+    #         print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
 
 
@@ -217,7 +218,6 @@ class ScreenControler:
         self.settings.set("COMPathESP", self.COMPathESP.text())
         self.settings.save_settings()
     
-    #\/    v03.01.25.1
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler
 
@@ -235,7 +235,6 @@ class ScreenControler:
             )
             if file_path:
                 self.graphControler.load_graph(file_path)
-    #/\
 
     # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
     # def fc500_zero(self):

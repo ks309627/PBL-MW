@@ -6,10 +6,12 @@ import json
 from datetime import datetime
 from settings import Settings
 import os
+from LoggingHandler import Logger
 
 class GraphControler(QMainWindow):
     def __init__(self, gui:Ui_Main, settings: Settings):
         super().__init__()
+        self.logger = Logger()
         self.Graph = QtCharts.QChart()
         self.Graph.setTitle("Wykres siły w czasie")
         self.current_offset = 0
@@ -57,18 +59,19 @@ class GraphControler(QMainWindow):
         try:
             with open(file_path, "w") as file:
                 json.dump(graph_data, file, indent=4)
-            print(f"Graph saved to {file_path}")
+            self.logger.log_info(f"Wykres zapisany do: {file_path}")
+
         except Exception as e:
-            print(f"Error saving graph: {e}")
+            self.logger.log_error(f"Wystąpił błąd podczas zapisu wykresu: {e}")
 
     def load_graph(self, file_path):
         try:
             with open(file_path, "r") as file:
                 graph_data = json.load(file)
             self.update_graph_from_data(graph_data["sekundy"], graph_data["siła"])
-            print(f"Graph loaded from {file_path}")
+            self.logger.log_info(f"Wykres załadowany z: {file_path}")
         except Exception as e:
-            print(f"Error loading graph: {e}")
+            self.logger.log_error(f"Wystąpił błąd podczas załadowania wykresu: {e}")
 
     def update_graph_from_data(self, sekundy, siła):
         self.Graph.removeAllSeries()
