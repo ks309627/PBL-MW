@@ -1,8 +1,9 @@
 from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
 from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
-from PySide6.QtWidgets import QCheckBox, QFileDialog
+from PySide6.QtWidgets import QCheckBox, QFileDialog, QMessageBox, QDialog, QPushButton
 from settings import Settings
+from LoginDialog import LoginDialog
 
 from FC500Com import FC500Com
 from MeasureProcess import MeasureProcess
@@ -54,13 +55,10 @@ class ScreenControler:
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
 
-        #\/    v03.01.25.1
         gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
         gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
-        #/\
 
-        self.devMode = gui.devMode
-        self.devMode.setChecked(bool(self.settings.get("devMode")))
+        gui.devMode.clicked.connect(self.handle_dev_mode)
 
         self.graphSavePath = gui.graphSavePath
         self.graphSavePath.setText(self.settings.get("graphSavePath"))
@@ -212,7 +210,7 @@ class ScreenControler:
         self.COMPathESP.setText(self.settings.get("COMPathESP"))
 
     def save_settings_to_file(self):
-        self.settings.set("devMode", int(self.devMode.isChecked()))
+        self.settings.set("devMode", int(self.gui.devMode.isChecked()))
         self.settings.set("graphSavePath", self.graphSavePath.text())
         self.settings.set("COMPathFC", self.COMPathFC.text())
         self.settings.set("COMPathESP", self.COMPathESP.text())
@@ -240,6 +238,22 @@ class ScreenControler:
     # def fc500_zero(self):
     #     if self.fc500:
     #         self.fc500.cmd_zero()
+
+    def handle_dev_mode(self):
+        if self.gui.devMode.isChecked():
+            login_dialog = LoginDialog()
+            if login_dialog.exec() == QDialog.Accepted:
+                self.settings.set("devMode", 1)
+                self.logger.log_info("DevMode został włączony.")
+                self.settings.save_settings()
+            else:
+                self.gui.devMode.setChecked(False)
+                self.logger.log_info("DevMode nie został włączony - brak autoryzacji.")
+        else:
+            if self.settings.get("devMode") == 1:
+                self.settings.set("devMode", 0)
+                self.logger.log_info("DevMode został wyłączony.")
+                self.settings.save_settings()
 
     def ButtonSwitch_Errors_AllH_basic(self):
         if self.terminalControler:

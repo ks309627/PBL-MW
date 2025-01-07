@@ -11,10 +11,23 @@ class FC500Com:
         self.baudrate = baudrate
         self.timeout = timeout
         self.max_time = max_time
-        #self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
+        try:
+            self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
+        except Exception as e:
+            self.logger.log_critical(f"An error occured while trying to create an instance of FC500 class: {e}")
         #self.ser = serial.Serial(port = "COM10", baudrate=9600, timeout=0.2)
 
     def connection_check(self):
+        self.logger.log_info("Performing connection check on FC500 through a ping:")
+        self.ping = self.cmd_ping()
+        if self.ping == "MJ":
+            self.logger.log_info("Ping check worked")
+            return True
+        else:
+            self.logger.log_warning("Ping check didn't work")
+            return False
+
+    def connection_incoming(self):
         start_time = time.time()
         while time.time() - start_time < self.max_time:
             if self.ser.in_waiting > 0:
@@ -24,7 +37,7 @@ class FC500Com:
     def read_data(self):
         self.ser.flush()
         data = "If you're seing this, something went wrong with Read Data."
-        while self.connection_check():
+        while self.connection_incoming():
             data = self.ser.readline().decode('utf-8').rstrip()
             self.logger.log_info(data)
         return data
