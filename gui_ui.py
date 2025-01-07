@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,11 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QFormLayout, QFrame,
-    QGridLayout, QHBoxLayout, QLabel, QLayout,
-    QLineEdit, QProgressBar, QPushButton, QSizePolicy,
-    QSpacerItem, QStackedWidget, QTextEdit, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QGridLayout,
+    QHBoxLayout, QLabel, QLayout, QLineEdit,
+    QProgressBar, QPushButton, QSizePolicy, QSpacerItem,
+    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
 from icons import Icons_rc
 
 class Ui_Main(object):
@@ -667,42 +666,6 @@ class Ui_Main(object):
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.COMPathFC)
 
-        self.label_9 = QLabel(self.formLayoutWidget_2)
-        self.label_9.setObjectName(u"label_9")
-
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_9)
-
-        self.devMode = QCheckBox(self.formLayoutWidget_2)
-        self.devMode.setObjectName(u"devMode")
-
-        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.devMode)
-
-        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(5, QFormLayout.LabelRole, self.verticalSpacer_7)
-
-        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(5, QFormLayout.FieldRole, self.verticalSpacer_10)
-
-        self.btn_settingsSave = QPushButton(self.formLayoutWidget_2)
-        self.btn_settingsSave.setObjectName(u"btn_settingsSave")
-
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.btn_settingsSave)
-
-        self.btn_settingsDefault = QPushButton(self.formLayoutWidget_2)
-        self.btn_settingsDefault.setObjectName(u"btn_settingsDefault")
-
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.btn_settingsDefault)
-
-        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(4, QFormLayout.FieldRole, self.verticalSpacer_8)
-
-        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.formLayout_2.setItem(6, QFormLayout.FieldRole, self.verticalSpacer_9)
-
         self.label_10 = QLabel(self.formLayoutWidget_2)
         self.label_10.setObjectName(u"label_10")
 
@@ -712,6 +675,44 @@ class Ui_Main(object):
         self.COMPathESP.setObjectName(u"COMPathESP")
 
         self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.COMPathESP)
+
+        self.btn_settingsSave = QPushButton(self.formLayoutWidget_2)
+        self.btn_settingsSave.setObjectName(u"btn_settingsSave")
+
+        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.btn_settingsSave)
+
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(4, QFormLayout.FieldRole, self.verticalSpacer_8)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(5, QFormLayout.LabelRole, self.verticalSpacer_7)
+
+        self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(5, QFormLayout.FieldRole, self.verticalSpacer_10)
+
+        self.btn_settingsDefault = QPushButton(self.formLayoutWidget_2)
+        self.btn_settingsDefault.setObjectName(u"btn_settingsDefault")
+
+        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.btn_settingsDefault)
+
+        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(6, QFormLayout.FieldRole, self.verticalSpacer_9)
+
+        self.devMode = QPushButton(self.formLayoutWidget_2)
+        self.devMode.setObjectName(u"devMode")
+        self.devMode.setCheckable(True)
+        self.devMode.setAutoExclusive(True)
+        self.devMode.setFlat(False)
+
+        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.devMode)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.formLayout_2.setItem(3, QFormLayout.FieldRole, self.verticalSpacer)
 
         self.Screen.addWidget(self.Screen_Settings)
         self.Screen_Errors = QWidget()
@@ -752,6 +753,7 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_basic.setMinimumSize(QSize(300, 60))
         self.btn_Errors_InstanceHistory_basic.setMaximumSize(QSize(150, 60))
         font5 = QFont()
+        font5.setFamilies([u"MS Shell Dlg 2"])
         font5.setPointSize(20)
         self.btn_Errors_InstanceHistory_basic.setFont(font5)
         self.btn_Errors_InstanceHistory_basic.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
@@ -808,7 +810,7 @@ class Ui_Main(object):
 
         self.terminal_basic = QTextEdit(self.verticalLayoutWidget)
         self.terminal_basic.setObjectName(u"terminal_basic")
-        self.terminal_basic.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_basic.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_basic.setTabletTracking(True)
         self.terminal_basic.setAutoFillBackground(False)
         self.terminal_basic.setReadOnly(True)
@@ -908,6 +910,7 @@ class Ui_Main(object):
         self.terminal_typefield_admin.setObjectName(u"terminal_typefield_admin")
         self.terminal_typefield_admin.setMinimumSize(QSize(0, 50))
         font6 = QFont()
+        font6.setFamilies([u"Futura Std Book"])
         font6.setPointSize(16)
         self.terminal_typefield_admin.setFont(font6)
         self.terminal_typefield_admin.setClearButtonEnabled(False)
@@ -940,7 +943,7 @@ class Ui_Main(object):
 
         self.terminal_admin = QTextEdit(self.verticalLayoutWidget_2)
         self.terminal_admin.setObjectName(u"terminal_admin")
-        self.terminal_admin.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_admin.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_admin.setTabletTracking(True)
         self.terminal_admin.setAutoFillBackground(False)
         self.terminal_admin.setReadOnly(True)
@@ -959,7 +962,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(2)
+        self.Screen.setCurrentIndex(4)
         self.SubScreens_Errors.setCurrentIndex(1)
 
 
@@ -1035,11 +1038,10 @@ class Ui_Main(object):
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
         self.label_7.setText(QCoreApplication.translate("Main", u"\u015acie\u017cka do zapisu wykres\u00f3w", None))
         self.label_8.setText(QCoreApplication.translate("Main", u"Port COM si\u0142omierza", None))
-        self.label_9.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
-        self.devMode.setText(QCoreApplication.translate("Main", u"CheckBox", None))
+        self.label_10.setText(QCoreApplication.translate("Main", u"Port COM mikrokontrolera", None))
         self.btn_settingsSave.setText(QCoreApplication.translate("Main", u"Zapisz ustawienia", None))
         self.btn_settingsDefault.setText(QCoreApplication.translate("Main", u"Przywr\u00f3\u0107 domy\u015blne ustawienia", None))
-        self.label_10.setText(QCoreApplication.translate("Main", u"Port COM mikrokontrolera", None))
+        self.devMode.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
         self.title_Errors_basic.setText(QCoreApplication.translate("Main", u"B\u0142\u0119dy", None))
         self.btn_Errors_InstanceHistory_basic.setText("")
         self.btn_Errors_AllHistory_basic.setText("")

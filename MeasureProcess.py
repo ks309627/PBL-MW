@@ -73,6 +73,8 @@ class MeasureProcess:
 
         fc500_connected = False
         esp_connected = False
+        # fc500_connected = True
+        # esp_connected = True
 
         # Sprawdzenie połączenia z FC500
         try:

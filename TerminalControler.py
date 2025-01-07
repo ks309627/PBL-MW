@@ -8,6 +8,7 @@ from datetime import datetime
 from LoggingHandler import Logger
 from CommandHandler import CommandInterpreter
 from settings import Settings
+from LoginDialog import LoginDialog
 
 class TerminalControler(QMainWindow):
     def __init__(self, gui:Ui_Main, settings:Settings):
