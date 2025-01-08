@@ -529,8 +529,8 @@
        <widget class="QLabel" name="title_MeasureProgress_4">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>50</y>
+          <x>21</x>
+          <y>21</y>
           <width>491</width>
           <height>71</height>
          </rect>
@@ -538,7 +538,7 @@
         <property name="font">
          <font>
           <family>Futura Std Book</family>
-          <pointsize>48</pointsize>
+          <pointsize>36</pointsize>
          </font>
         </property>
         <property name="text">
@@ -1696,69 +1696,122 @@ nacisnąć przycisk</string>
        <widget class="QChartView" name="graph_Test">
         <property name="geometry">
          <rect>
-          <x>90</x>
-          <y>130</y>
-          <width>701</width>
-          <height>341</height>
+          <x>30</x>
+          <y>160</y>
+          <width>711</width>
+          <height>351</height>
          </rect>
         </property>
        </widget>
        <widget class="QWidget" name="gridLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>798</x>
-          <y>210</y>
-          <width>239</width>
-          <height>141</height>
+          <x>540</x>
+          <y>30</y>
+          <width>201</width>
+          <height>121</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="1">
-          <widget class="QPushButton" name="btn_Graph_up">
-           <property name="text">
-            <string>Góra</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="btn_Graph_down">
-           <property name="text">
-            <string>Dół</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="btn_Graph_left">
-           <property name="text">
-            <string>Lewo</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="2">
           <widget class="QPushButton" name="btn_Graph_right">
            <property name="text">
-            <string>Prawo</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_right.png</normaloff>icons/graph/graph_right.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
            </property>
           </widget>
          </item>
          <item row="0" column="0">
           <widget class="QPushButton" name="btn_Graph_zout">
            <property name="text">
-            <string>Zoom out</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_zoomout.png</normaloff>icons/graph/graph_zoomout.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="btn_Graph_up">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_up.png</normaloff>icons/graph/graph_up.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="btn_Graph_left">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_left.png</normaloff>icons/graph/graph_left.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btn_Graph_down">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_down.png</normaloff>icons/graph/graph_down.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
            </property>
           </widget>
          </item>
          <item row="0" column="2">
           <widget class="QPushButton" name="btn_Graph_zin">
            <property name="text">
-            <string>Zoom in</string>
+            <string/>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="btn_Graph_resetview">
-           <property name="text">
-            <string>Graph Reset</string>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/graph_zoomin.png</normaloff>icons/graph/graph_zoomin.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1767,8 +1820,8 @@ nacisnąć przycisk</string>
        <widget class="QPushButton" name="btn_SaveGraph">
         <property name="geometry">
          <rect>
-          <x>800</x>
-          <y>410</y>
+          <x>770</x>
+          <y>30</y>
           <width>101</width>
           <height>61</height>
          </rect>
@@ -1781,7 +1834,7 @@ nacisnąć przycisk</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>icons/menu/Save.png</normaloff>icons/menu/Save.png</iconset>
+          <normaloff>icons/graph/Save.png</normaloff>icons/graph/Save.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1793,8 +1846,8 @@ nacisnąć przycisk</string>
        <widget class="QPushButton" name="btn_LoadGraph">
         <property name="geometry">
          <rect>
-          <x>910</x>
-          <y>410</y>
+          <x>890</x>
+          <y>30</y>
           <width>101</width>
           <height>61</height>
          </rect>
@@ -1807,7 +1860,53 @@ nacisnąć przycisk</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>icons/menu/Load.png</normaloff>icons/menu/Load.png</iconset>
+          <normaloff>icons/graph/Load.png</normaloff>icons/graph/Load.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="geometry">
+         <rect>
+          <x>765</x>
+          <y>100</y>
+          <width>231</width>
+          <height>411</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QScrollBar" name="verticalScrollBar">
+        <property name="geometry">
+         <rect>
+          <x>1000</x>
+          <y>100</y>
+          <width>20</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_Graph_resetview">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>90</y>
+          <width>60</width>
+          <height>56</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>icons/graph/refresh_graph.png</normaloff>icons/graph/refresh_graph.png</iconset>
         </property>
         <property name="iconSize">
          <size>
