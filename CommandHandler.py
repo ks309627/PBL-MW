@@ -1,4 +1,3 @@
-import sys
 from LoggingHandler import Logger
 from FC500Com import FC500Com
 from settings import Settings

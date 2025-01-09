@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -845,7 +845,7 @@ class Ui_Main(object):
 
         self.terminal_basic = QTextEdit(self.verticalLayoutWidget)
         self.terminal_basic.setObjectName(u"terminal_basic")
-        self.terminal_basic.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_basic.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_basic.setTabletTracking(True)
         self.terminal_basic.setAutoFillBackground(False)
         self.terminal_basic.setReadOnly(True)
@@ -975,7 +975,7 @@ class Ui_Main(object):
 
         self.terminal_admin = QTextEdit(self.verticalLayoutWidget_2)
         self.terminal_admin.setObjectName(u"terminal_admin")
-        self.terminal_admin.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_admin.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_admin.setTabletTracking(True)
         self.terminal_admin.setAutoFillBackground(False)
         self.terminal_admin.setReadOnly(True)

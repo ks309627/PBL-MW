@@ -11,6 +11,9 @@ class FC500Com:
         self.baudrate = baudrate
         self.timeout = timeout
         self.max_time = max_time
+
+        self.last_response = None
+
         try:
             self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
         except Exception as e:
@@ -40,7 +43,15 @@ class FC500Com:
         while self.connection_incoming():
             data = self.ser.readline().decode('utf-8').rstrip()
             self.logger.log_info(data)
+            self.last_response = data
         return data
+
+    def getLastResponse(self):
+        if not self.last_response == "":
+            response = self.last_response
+        else:
+            raise ValueError("Couldn't retrive a response.")
+        return response
 
     def close(self):
         self.ser.close()

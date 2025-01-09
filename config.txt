@@ -1,4 +1,4 @@
 devMode = 0
-graphSavePath = zmiento123
+graphSavePath = graphs/
 COMPathFC = COM1
 COMPathESP = COM2
