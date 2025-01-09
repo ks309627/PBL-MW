@@ -1,10 +1,8 @@
 import os
 import glob
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
+from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt, QTimer, QEvent, Qt
-from PySide6.QtGui import QTextCursor
 from gui_ui import Ui_Main
-from datetime import datetime
 from LoggingHandler import Logger
 from CommandHandler import CommandInterpreter
 from settings import Settings

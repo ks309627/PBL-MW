@@ -6,10 +6,12 @@ from settings import Settings
 
 from FC500Com import FC500Com
 from MeasureProcess import MeasureProcess
-import asyncio
 
 from TerminalControler import TerminalControler
 from LoggingHandler import Logger
+
+from MeasureProcess_Step1 import MeasureProcess_Steps1
+from MeasureProcess_Step2 import MeasureProcess_Steps2
 
 
 class ScreenControler:
@@ -19,6 +21,9 @@ class ScreenControler:
         #self.communicator = communicator
         self.graphControler = None
         self.settings = settings
+
+        self.measure1 = MeasureProcess_Steps1(gui, settings)
+        self.measure2 = MeasureProcess_Steps2(gui, settings)
 
         self.logger = Logger()
         self.measureProcess = MeasureProcess(gui, settings)
@@ -34,10 +39,12 @@ class ScreenControler:
         gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
         gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure_Safety()))
 
-        gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), asyncio.run(self.measureProcess.MeasureCycle())))
+        gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), self.measureProcess.MeasureCycle()))
 
         gui.btn_Measure_Step1_Error_Errors.clicked.connect(lambda:(self.StopMeasure(), gui.Screen.setCurrentWidget(gui.Screen_Errors), self.ScreenSwitch_CategoryErrors(gui), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
         gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
+
+        gui.btn_Measure_Step2_LockSafety.clicked.connect(lambda:(self.Measure_Step2_LockSafety()))
 
         # v30.11.24.2 - added comunicator v30.11.24.2
         self.gui = gui
@@ -124,7 +131,7 @@ class ScreenControler:
         if self.measureProcess:
             self.measureProcess.Step_Flags = 0
             self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1) 
-            asyncio.run(self.measureProcess.MeasureCycle())
+            self.measureProcess.MeasureCycle()
             self.gui.btn_Measure.setEnabled(False)
             self.gui.btn_Graphs.setEnabled(False)
             self.gui.btn_Settings.setEnabled(False)
@@ -145,7 +152,12 @@ class ScreenControler:
 
     def MeasureComRefresh(self):
         if self.measureProcess:
-            asyncio.run(self.measureProcess.Measure_Step1_Error_Refresh())
+            pass
+
+    def Measure_Step2_LockSafety(self):
+        if self.measureProcess:
+            self.measure2.Measure_Step2_2()
+
 
 
 

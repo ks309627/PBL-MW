@@ -8,7 +8,7 @@ from GraphControler import GraphControler
 from settings import Settings
 from LoggingHandler import Logger
 from TerminalControler import TerminalControler
-from Measure_ProgressBar import Step_Measure
+from Measure_Lights import Measure_Lights
 from FC500Com import FC500Com
 from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
 
@@ -31,7 +31,7 @@ class MainWindow(QWidget):
 
         self.TerminalControler = TerminalControler(self.ui, self.settings)
 
-        self.step_measure = Step_Measure()
+        self.step_measure = Measure_Lights()
 
         self.FC500Com = FC500Com(self.settings)
 

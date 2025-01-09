@@ -3,10 +3,11 @@ from PySide6.QtGui import QIcon
 from PySide6.QtCore import QSize, QTimer
 from LoggingHandler import Logger
 
-class Step_Measure:
+class Measure_Lights:
     def __init__(self):
         self.logger = Logger()
         self.timers = {}
+        self.icon_states = {}
 
     def Set_Empty(self, disp_number, parent):
         button_name = f"dsp_MeasureProgress_Step_{disp_number}"
@@ -50,7 +51,7 @@ class Step_Measure:
             if toggle:
                 if disp_number not in self.timers:
                     self.timers[disp_number] = QTimer()
-                    self.timers[disp_number].timeout.connect(lambda disp_number=disp_number, parent=parent: self._toggle_icon(disp_number, parent, icon1, icon2))
+                    self.timers[disp_number].timeout.connect(lambda disp_number=disp_number, parent=parent: self._toggle_icon(disp_number, parent, icon2, icon1))
                 self.timers[disp_number].start(500)
             else:
                 if disp_number in self.timers:
@@ -59,6 +60,7 @@ class Step_Measure:
                 button.setIcon(icon1)
         else:
             self.logger.log_warning("Nie znaleziono przycisku")
+
 
     def Set_Processing_False(self, disp_number, parent, toggle=True):
         button_name = f"dsp_MeasureProgress_Step_{disp_number}"

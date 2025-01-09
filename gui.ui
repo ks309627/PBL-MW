@@ -978,7 +978,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <enum>QFrame::Sunken</enum>
           </property>
           <property name="text">
-           <string>Sprawdź połączenie użądzenia.</string>
+           <string>Sprawdź połączenie urządzenia.</string>
           </property>
           <property name="textFormat">
            <enum>Qt::AutoText</enum>
@@ -999,6 +999,9 @@ Po upewnieniu się o poprawnym włożeniu próbki,
         </widget>
         <widget class="QWidget" name="SubScreen_Measure_Step2">
          <widget class="QPushButton" name="btn_Measure_Step2_LockSafety">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="geometry">
            <rect>
             <x>770</x>
@@ -1014,7 +1017,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <iconset resource="icons/Icons.qrc">
             <normaloff>:/Progress/progress/Unlocked.png</normaloff>
             <normalon>:/Progress/progress/Locked.png</normalon>
-            <disabledoff>:/Progress/progress/Unlocked.png</disabledoff>
+            <disabledoff>:/Progress/progress/Locked.png</disabledoff>
             <disabledon>:/Progress/progress/Locked.png</disabledon>:/Progress/progress/Unlocked.png</iconset>
           </property>
           <property name="iconSize">
@@ -1058,9 +1061,9 @@ Po upewnieniu się o poprawnym włożeniu próbki,
           <property name="icon">
            <iconset resource="icons/Icons.qrc">
             <normaloff>:/Progress/progress/Empty.png</normaloff>
-            <normalon>:/Progress/progress/True.png</normalon>
+            <normalon>:/Progress/progress/Empty.png</normalon>
             <disabledoff>:/Progress/progress/Empty.png</disabledoff>
-            <disabledon>:/Progress/progress/True.png</disabledon>:/Progress/progress/Empty.png</iconset>
+            <disabledon>:/Progress/progress/Empty.png</disabledon>:/Progress/progress/Empty.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1348,7 +1351,7 @@ W przypadku gdy próbka jest poprawnie ułożona,
            <number>-1</number>
           </property>
          </widget>
-         <widget class="QLabel" name="text_MeasureProgress_Step2_Error_2">
+         <widget class="QLabel" name="text_MeasureProgress_Step2_Reset_1">
           <property name="geometry">
            <rect>
             <x>180</x>
@@ -1390,7 +1393,7 @@ nacisnąć przycisk</string>
            <number>-1</number>
           </property>
          </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_LockSafety_2">
+         <widget class="QPushButton" name="btn_Measure_Step2_Reset_LockSafety_2">
           <property name="geometry">
            <rect>
             <x>300</x>
