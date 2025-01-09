@@ -1,17 +1,20 @@
 from LoggingHandler import Logger
 from FC500Com import FC500Com
 from settings import Settings
+from GraphJsonHandler import GraphRecorder
 
 class CommandInterpreter:
     def __init__(self, settings:Settings):
         self.settings = settings
         self.fc500Com = FC500Com(settings)
         self.logger = Logger()
+        self.graphRecoder = GraphRecorder(settings)
         self.commands = {
             "com": self.handle_com,
             "help": self.handle_help,
             "?": self.handle_help,
-            "log": self.handle_log
+            "log": self.handle_log,
+            "measure": self.handle_measure
         }
         self.com_devices = ["ESP", "FC500"]
 
@@ -57,6 +60,7 @@ class CommandInterpreter:
         self.logger.log_info("  COM list              - List available COM devices")
         self.logger.log_info("  LOG [level] [message]  - Log a message with a specific level")
         self.logger.log_info("  help or ?             - Display this help message")
+        self.logger.log_info("  MEASURE [type] [value] - Force a manual measure ")
 
     def handle_log(self, args):
         log_levels = {
@@ -79,3 +83,33 @@ class CommandInterpreter:
             return
         
         log_levels[level](message)
+
+    def handle_measure(self, args):
+        if not args:
+            self.logger.log_info("MEASURE command requires arguments. Type 'help' or '?' for command list.")
+            return
+
+        if len(args) < 2:
+            self.logger.log_info("MEASURE command requires two arguments: measure type (LIMIT or TOGGLE) and value.")
+            return
+
+        measure_type = args[0].lower()
+        value = args[1]
+
+        if measure_type == "limit":
+            try:
+                value = int(value)
+                if value > 0:
+                    self.graphRecoder.graphMeasure_timeLimit(value)
+                else:
+                    self.logger.log_info("Please enter a positive integer.")
+            except ValueError as e:
+                self.logger.log_info(f"Invalid value for LIMIT. Please enter an integer. - {e}")
+            except Exception as e:
+                self.logger.log_error(f"Command - Unexpected exception: {e}")
+
+        elif measure_type == "toggle":
+            self.graphRecoder.graphMeasure_toggle()
+
+        else:
+            self.logger.log_error(f"Invalid measure type: {measure_type}")
