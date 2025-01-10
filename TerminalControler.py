@@ -82,13 +82,13 @@ class TerminalControler(QMainWindow):
         try:
             if self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
                 if self.gui.btn_Errors_Refresh_basic.isChecked():
-                    self.refresh_timer.start(10)
+                    self.refresh_timer.start(100)
                     self.Perform_Refresh()
                 else:
                     self.refresh_timer.stop()
             elif self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
                 if self.gui.btn_Errors_Refresh_admin.isChecked():
-                    self.refresh_timer.start(10)
+                    self.refresh_timer.start(100)
                     self.Perform_Refresh()
                 else:
                     self.refresh_timer.stop()

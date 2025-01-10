@@ -50,8 +50,13 @@ class CommandInterpreter:
             return
 
         message = " ".join(args[1:])
+        try:
+            self.fc500Com.connection_create()
+        except Exception as e:
+            self.logger.log_critical(f"An error occured while trying to create an instance of FC500 class: {e}")
+            return
         self.logger.log_info(f"Sending to {device}: {message}")
-        self.logger.log_info(self.fc500Com.cmd_custom(str({message})))
+        self.fc500Com.cmd_custom(str({message}))
 
 
     def handle_help(self, args):
@@ -101,6 +106,7 @@ class CommandInterpreter:
                 value = int(value)
                 if value > 0:
                     self.graphRecoder.graphMeasure_timeLimit(value)
+                    return
                 else:
                     self.logger.log_info("Please enter a positive integer.")
             except ValueError as e:

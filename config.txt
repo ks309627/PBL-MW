@@ -1,4 +1,4 @@
 devMode = 1
 graphSavePath = graphs/
-COMPathFC = COM1
+COMPathFC = COM5
 COMPathESP = COM2
