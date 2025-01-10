@@ -15,7 +15,7 @@ class FC500Com:
         if not hasattr(self, 'initialized'):
             self.logger = Logger()
             self.settings = settings
-            self.port = self.settings.get("COMPathFC")  
+            self.port = self.settings.get("COMPathFC")
             self.baudrate = baudrate
             self.timeout = timeout
             self.max_time = max_time
@@ -52,14 +52,16 @@ class FC500Com:
             self.logger.log_warning("Ping check didn't work")
             return False
 
-    def read_data(self):
+    def read_data(self, silent):
         start_time = time.time()
         self.data = "If you're reading this, something went wrong with reading data."
-        self.logger.log_info(f"Waiting for data on serial port {self.port}...")
+        if silent == False:
+            self.logger.log_info(f"Waiting for data on serial port {self.port}...")
         while time.time() - start_time < self.max_time:
             if self.ser.in_waiting > 0:
                 self.data = self.ser.readline().decode('utf-8').rstrip()
-                self.logger.log_info(self.data)
+                if silent == False:
+                    self.logger.log_info(self.data)
                 self.last_response = self.data
                 return self.data
         self.logger.log_info(f"Timed out waiting for data on serial port {self.port}...")
@@ -72,95 +74,95 @@ class FC500Com:
             raise ValueError("Couldn't retrive a response.")
         return response
 
-    def cmd_custom(self, command):
+    def cmd_custom(self, command, silent=False):
         self.ser.write((command+"\r\n").encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Set the baseline for measurement
-    def cmd_zero(self):
+    def cmd_zero(self, silent=False):
         command = 'ST\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Turn off FC500 (needs manual turning on) - DON'T USE
-    def cmd_OFF(self):
+    def cmd_OFF(self, silent=False):
         command = 'SS\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Put FC500 to sleep or wake it up - preferable to cmd_OFF
-    def cmd_sleep(self):
+    def cmd_sleep(self, silent=False):
         command = 'Ss\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Get a measurement
-    def cmd_measure(self):
+    def cmd_measure(self, silent=False):
         command = 'Sx1\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Ping FC500 if it is connected
-    def cmd_ping(self):
+    def cmd_ping(self, silent=False):
         command = 'SJ\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Set the unit of measurement
-    def cmd_setunit(self):
+    def cmd_setunit(self, silent=False):
         unit = 'N'
         command = 'Su\r\n' + unit
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Set how fast FC500 measures per second - needs testing
-    def cmd_sethz(self):
+    def cmd_sethz(self, silent=False):
         hz = '1000'
         command = 'St\r\n' + hz
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Set the gravity constant - DON'T USE
-    def cmd_setgravity(self):
+    def cmd_setgravity(self, silent=False):
         gravity = 9.81
         command = 'Sn\r\n' + gravity
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
     
     #Set the clock of FC500 - needs to adapted to the vaules expected by FC500
-    # def cmd_setclock(self):
+    # def cmd_setclock(self, silent=False):
     #     clock = time.time
     #     command = 'Sd&t' + clock
     #     self.ser.write(command.encode())
-    #     self.read_data()
+    #     self.read_data(silent)
     #     return
     
     #Check the clock
-    def cmd_getclock(self):
+    def cmd_getclock(self, silent=False):
         command = 'Sd&t?\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Check hz of measurement
-    def cmd_gethz(self):
+    def cmd_gethz(self, silent=False):
         command = 'St?\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return
 
     #Check battery level
-    def cmd_getbattery(self):
+    def cmd_getbattery(self, silent=False):
         command = 'Sb\r\n'
         self.ser.write(command.encode())
-        self.read_data()
+        self.read_data(silent)
         return

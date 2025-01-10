@@ -111,8 +111,8 @@ class CommandInterpreter:
                     self.logger.log_info("Please enter a positive integer.")
             except ValueError as e:
                 self.logger.log_info(f"Invalid value for LIMIT. Please enter an integer. - {e}")
-            except Exception as e:
-                self.logger.log_error(f"Command - Unexpected exception: {e}")
+            # except Exception as e:
+            #      self.logger.log_error(f"Command - Unexpected exception: {e}")
 
         elif measure_type == "toggle":
             self.graphRecoder.graphMeasure_toggle()
