@@ -38,7 +38,7 @@ class GraphRecorder:
             self.fc500.cmd_measure(silent=True)
             measurement = self.fc500.getLastResponse()
             
-            elapsed_time = round(time.time() - self.start_time, 1000) /1000
+            elapsed_time = round(time.time() - self.start_time, 1000)
             self.data["seconds"].append(elapsed_time)
             self.data["force"].append(measurement.strip())
 
