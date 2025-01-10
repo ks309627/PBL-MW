@@ -7,8 +7,6 @@ from LoggingHandler import Logger
 from settings import Settings
 
 class GraphRecorder:
-
-
     def __init__(self, settings:Settings):
         self.settings = settings
         self.fc500 = FC500Com(settings)

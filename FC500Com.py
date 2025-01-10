@@ -6,12 +6,12 @@ from LoggingHandler import Logger
 class FC500Com:
     _instance = None
 
-    def __new__(cls, settings:Settings, baudrate=9600, timeout=0.5, max_time=2):
+    def __new__(cls, settings:Settings):
         if cls._instance is None:
             cls._instance = super(FC500Com, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self, settings:Settings, baudrate=9600, timeout=0.5, max_time=2):
+    def __init__(self, settings:Settings, baudrate=9600, timeout=0.2, max_time=2):
         if not hasattr(self, 'initialized'):
             self.logger = Logger()
             self.settings = settings
@@ -35,6 +35,7 @@ class FC500Com:
             if self.ser:
                 self.connection_close()
                 self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
+                self.logger.log_info("FC500 Connection opened")
             else:
                 self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
         except Exception as e:
@@ -57,13 +58,12 @@ class FC500Com:
         self.logger.log_info(f"Waiting for data on serial port {self.port}...")
         while time.time() - start_time < self.max_time:
             if self.ser.in_waiting > 0:
-                self.logger.log_info("WRITE: Read")
                 self.data = self.ser.readline().decode('utf-8').rstrip()
                 self.logger.log_info(self.data)
                 self.last_response = self.data
                 return self.data
         self.logger.log_info(f"Timed out waiting for data on serial port {self.port}...")
-        return self.data
+        return
 
     def getLastResponse(self):
         if not self.last_response == "":
@@ -73,9 +73,7 @@ class FC500Com:
         return response
 
     def cmd_custom(self, command):
-        self.logger.log_info("WRITE: A1")
         self.ser.write((command+"\r\n").encode())
-        self.logger.log_info("WRITE: A2")
         self.read_data()
         return
 

@@ -56,7 +56,7 @@ class CommandInterpreter:
             self.logger.log_critical(f"Command Handler: An error occured while trying to create an instance of FC500 class: {e}")
             return
         self.logger.log_info(f"Sending to {device}: {message}")
-        self.fc500Com.cmd_custom(str({message}))
+        self.fc500Com.cmd_custom(str(message))
 
 
     def handle_help(self, args):
