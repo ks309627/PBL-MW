@@ -4,23 +4,27 @@ from settings import Settings
 from LoggingHandler import Logger
 
 class FC500Com:
-    def __init__(self, settings:Settings, baudrate=9600, timeout=1, max_time=1):
-        self.logger = Logger()
-        self.settings = settings
-        self.port = self.settings.get("COMPathFC")  
-        self.baudrate = baudrate
-        self.timeout = timeout
-        self.max_time = max_time
+    _instance = None
 
-        self.last_response = None
+    def __new__(cls, settings:Settings, baudrate=9600, timeout=0.5, max_time=2):
+        if cls._instance is None:
+            cls._instance = super(FC500Com, cls).__new__(cls)
+        return cls._instance
 
-        self.ser = None
-
-        # try:
-        #     self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
-        # except Exception as e:
-        #     self.logger.log_critical(f"An error occured while trying to create an instance of FC500 class: {e}")
-        #self.ser = serial.Serial(port = "COM10", baudrate=9600, timeout=0.2)
+    def __init__(self, settings:Settings, baudrate=9600, timeout=0.5, max_time=2):
+        if not hasattr(self, 'initialized'):
+            self.logger = Logger()
+            self.settings = settings
+            self.port = self.settings.get("COMPathFC")  
+            self.baudrate = baudrate
+            self.timeout = timeout
+            self.max_time = max_time
+            self.last_response = None
+            try:
+                self.ser = serial.Serial(port = self.port, baudrate = self.baudrate, timeout= self.timeout)
+            except serial.SerialException as e:
+                print(f"Failed to open COM port: {e}")
+            self.initialized = True
 
     def connection_close(self):
         self.logger.log_info("FC500 Connection closed")
