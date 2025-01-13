@@ -101,6 +101,10 @@ class MeasureProcess:
                 self.logger.log_error(f"Measure: Brak połączenia z ESP - {message}")
         except Exception as e:
             self.logger.log_error(f"Measure: Błąd podczas sprawdzania połączenia z ESP: {e}")        
+    
+    def Step2(self):
+        self.logger.log_info("Measure Process: Step2")
+        QTimer.singleShot(2000, lambda:(self.gui.btn_Measure_Step2_LockSafety.setEnabled(True)))
 
 
     def StopCycle(self):

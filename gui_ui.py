@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -362,10 +362,7 @@ class Ui_Main(object):
         self.btn_Measure_Step2_LockSafety.setEnabled(False)
         self.btn_Measure_Step2_LockSafety.setGeometry(QRect(770, 240, 181, 181))
         icon7 = QIcon()
-        icon7.addFile(u":/Progress/progress/Unlocked.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        icon7.addFile(u":/Progress/progress/Locked.png", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        icon7.addFile(u":/Progress/progress/Locked.png", QSize(), QIcon.Mode.Disabled, QIcon.State.Off)
-        icon7.addFile(u":/Progress/progress/Locked.png", QSize(), QIcon.Mode.Disabled, QIcon.State.On)
+        icon7.addFile(u"icons/progress/Ok.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_Measure_Step2_LockSafety.setIcon(icon7)
         self.btn_Measure_Step2_LockSafety.setIconSize(QSize(128, 128))
         self.dsp_Measure_Step2_TensionProgressBar = QProgressBar(self.SubScreen_Measure_Step2)
@@ -395,7 +392,7 @@ class Ui_Main(object):
         self.title_MeasureProgress_Step2.setIndent(-1)
         self.text_MeasureProgress_Step1_5 = QLabel(self.SubScreen_Measure_Step2)
         self.text_MeasureProgress_Step1_5.setObjectName(u"text_MeasureProgress_Step1_5")
-        self.text_MeasureProgress_Step1_5.setGeometry(QRect(100, 140, 571, 141))
+        self.text_MeasureProgress_Step1_5.setGeometry(QRect(100, 140, 571, 171))
         self.text_MeasureProgress_Step1_5.setFont(font4)
         self.text_MeasureProgress_Step1_5.setFrameShape(QFrame.Box)
         self.text_MeasureProgress_Step1_5.setFrameShadow(QFrame.Sunken)
@@ -763,6 +760,7 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_basic.setMinimumSize(QSize(300, 60))
         self.btn_Errors_InstanceHistory_basic.setMaximumSize(QSize(150, 60))
         font5 = QFont()
+        font5.setFamilies([u"MS Shell Dlg 2"])
         font5.setPointSize(20)
         self.btn_Errors_InstanceHistory_basic.setFont(font5)
         self.btn_Errors_InstanceHistory_basic.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
@@ -819,7 +817,7 @@ class Ui_Main(object):
 
         self.terminal_basic = QTextEdit(self.verticalLayoutWidget)
         self.terminal_basic.setObjectName(u"terminal_basic")
-        self.terminal_basic.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_basic.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_basic.setTabletTracking(True)
         self.terminal_basic.setAutoFillBackground(False)
         self.terminal_basic.setReadOnly(True)
@@ -919,6 +917,7 @@ class Ui_Main(object):
         self.terminal_typefield_admin.setObjectName(u"terminal_typefield_admin")
         self.terminal_typefield_admin.setMinimumSize(QSize(0, 50))
         font6 = QFont()
+        font6.setFamilies([u"Futura Std Book"])
         font6.setPointSize(16)
         self.terminal_typefield_admin.setFont(font6)
         self.terminal_typefield_admin.setClearButtonEnabled(False)
@@ -951,7 +950,7 @@ class Ui_Main(object):
 
         self.terminal_admin = QTextEdit(self.verticalLayoutWidget_2)
         self.terminal_admin.setObjectName(u"terminal_admin")
-        self.terminal_admin.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_admin.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_admin.setTabletTracking(True)
         self.terminal_admin.setAutoFillBackground(False)
         self.terminal_admin.setReadOnly(True)
@@ -1011,7 +1010,9 @@ class Ui_Main(object):
         self.title_MeasureProgress_Step2.setText(QCoreApplication.translate("Main", u"Przygotowanie do Pomiaru", None))
         self.text_MeasureProgress_Step1_5.setText(QCoreApplication.translate("Main", u"Umie\u015b\u0107 pr\u00f3bk\u0119 w komorze.\n"
 "Nast\u0119pnie po zamkni\u0119ciu drzwi zablokuj je.\n"
-"Poczekaj na wst\u0119pne napi\u0119cie pr\u00f3bki.", None))
+"Po upewnieniu si\u0119, \u017ce wszsytkie \u015brodki BHP \n"
+"zosta\u0142y zachowane, naci\u015bnij przycisk aby \n"
+"rozpocz\u0105\u0107 pomiar.", None))
         self.title_MeasureProgress_Step2_Error.setText(QCoreApplication.translate("Main", u"B\u0142\u0105d Przygotowania", None))
         self.btn_Measure_Step2_Error_LockSafety.setText("")
         self.btn_Measure_Step2_Error_Retry.setText("")

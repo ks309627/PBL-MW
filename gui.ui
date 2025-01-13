@@ -1014,11 +1014,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
-            <normaloff>:/Progress/progress/Unlocked.png</normaloff>
-            <normalon>:/Progress/progress/Locked.png</normalon>
-            <disabledoff>:/Progress/progress/Locked.png</disabledoff>
-            <disabledon>:/Progress/progress/Locked.png</disabledon>:/Progress/progress/Unlocked.png</iconset>
+           <iconset>
+            <normaloff>icons/progress/Ok.png</normaloff>icons/progress/Ok.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1112,7 +1109,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
             <x>100</x>
             <y>140</y>
             <width>571</width>
-            <height>141</height>
+            <height>171</height>
            </rect>
           </property>
           <property name="font">
@@ -1130,7 +1127,9 @@ Po upewnieniu się o poprawnym włożeniu próbki,
           <property name="text">
            <string>Umieść próbkę w komorze.
 Następnie po zamknięciu drzwi zablokuj je.
-Poczekaj na wstępne napięcie próbki.</string>
+Po upewnieniu się, że wszsytkie środki BHP 
+zostały zachowane, naciśnij przycisk aby 
+rozpocząć pomiar.</string>
           </property>
           <property name="textFormat">
            <enum>Qt::AutoText</enum>
@@ -2082,6 +2081,7 @@ nacisnąć przycisk</string>
                </property>
                <property name="font">
                 <font>
+                 <family>MS Shell Dlg 2</family>
                  <pointsize>20</pointsize>
                 </font>
                </property>
@@ -2364,6 +2364,7 @@ nacisnąć przycisk</string>
                </property>
                <property name="font">
                 <font>
+                 <family>MS Shell Dlg 2</family>
                  <pointsize>20</pointsize>
                 </font>
                </property>
@@ -2527,6 +2528,7 @@ nacisnąć przycisk</string>
                </property>
                <property name="font">
                 <font>
+                 <family>Futura Std Book</family>
                  <pointsize>16</pointsize>
                 </font>
                </property>
