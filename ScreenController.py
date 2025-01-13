@@ -5,13 +5,16 @@ from PySide6.QtWidgets import QCheckBox, QFileDialog
 from settings import Settings
 
 from FC500Com import FC500Com
-from MeasureProcess import MeasureProcess
+from ESPCom import ESPCom
+#from MeasureProcess import MeasureProcess
 
 from TerminalControler import TerminalControler
 from LoggingHandler import Logger
 
-from MeasureProcess_Step1 import MeasureProcess_Steps1
-from MeasureProcess_Step2 import MeasureProcess_Steps2
+#from MeasureProcess_Step1 import MeasureProcess_Steps1
+#from MeasureProcess_Step2 import MeasureProcess_Steps2
+from MeasureProcess_v2 import MeasureProcess
+from Measure_Lights import Measure_Lights
 
 
 class ScreenControler:
@@ -22,12 +25,15 @@ class ScreenControler:
         self.graphControler = None
         self.settings = settings
 
-        self.measure1 = MeasureProcess_Steps1(gui, settings)
-        self.measure2 = MeasureProcess_Steps2(gui, settings)
+        #self.measure1 = MeasureProcess_Steps1(gui, settings)
+        #self.measure2 = MeasureProcess_Steps2(gui, settings)
+
+        self.Step_Light = Measure_Lights()
 
         self.logger = Logger()
         self.measureProcess = MeasureProcess(gui, settings)
         self.FC500 = FC500Com(settings)
+        self.ESP = ESPCom(settings)
 
 
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
@@ -36,7 +42,12 @@ class ScreenControler:
         gui.btn_Errors.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Errors), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
         
         gui.btn_MeasureToGraph.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Graphs), self.ScreenSwitch_CategoryGraphs(gui)))
+        #
         gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
+        #gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
+        gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
+        
+        
         gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure_Safety()))
 
         gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), self.measureProcess.MeasureCycle()))
@@ -131,12 +142,24 @@ class ScreenControler:
         if self.measureProcess:
             self.measureProcess.Step_Flags = 0
             self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1) 
-            self.measureProcess.MeasureCycle()
+            #self.measureProcess.MeasureCycle()
+            self.measureProcess.begin()
             self.gui.btn_Measure.setEnabled(False)
             self.gui.btn_Graphs.setEnabled(False)
             self.gui.btn_Settings.setEnabled(False)
             self.gui.btn_Errors.setEnabled(False)
     
+    def MeasureComRefresh(self):
+        if self.measureProcess:
+            # self.ESP.close()
+            # self.Step_Light.Set_Empty("1_1", self.gui.dsp_MeasureProgress_Step_1_2.parentWidget())
+            # self.Step_Light.Set_Empty("1_2", self.gui.dsp_MeasureProgress_Step_1_2.parentWidget())
+            # #self.measureProcess.check_devices()
+            # #QTimer.singleShot(1700, lambda:(self.measureProcess.Step1()))
+            # QTimer.singleShot(1700, lambda:(self.measureProcess.check_devices()))
+            self.measureProcess.Refresh()
+
+
     def StopMeasure(self):
         if self.measureProcess:
             self.measureProcess.StopCycle()
@@ -149,10 +172,6 @@ class ScreenControler:
         if self.measureProcess:
             self.logger.log_warning("Safety Mushroom Pressed!")
             self.StopMeasure()
-
-    def MeasureComRefresh(self):
-        if self.measureProcess:
-            pass
 
     def Measure_Step2_LockSafety(self):
         if self.measureProcess:

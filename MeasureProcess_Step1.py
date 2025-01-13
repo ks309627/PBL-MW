@@ -61,7 +61,7 @@ class MeasureProcess_Steps1:
         except Exception as e:
             self.logger.log_error(f"Measure: Błąd podczas sprawdzania połączenia z ESP: {e}")
 
-        if fc500_connected and esp_connected or self.fc500_override and self.esp_override:
+        if fc500_connected and esp_connected:
             self.logger.log_info("Measure: Oba urządzenia są podłączone, kontynuowanie procesu")
             #self.safety_unlock()
             self.Step_Light.Set_Processing(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
