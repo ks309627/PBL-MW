@@ -1,14 +1,16 @@
 from LoggingHandler import Logger
 from FC500Com import FC500Com
 from settings import Settings
+from gui_ui import Ui_Main
 from GraphJsonHandler import GraphRecorder
 
 class CommandInterpreter:
-    def __init__(self, settings:Settings):
+    def __init__(self, gui:Ui_Main, settings:Settings):
         self.settings = settings
         self.fc500Com = FC500Com(settings)
         self.logger = Logger()
-        self.graphRecoder = GraphRecorder(settings)
+        self.gui = gui
+        self.graphRecoder = GraphRecorder(gui, settings)
         self.commands = {
             "com": self.handle_com,
             "help": self.handle_help,
@@ -105,7 +107,7 @@ class CommandInterpreter:
             try:
                 value = int(value)
                 if value > 0:
-                    self.graphRecoder.graphMeasure_timeLimit(value)
+                    self.graphRecoder.graphMeasure_process(value)
                     return
                 else:
                     self.logger.log_info("Please enter a positive integer.")

@@ -27,7 +27,7 @@ class ScreenControler:
 
 
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
-        gui.btn_Graphs.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Graphs))
+        gui.btn_Graphs.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Graphs), self.graphUpdate()))
         gui.btn_Settings.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_Settings))
         gui.btn_Errors.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Errors), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
         
@@ -169,7 +169,8 @@ class ScreenControler:
     #     else:
     #         print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
-
+    def graphUpdate(self):
+        self.graphControler.default_load()
 
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler

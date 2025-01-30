@@ -18,9 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLayout, QLineEdit, QProgressBar,
-    QPushButton, QScrollBar, QSizePolicy, QSpacerItem,
-    QStackedWidget, QTextBrowser, QTextEdit, QVBoxLayout,
-    QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
+    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
 from icons import Icons_rc
 
 class Ui_Main(object):
@@ -567,9 +566,9 @@ class Ui_Main(object):
         self.title_Graphs.setScaledContents(False)
         self.title_Graphs.setWordWrap(False)
         self.title_Graphs.setIndent(-1)
-        self.graph_Test = QChartView(self.Screen_Graphs)
-        self.graph_Test.setObjectName(u"graph_Test")
-        self.graph_Test.setGeometry(QRect(30, 160, 711, 351))
+        self.dsp_graph = QChartView(self.Screen_Graphs)
+        self.dsp_graph.setObjectName(u"dsp_graph")
+        self.dsp_graph.setGeometry(QRect(30, 160, 711, 351))
         self.gridLayoutWidget = QWidget(self.Screen_Graphs)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
         self.gridLayoutWidget.setGeometry(QRect(540, 30, 201, 121))
@@ -646,13 +645,6 @@ class Ui_Main(object):
         icon17.addFile(u"icons/graph/Load.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_LoadGraph.setIcon(icon17)
         self.btn_LoadGraph.setIconSize(QSize(48, 48))
-        self.textBrowser = QTextBrowser(self.Screen_Graphs)
-        self.textBrowser.setObjectName(u"textBrowser")
-        self.textBrowser.setGeometry(QRect(765, 100, 231, 411))
-        self.verticalScrollBar = QScrollBar(self.Screen_Graphs)
-        self.verticalScrollBar.setObjectName(u"verticalScrollBar")
-        self.verticalScrollBar.setGeometry(QRect(1000, 100, 20, 411))
-        self.verticalScrollBar.setOrientation(Qt.Vertical)
         self.btn_Graph_resetview = QPushButton(self.Screen_Graphs)
         self.btn_Graph_resetview.setObjectName(u"btn_Graph_resetview")
         self.btn_Graph_resetview.setGeometry(QRect(470, 90, 60, 56))
@@ -660,6 +652,14 @@ class Ui_Main(object):
         icon18.addFile(u"icons/graph/refresh_graph.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btn_Graph_resetview.setIcon(icon18)
         self.btn_Graph_resetview.setIconSize(QSize(48, 48))
+        self.graph_graphs_list = QScrollArea(self.Screen_Graphs)
+        self.graph_graphs_list.setObjectName(u"graph_graphs_list")
+        self.graph_graphs_list.setGeometry(QRect(760, 110, 251, 401))
+        self.graph_graphs_list.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 249, 399))
+        self.graph_graphs_list.setWidget(self.scrollAreaWidgetContents)
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")

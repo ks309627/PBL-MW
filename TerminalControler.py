@@ -19,7 +19,7 @@ class TerminalControler(QMainWindow):
         self.refresh_timer.timeout.connect(self.Refresh_Loop)
 
         self.gui.terminal_typefield_admin.returnPressed.connect(self.Send_Command_admin)
-        self.CommandReceiver = CommandInterpreter(settings)
+        self.CommandReceiver = CommandInterpreter(gui, settings)
         self.settings = settings
 
         self.command_history = []
