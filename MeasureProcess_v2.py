@@ -104,7 +104,25 @@ class MeasureProcess:
     
     def Step2(self):
         self.logger.log_info("Measure Process: Step2")
+        self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_True(1, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Processing(2, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
         QTimer.singleShot(2000, lambda:(self.gui.btn_Measure_Step2_LockSafety.setEnabled(True)))
+
+    def Step3(self):
+        self.logger.log_info("Measure Process: Step3")
+        self.Step_Light.Set_Processing(2, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_True(2, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Processing(3, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
+        #tu będzie funkcja opdowiedzialna za pobieranie danych z grafu
+        #po upływie 5~10 sekund program przechodzi do kroku 4, gdzie jest pokazany wykres (przejście do ekranu)
+        QTimer.singleShot(2000, lambda:(self.gui.btn_Measure_Step3.setEnabled(True)))
+
+    def Step4(self):
+        self.logger.log_info("Measure Process: Step4")
+        self.Step_Light.Set_Processing(3, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_True(3, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Processing(4, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
 
 
     def StopCycle(self):
@@ -116,7 +134,13 @@ class MeasureProcess:
         self.Step_Light.Set_Processing("2_1", self.gui.dsp_MeasureProgress_Step_2_1.parentWidget(), toggle=False)
         self.Step_Light.Set_Empty("2_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
         self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing(2, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing(3, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing(4, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
         self.Step_Light.Set_Empty(1, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Empty(2, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Empty(3, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Empty(4, self.gui.LightIndicatorContainer.parentWidget())
 
     def Refresh(self):
         self.ESP.close()

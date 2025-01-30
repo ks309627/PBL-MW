@@ -55,7 +55,9 @@ class ScreenControler:
         gui.btn_Measure_Step1_Error_Errors.clicked.connect(lambda:(self.StopMeasure(), gui.Screen.setCurrentWidget(gui.Screen_Errors), self.ScreenSwitch_CategoryErrors(gui), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
         gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
 
-        gui.btn_Measure_Step2_LockSafety.clicked.connect(lambda:(self.Measure_Step2_LockSafety()))
+        gui.btn_Measure_Step2_LockSafety.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step3), self.gotoStep3()))
+        gui.btn_Measure_Step3.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step4), self.gotoStep4()))
+        
 
         # v30.11.24.2 - added comunicator v30.11.24.2
         self.gui = gui
@@ -177,10 +179,13 @@ class ScreenControler:
             self.logger.log_warning("Safety Mushroom Pressed!")
             self.StopMeasure()
 
-    def Measure_Step2_LockSafety(self):
+    def gotoStep3(self):
         if self.measureProcess:
-            self.measure2.Measure_Step2_2()
+            self.measureProcess.Step3()
 
+    def gotoStep4(self):
+        if self.measureProcess:
+            self.measureProcess.Step4()
 
 
 
