@@ -5,6 +5,7 @@ from datetime import datetime
 
 from PySide6.QtCore import QTimer
 
+from GraphControler import GraphControler
 from FC500Com import FC500Com
 from LoggingHandler import Logger
 from settings import Settings
@@ -14,6 +15,7 @@ class GraphRecorder:
         self.settings = settings
         self.fc500 = FC500Com(settings)
         self.logger = Logger()
+        self.graph_controler = GraphControler
         self.start_time = None
         self.data = {
             "seconds": [],
@@ -22,6 +24,10 @@ class GraphRecorder:
         self.file_path = self.settings.get("graphSavePath")  
         
     def graphMeasure_timeLimit(self, Limit=1):
+        self.data = {
+            "seconds": [],
+            "force": []
+        }
         self.Limit = Limit
         self.logger.log_info("Begining measurment process.")
         self.start_time = time.time()
@@ -45,6 +51,7 @@ class GraphRecorder:
             with open(self.full_file_path, 'w') as f:
                 json.dump(self.data, f, indent=4)
 
+            #self.graph_controler.default_load(self.settings, gui)
             QTimer.singleShot(1, lambda: (self.timeLimit()))
         else:
             self.logger.log_info("Measurment process finished.")

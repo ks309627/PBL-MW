@@ -1,13 +1,15 @@
 from LoggingHandler import Logger
 from FC500Com import FC500Com
 from settings import Settings
+from gui_ui import Ui_Main
 from GraphJsonHandler import GraphRecorder
 
 class CommandInterpreter:
-    def __init__(self, settings:Settings):
+    def __init__(self, gui:Ui_Main, settings:Settings):
         self.settings = settings
         self.fc500Com = FC500Com(settings)
         self.logger = Logger()
+        self.gui = gui
         self.graphRecoder = GraphRecorder(settings)
         self.commands = {
             "com": self.handle_com,
