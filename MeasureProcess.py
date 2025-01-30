@@ -57,8 +57,100 @@ class MeasureProcess:
             self.logger.log_error(f"An error occured inside of MeasureCycle: {e}")
 
 
-    def safety_unlock(self):
+    async def Measure_Step1(self):
+        self.logger.log_info("Measure Process: Step 1")
+        self.gui.btn_Measure_Step1_ObjectReady.setEnabled(False)
+        self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
+        self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1)
+
+        fc500_connected = False
+        esp_connected = False
+        # fc500_connected = True
+        # esp_connected = True
+
+        # Sprawdzenie połączenia z FC500
+        try:
+            if self.FC500.connection_check():
+                self.logger.log_info("Measure: Połączenie nawiązane z FC500")
+                self.Step_Light.Set_True("1_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
+                fc500_connected = True
+            else:
+                self.logger.log_error("Measure: Brak połączenia z FC500")
+        except Exception as e:
+            self.logger.log_error(f"Measure: Błąd podczas sprawdzania połączenia z FC500: {e}")
+
+        # Sprawdzenie połączenia z ESP
+        try:
+            status, message = self.ESP.connect()
+            if status:
+                self.logger.log_info("Measure: Połączenie nawiązane z mikrokontrolerem ESP")
+                self.Step_Light.Set_True("1_2", self.gui.dsp_MeasureProgress_Step_1_2.parentWidget())
+                esp_connected = True
+            else:
+                self.logger.log_error(f"Measure: Brak połączenia z ESP - {message}")
+        except Exception as e:
+            self.logger.log_error(f"Measure: Błąd podczas sprawdzania połączenia z ESP: {e}")
+
+        # Logika warunków
+        if fc500_connected and esp_connected:
+            self.logger.log_info("Measure: Oba urządzenia są podłączone, kontynuowanie procesu")
+            await self.safety_unlock()
+            self.Step_Light.Set_Processing(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
+            self.Step_Light.Set_Processing_True(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
+            self.gui.btn_Measure_Step1_ObjectReady.setEnabled(True)
+            await self.MeasureCycle()
+        else:
+            # Zarządzanie błędami
+            if not fc500_connected and not esp_connected:
+                self.logger.log_error("Measure: Brak połączenia z FC500 oraz ESP")
+                self.Measure_Step1_ErrorFC()
+                self.Measure_Step1_ErrorESP()
+            elif not fc500_connected:
+                self.Measure_Step1_ErrorFC()
+            elif not esp_connected:
+                self.Measure_Step1_ErrorESP()
+
+
+    def Measure_Step1_ErrorFC(self):
+        self.logger.log_error("Measure: Nie można połączyć się z FC500. Proszę sprawdzić kabel oraz stan urządzenia. Odłączenie i ponowne podłączenie kabla lub/oraz restart programu mogą być wymagane.")
+        self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing_False(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
+        self.Step_Light.Set_False("1_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
+        if self.gui.SubScreens_Measure.currentWidget() != self.gui.SubScreen_Measure_Step1_Error:
+            self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1_Error)
+    
+    def Measure_Step1_ErrorESP(self):
+        self.logger.log_error("Measure: Nie można połączyć się z mikrokontrolerem ESP. Proszę sprawdzić stan podłączenia przewodów. Odłączenie i ponowne podłączenie kabla lub/oraz restart programu mogą być wymagane.") #TMQ Tu jakiś error pasujący do ESP
+        self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
+        self.Step_Light.Set_Processing_False(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
+        self.Step_Light.Set_False("1_2", self.gui.dsp_MeasureProgress_Step_1_2.parentWidget())
+        if self.gui.SubScreens_Measure.currentWidget() != self.gui.SubScreen_Measure_Step1_Error:
+            self.gui.SubScreens_Measure.setCurrentWidget(self.gui.SubScreen_Measure_Step1_Error)
+    
+    async def Measure_Step1_Error_Refresh(self):
+        try:
+            self.FC500.connection_check()
+            self.ESPCom.send_left_command()
+            try:
+                #TMQ taki sam connection check jak wyżej w Measure_Step1
+                self.Measure_Step1()
+            except:
+                self.logger.log_error("ESP") #TMQ Tu jakiś error pasujący do ESP
+        except:
+            self.logger.log_error("Measure: Nie można połączyć się z FC500. Proszę sprawdzić kabel oraz stan urządzenia. Odłączenie i ponowne podłączenie kabla lub/oraz restart programu mogą być wymagane.")
+
+    async def safety_unlock(self):
         pass
 
-    def safety_lock(self):
+    async def safety_lock(self):
         pass
+
+    async def Measure_Step2(self):
+        self.logger.log_info("Measure Process: Step 2")
+        self.Step_Light.Set_Processing_True(1, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=False)
+        self.Step_Light.Set_True(1, self.gui.LightIndicatorContainer.parentWidget())
+        self.Step_Light.Set_Processing(2, self.gui.dsp_MeasureProgress_Step_1.parentWidget(), toggle=True)
+        
+        
+      
+    

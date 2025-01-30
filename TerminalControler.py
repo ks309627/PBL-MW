@@ -19,7 +19,7 @@ class TerminalControler(QMainWindow):
         self.refresh_timer.timeout.connect(self.Refresh_Loop)
 
         self.gui.terminal_typefield_admin.returnPressed.connect(self.Send_Command_admin)
-        self.CommandReceiver = CommandInterpreter(settings)
+        self.CommandReceiver = CommandInterpreter(gui, settings)
         self.settings = settings
 
         self.command_history = []
@@ -82,13 +82,13 @@ class TerminalControler(QMainWindow):
         try:
             if self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Basic:
                 if self.gui.btn_Errors_Refresh_basic.isChecked():
-                    self.refresh_timer.start(10)
+                    self.refresh_timer.start(100)
                     self.Perform_Refresh()
                 else:
                     self.refresh_timer.stop()
             elif self.gui.SubScreens_Errors.currentWidget() == self.gui.SubScreen_Errors_Admin:
                 if self.gui.btn_Errors_Refresh_admin.isChecked():
-                    self.refresh_timer.start(10)
+                    self.refresh_timer.start(100)
                     self.Perform_Refresh()
                 else:
                     self.refresh_timer.stop()
