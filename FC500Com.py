@@ -23,7 +23,7 @@ class FC500Com:
             try:
                 self.ser = serial.Serial(port = self.port, baudrate = self.baudrate, timeout= self.timeout)
             except serial.SerialException as e:
-                print(f"Failed to open COM port: {e}")
+                self.logger.log_warning(f"Failed to open COM port: {e}")
             self.initialized = True
 
     def connection_close(self):
@@ -45,6 +45,7 @@ class FC500Com:
     def connection_check(self):
         self.logger.log_info("Performing connection check on FC500 through a ping:")
         self.ping = self.cmd_ping()
+        self.logger.log_info(self.ping)
         if self.ping == "MJ":
             self.logger.log_info("Ping check worked")
             return True
@@ -111,8 +112,8 @@ class FC500Com:
     def cmd_ping(self, silent=False):
         command = 'SJ\r\n'
         self.ser.write(command.encode())
-        self.read_data(silent)
-        return
+        data = self.read_data(silent)
+        return data
 
     #Set the unit of measurement
     def cmd_setunit(self, silent=False):
