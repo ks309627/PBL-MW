@@ -10,7 +10,7 @@ class CommandInterpreter:
         self.fc500Com = FC500Com(settings)
         self.logger = Logger()
         self.gui = gui
-        self.graphRecoder = GraphRecorder(settings)
+        self.graphRecoder = GraphRecorder(gui, settings)
         self.commands = {
             "com": self.handle_com,
             "help": self.handle_help,
@@ -107,7 +107,7 @@ class CommandInterpreter:
             try:
                 value = int(value)
                 if value > 0:
-                    self.graphRecoder.graphMeasure_timeLimit(value)
+                    self.graphRecoder.graphMeasure_process(value)
                     return
                 else:
                     self.logger.log_info("Please enter a positive integer.")

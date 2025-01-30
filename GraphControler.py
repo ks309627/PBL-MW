@@ -21,9 +21,9 @@ class GraphControler(QMainWindow):
         self.seconds = [0, 1]
         self.force = [0, 0]
 
-        self.default_load(gui)
+        self.default_load()
 
-    def default_load(self, gui: Ui_Main):
+    def default_load(self):
         try:
             files = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if os.path.isfile(os.path.join(self.folder_path, f))]
             if not files:
@@ -36,7 +36,7 @@ class GraphControler(QMainWindow):
                 data = json.load(file)
                 self.seconds = data['seconds']
                 self.force = [float(value.replace(" ", "").replace("N", "")) for value in data['force']]
-                self.update_graph_data(gui)
+                self.update_graph_data(self.gui)
         except json.JSONDecodeError:
             self.logger.log_error(f"Failed to parse JSON in file {most_recent_file}.")
         except KeyError:
