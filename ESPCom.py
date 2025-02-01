@@ -3,19 +3,28 @@ import time
 from settings import Settings
 from LoggingHandler import Logger
 
-class ESPCom: #changed SerialCommunicator to ESPCom
+class ESPCom:
+    _instance = None
+
+    def __new__(cls, settings: Settings):
+        if cls._instance is None:
+            cls._instance = super(ESPCom, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self, settings: Settings, baudrate=9600, timeout=1):
-        self.logger = Logger()
-        self.settings = settings
-        self.port = self.settings.get("COMPathESP")
-        self.baudrate = baudrate
-        self.timeout = timeout
-        self.serial_connection = None
-        try:
-            self.ser = serial.Serial(port = self.port, baudrate = self.baudrate, timeout= self.timeout)
-        except serial.SerialException as e:
-            self.logger.log_warning(f"Failed to open COM port: {e}")
-        self.initialized = True
+        if not hasattr(self, 'initialized'):
+            self.logger = Logger()
+            self.settings = settings
+            self.port = self.settings.get("COMPathESP")
+            self.baudrate = baudrate
+            self.timeout = timeout
+            self.serial_connection = None
+            try:
+                self.ser = serial.Serial(port=self.port, baudrate=self.baudrate, timeout=self.timeout)
+            except serial.SerialException as e:
+                self.logger.log_warning(f"Failed to open COM port: {e}")
+            self.initialized = True
+
     
     def cmd_custom(self, command, silent=False):
         full_command = f"{command}\r\n"
