@@ -11,6 +11,11 @@ from LoggingHandler import Logger
 from settings import Settings
 from gui_ui import Ui_Main
 
+try:
+    import matplotlib.pyplot as plt
+except Exception as e:
+    print(f"An error occured when starting up! {e}. Some functionality of the program might not work properly! Usage of the program is a risk!")
+
 class GraphRecorder:
     def __init__(self, gui:Ui_Main, settings:Settings):
         self.settings = settings
@@ -30,15 +35,19 @@ class GraphRecorder:
             "force": []
         }
 
+        self.current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
         if Limit == 'unlimited': #begin an infinite measurement. USE WITH CAUTION!
             self.Limit = 'unlimited'
             self.paused = False
             self.logger.log_info("Begining unlimited measurment process.")
             self.start_time = time.time()
             
-            current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            self.file_name = f"measurement_{current_datetime}.json"
-            self.full_file_path = os.path.join(self.file_path, self.file_name)
+            self.file_name_json = f"measurement_{self.current_datetime}.json"
+            self.folder_name = f"measurement_{self.current_datetime}"
+            self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
+
+            os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
             self.timeLimit()
 
@@ -67,9 +76,12 @@ class GraphRecorder:
             self.logger.log_info("Begining measurment process.")
             self.start_time = time.time()
             
-            current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            self.file_name = f"measurement_{current_datetime}.json"
-            self.full_file_path = os.path.join(self.file_path, self.file_name)
+            
+            self.file_name_json = f"measurement_{self.current_datetime}.json"
+            self.folder_name = f"measurement_{self.current_datetime}"
+            self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
+
+            os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
             self.timeLimit()
 
@@ -85,11 +97,13 @@ class GraphRecorder:
 
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
-
+    
                 self.graph_controler.default_load()
                 QTimer.singleShot(1, lambda: (self.timeLimit()))
+
             else:
                 self.logger.log_info("Measurment process finished.")
+                self.create_icon()
         else:
             if hasattr(self, 'start_time'):
                 del self.start_time  # Remove the start time attribute
@@ -99,4 +113,30 @@ class GraphRecorder:
         if self.paused:
             QTimer.singleShot(100, lambda: (self.check_status()))
         else:
+            return
+        
+    def create_icon(self):
+        try:
+            image_size = (80, 60)
+            dpi = 100
+            plt.figure(figsize=(image_size[0] / dpi, image_size[1] / dpi), dpi=dpi)
+            plt.xticks([])
+            plt.yticks([])
+            plt.axis('off')
+
+            forces = []
+            for f in self.data["force"]:
+                f = f.replace("N", "").strip()
+                if "-" in f:
+                    forces.append(-float(f.replace("-", "").strip()))
+                else:
+                    forces.append(float(f))
+
+            plt.plot(self.data["seconds"], forces)
+            self.file_name_jpeg = f"graph_{self.current_datetime}.jpeg"
+            image_path = os.path.join(self.file_path, self.folder_name, self.file_name_jpeg)
+            plt.savefig(image_path, bbox_inches="tight")
+            plt.close()
+        except Exception as e:
+            self.logger.log_error(f"Image creation failed! {e}")
             return

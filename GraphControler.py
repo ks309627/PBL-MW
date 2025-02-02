@@ -25,11 +25,21 @@ class GraphControler(QMainWindow):
 
     def default_load(self):
         try:
-            files = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if os.path.isfile(os.path.join(self.folder_path, f))]
-            if not files:
-                self.logger.log_warning(f"No files found in folder {self.folder_path}.")
+            subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
+            if not subdirectories:
+                self.logger.log_warning(f"No subdirectories found in folder {self.folder_path}.")
                 return
-            most_recent_file = max(files, key=os.path.getctime)
+            most_recent_subdirectory = max(subdirectories, key=os.path.getctime)
+
+            files = [os.path.join(most_recent_subdirectory, f) for f in os.listdir(most_recent_subdirectory) if os.path.isfile(os.path.join(most_recent_subdirectory, f))]
+
+            json_files = [file for file in files if file.endswith('.json')]
+            if json_files:
+                most_recent_file = max(json_files, key=os.path.getctime)
+            else:
+                self.logger.log_warning(f"No graph file found in subdirectory {most_recent_subdirectory}.")
+                return
+
             with open(most_recent_file, 'r') as file:
                 data = json.load(file)
                 self.seconds = data['seconds']
