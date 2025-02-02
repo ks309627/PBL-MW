@@ -9,6 +9,9 @@ from FC500Com import FC500Com
 from ESPCom import ESPCom
 #from MeasureProcess import MeasureProcess
 
+from GraphControler import GraphControler
+from GraphList import GraphList
+
 from TerminalControler import TerminalControler
 from LoggingHandler import Logger
 
@@ -18,13 +21,15 @@ from MeasureProcess_v2 import MeasureProcess
 from Measure_Lights import Measure_Lights
 
 
+
 class ScreenControler:
     def __init__(self, gui:Ui_Main, settings:Settings):
 
         self.gui = gui
         #self.communicator = communicator
-        self.graphControler = None
+        self.graphControler = GraphControler(gui, settings)
         self.settings = settings
+        self.graphList = GraphList(gui, settings)
 
         #self.measure1 = MeasureProcess_Steps1(gui, settings)
         #self.measure2 = MeasureProcess_Steps2(gui, settings)
@@ -211,6 +216,7 @@ class ScreenControler:
             
     def graphUpdate(self):
         self.graphControler.default_load()
+        self.graphList.load_graphs()
 
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler

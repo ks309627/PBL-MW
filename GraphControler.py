@@ -2,16 +2,20 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 from PySide6.QtCore import Qt
 from PySide6 import QtCharts
 from gui_ui import Ui_Main
+
 import json
 import os
 from datetime import datetime
 from settings import Settings
+
 from LoggingHandler import Logger
+from GraphList import GraphList
 
 class GraphControler(QMainWindow):
     def __init__(self, gui:Ui_Main, settings: Settings):
         super().__init__()
         self.logger = Logger()
+        self.graphlist = GraphList(gui, settings)
         self.Graph = QtCharts.QChart()
         self.Graph.setTitle("Wykres siły w czasie")
         self.current_offset = 0
@@ -76,6 +80,7 @@ class GraphControler(QMainWindow):
             if max(self.seconds) - min(self.seconds) > 5:
                 axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
 
+        self.graphlist.load_graphs()
         gui.dsp_graph.setChart(self.Graph)
 
 

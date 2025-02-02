@@ -28,7 +28,11 @@ class ESPCom:
     
     def cmd_custom(self, command, silent=False):
         full_command = f"{command}\r\n"
-        self.ser.write(full_command.encode('utf-8'))
+        try:
+            self.ser.write(full_command.encode('utf-8'))
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.logger.log_info(f"ESP - Wysłano komendę: {full_command.strip()}")
         response = self.ser.readline().decode('utf-8', errors='ignore').strip()
         if response:

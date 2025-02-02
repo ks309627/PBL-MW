@@ -1865,7 +1865,7 @@ nacisnąć przycisk</string>
          </item>
         </layout>
        </widget>
-       <widget class="QListView" name="listView">
+       <widget class="QListView" name="list_graph">
         <property name="geometry">
          <rect>
           <x>770</x>
@@ -1891,19 +1891,22 @@ nacisnąć przycisk</string>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
         <property name="defaultDropAction">
          <enum>Qt::IgnoreAction</enum>
         </property>
         <property name="alternatingRowColors">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::SingleSelection</enum>
         </property>
         <property name="iconSize">
          <size>
-          <width>64</width>
-          <height>64</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="verticalScrollMode">

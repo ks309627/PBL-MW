@@ -6,6 +6,7 @@ from datetime import datetime
 from PySide6.QtCore import QTimer
 
 from GraphControler import GraphControler
+from GraphList import GraphList
 from FC500Com import FC500Com
 from LoggingHandler import Logger
 from settings import Settings
@@ -22,12 +23,13 @@ class GraphRecorder:
         self.fc500 = FC500Com(settings)
         self.logger = Logger()
         self.graph_controler = GraphControler(gui, settings)
+        self.graph_icons = GraphList(gui, settings)
         self.start_time = None
         self.data = {
             "seconds": [],
             "force": []
         }
-        self.file_path = self.settings.get("graphSavePath")  
+        self.file_path = self.settings.get("graphSavePath")
         
     def graphMeasure_process(self, Limit=1):
         self.data = {
@@ -46,6 +48,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
+            self.graph_icons.load_graphs()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -80,6 +83,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
+            self.graph_icons.load_graphs()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -104,6 +108,7 @@ class GraphRecorder:
             else:
                 self.logger.log_info("Measurment process finished.")
                 self.create_icon()
+                self.graph_icons.load_graphs()
         else:
             if hasattr(self, 'start_time'):
                 del self.start_time  # Remove the start time attribute
@@ -133,8 +138,8 @@ class GraphRecorder:
                     forces.append(float(f))
 
             plt.plot(self.data["seconds"], forces)
-            self.file_name_jpeg = f"graph_{self.current_datetime}.jpeg"
-            image_path = os.path.join(self.file_path, self.folder_name, self.file_name_jpeg)
+            self.file_name_icon = f"icon_{self.current_datetime}.jpeg"
+            image_path = os.path.join(self.file_path, self.folder_name, self.file_name_icon)
             plt.savefig(image_path, bbox_inches="tight")
             plt.close()
         except Exception as e:
