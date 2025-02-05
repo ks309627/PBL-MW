@@ -48,7 +48,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
-            self.graph_icons.load_graphs()
+            self.graph_icons.load_list()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -83,7 +83,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
-            self.graph_icons.load_graphs()
+            self.graph_icons.load_list()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -102,13 +102,13 @@ class GraphRecorder:
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
     
-                self.graph_controler.default_load()
+                self.graph_controler.load_graph()
                 QTimer.singleShot(1, lambda: (self.timeLimit()))
 
             else:
                 self.logger.log_info("Measurment process finished.")
                 self.create_icon()
-                self.graph_icons.load_graphs()
+                self.graph_icons.load_list()
         else:
             if hasattr(self, 'start_time'):
                 del self.start_time  # Remove the start time attribute

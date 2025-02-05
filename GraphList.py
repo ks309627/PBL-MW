@@ -1,6 +1,6 @@
 import os
 import re
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, QItemSelection
 from PySide6.QtWidgets import QListView
 from PySide6.QtGui import QStandardItemModel, QStandardItem, QIcon
 
@@ -19,9 +19,14 @@ class GraphList:
         self.view = QListView()
         self.listView = gui.list_graph
         self.listView.setModel(self.model)
-        self.load_graphs()
+        self.current_index = 0
+        self.graphs_number = 0
+        self.load_list()
 
-    def load_graphs(self):
+    def load_list(self):
+        self.graphs_number = self.model.rowCount()
+        if self.graphs_number == 0: #Jeżeli w momencie callu load_graphs nie ma żadnych wykresów, to ustaw index na 0, ale po wczytaniu wykresów (stąd marker)
+            self.reset_index_marker = True
         self.model.setRowCount(0)
         folders = [folder for folder in os.listdir(self.path) if os.path.isdir(os.path.join(self.path, folder))]
         for folder in reversed(folders):
@@ -44,6 +49,11 @@ class GraphList:
                     item.setIcon(self.default_icon)
                 self.model.appendRow(item)
         self.listView.setModel(self.model)
+        self.listView.selectionModel().selectionChanged.connect(self.selection_changed)
+        if self.reset_index_marker or self.graphs_number != self.model.rowCount():
+            self.current_index = 0
+            self.reset_index_marker = False
+        self.listView.setCurrentIndex(self.model.index(self.current_index, 0))
 
     def find_icon(self, folder_path):
         image_extensions = ['.png', '.jpg', '.jpeg', '.bmp', '.gif']
@@ -52,5 +62,8 @@ class GraphList:
             if os.path.splitext(file)[1].lower() in image_extensions:
                 return os.path.join(folder_path, file).replace('\\', '/')
         return None
-
-
+    
+    def selection_changed(self, selected):
+        if selected.indexes():
+            selected_index = selected.indexes()[0]
+            self.current_index = selected_index.row()

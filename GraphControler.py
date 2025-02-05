@@ -26,22 +26,32 @@ class GraphControler(QMainWindow):
             os.makedirs(self.folder_path)
         self.seconds = [0, 1]
         self.force = [0, 0]
+        self.selected_graph = 0
 
-    def default_load(self):
+    def load_graph(self):
+        self.selected_graph = self.graphlist.current_index
+
         try:
             subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
             if not subdirectories:
                 self.logger.log_warning(f"No subdirectories found in folder {self.folder_path}.")
                 return
-            most_recent_subdirectory = max(subdirectories, key=os.path.getctime)
+            subdirectories.sort(key=os.path.getctime, reverse=True)
+            if self.selected_graph < 0 or self.selected_graph >= len(subdirectories):
+                self.logger.log_error(f"Invalid graph index {self.selected_graph}.")
+                return
 
-            files = [os.path.join(most_recent_subdirectory, f) for f in os.listdir(most_recent_subdirectory) if os.path.isfile(os.path.join(most_recent_subdirectory, f))]
+            print(f"Selected Graph in GraphControler: {self.selected_graph}")
+            selected_subdirectory = subdirectories[self.selected_graph]
+            print(f"Selected Subdirectory in GraphControler: {selected_subdirectory}")
+
+            files = [os.path.join(selected_subdirectory, f) for f in os.listdir(selected_subdirectory) if os.path.isfile(os.path.join(selected_subdirectory, f))]
 
             json_files = [file for file in files if file.endswith('.json')]
             if json_files:
                 most_recent_file = max(json_files, key=os.path.getctime)
             else:
-                self.logger.log_warning(f"No graph file found in subdirectory {most_recent_subdirectory}.")
+                self.logger.log_warning(f"No graph file found in subdirectory {selected_subdirectory}.")
                 return
 
             with open(most_recent_file, 'r') as file:
@@ -80,8 +90,8 @@ class GraphControler(QMainWindow):
             if max(self.seconds) - min(self.seconds) > 5:
                 axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
 
-        self.graphlist.load_graphs()
-        gui.dsp_graph.setChart(self.Graph)
+            self.graphlist.load_list()
+            gui.dsp_graph.setChart(self.Graph)
 
 
     def scroll_left(self):

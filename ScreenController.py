@@ -215,8 +215,7 @@ class ScreenControler:
     #         print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
     def graphUpdate(self):
-        self.graphControler.default_load()
-        self.graphList.load_graphs()
+        self.graphControler.load_graph()
 
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler

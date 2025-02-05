@@ -38,9 +38,8 @@ class FC500Com:
                 self.logger.log_info("FC500 Connection opened")
             else:
                 self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
-        except Exception as e:
-            self.logger.log_critical(f"Exception: {e}")
-            raise Exception({e})
+        except Exception:
+            raise
 
     def connection_check(self):
         self.logger.log_info("Performing connection check on FC500 through a ping:")
