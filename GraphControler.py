@@ -9,13 +9,11 @@ from datetime import datetime
 from settings import Settings
 
 from LoggingHandler import Logger
-from GraphList import GraphList
 
 class GraphControler(QMainWindow):
     def __init__(self, gui:Ui_Main, settings: Settings):
         super().__init__()
         self.logger = Logger()
-        self.graphlist = GraphList(gui, settings)
         self.Graph = QtCharts.QChart()
         self.Graph.setTitle("Wykres siły w czasie")
         self.current_offset = 0
@@ -28,8 +26,8 @@ class GraphControler(QMainWindow):
         self.force = [0, 0]
         self.selected_graph = 0
 
-    def load_graph(self):
-        self.selected_graph = self.graphlist.current_index
+    def load_graph(self, selected_graph):
+        self.selected_graph = selected_graph
 
         try:
             subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
@@ -41,9 +39,7 @@ class GraphControler(QMainWindow):
                 self.logger.log_error(f"Invalid graph index {self.selected_graph}.")
                 return
 
-            print(f"Selected Graph in GraphControler: {self.selected_graph}")
             selected_subdirectory = subdirectories[self.selected_graph]
-            print(f"Selected Subdirectory in GraphControler: {selected_subdirectory}")
 
             files = [os.path.join(selected_subdirectory, f) for f in os.listdir(selected_subdirectory) if os.path.isfile(os.path.join(selected_subdirectory, f))]
 
@@ -65,6 +61,7 @@ class GraphControler(QMainWindow):
             self.logger.log_error(f"Invalid JSON format in file {most_recent_file}.")
 
     def default_update_graph(self, gui: Ui_Main):
+        self.logger.log_critical("A")
         self.Graph.removeAllSeries()
         for axis in self.Graph.axes():
             self.Graph.removeAxis(axis)
@@ -77,7 +74,7 @@ class GraphControler(QMainWindow):
         if self.seconds:
             axis_x = QtCharts.QValueAxis()
             axis_x.setRange(min(self.seconds), max(self.seconds))
-            axis_x.setTickCount(10)  # Set the number of ticks on the x-axis
+            axis_x.setTickCount(10)
             self.Graph.addAxis(axis_x, Qt.AlignBottom)
             self.series.attachAxis(axis_x)
 
@@ -86,16 +83,20 @@ class GraphControler(QMainWindow):
             self.Graph.addAxis(axis_y, Qt.AlignLeft)
             self.series.attachAxis(axis_y)
 
-            # Set the visible range of the x-axis to the last 3 seconds
-            if max(self.seconds) - min(self.seconds) > 5:
-                axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
-
-            self.graphlist.load_list()
             gui.dsp_graph.setChart(self.Graph)
+            self.logger.log_info("Graph axes initialized successfully.")
+            self.logger.log_info(f"Horizontal axes after initialization: {self.Graph.axes(Qt.Horizontal)}")
 
 
     def scroll_left(self):
-        axis_x = self.Graph.axes(Qt.Horizontal)[0]
+        self.logger.log_info(f"{self.Graph.axes(Qt.Horizontal)}")
+        axes = self.Graph.axes(Qt.Horizontal)
+        self.logger.log_info(f"Horizontal axes before scrolling: {axes}")
+        if not axes:
+            self.logger.log_error("No horizontal axes found in the graph.")
+            return
+
+        axis_x = axes[0]
         min_val = axis_x.min()
         max_val = axis_x.max()
         range_val = max_val - min_val
@@ -167,7 +168,7 @@ class GraphControler(QMainWindow):
 
 # OLDDDDDD
 
-    def save_graph(self):
+    def save_graph_to_file(self):
 
         graph_data = {"sekundy": self.seconds, "siła": self.force}
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -182,7 +183,7 @@ class GraphControler(QMainWindow):
         except Exception as e:
             self.logger.log_error(f"Wystąpił błąd podczas zapisu wykresu: {e}")
 
-    def load_graph(self, file_path):
+    def load_graph_from_file(self, file_path):
         try:
             with open(file_path, "r") as file:
                 graph_data = json.load(file)

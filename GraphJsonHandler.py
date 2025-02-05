@@ -23,7 +23,7 @@ class GraphRecorder:
         self.fc500 = FC500Com(settings)
         self.logger = Logger()
         self.graph_controler = GraphControler(gui, settings)
-        self.graph_icons = GraphList(gui, settings)
+        self.graph_list = GraphList(gui, settings)
         self.start_time = None
         self.data = {
             "seconds": [],
@@ -48,7 +48,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
-            self.graph_icons.load_list()
+            self.graph_list.load_list()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -83,7 +83,7 @@ class GraphRecorder:
             self.file_name_json = f"measurement_{self.current_datetime}.json"
             self.folder_name = f"measurement_{self.current_datetime}"
             self.full_file_path = os.path.join(self.file_path, self.folder_name, self.file_name_json)
-            self.graph_icons.load_list()
+            self.graph_list.load_list()
 
             os.makedirs(os.path.join(self.file_path, self.folder_name), exist_ok=True)
             
@@ -108,7 +108,7 @@ class GraphRecorder:
             else:
                 self.logger.log_info("Measurment process finished.")
                 self.create_icon()
-                self.graph_icons.load_list()
+                self.graph_list.load_list()
         else:
             if hasattr(self, 'start_time'):
                 del self.start_time  # Remove the start time attribute

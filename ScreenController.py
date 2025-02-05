@@ -215,7 +215,7 @@ class ScreenControler:
     #         print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
     def graphUpdate(self):
-        self.graphControler.load_graph()
+        self.graphList.refresh_graph
 
     def set_graph_controler(self, graphControler):
         self.graphControler = graphControler
@@ -267,7 +267,7 @@ class ScreenControler:
 
     def handle_save_graph(self):
         if self.graphControler:
-            file_path = self.graphControler.save_graph()
+            file_path = self.graphControler.save_graph_to_file()
             if file_path:
                 print(f"Graph successfully saved: {file_path}")
 
@@ -278,7 +278,7 @@ class ScreenControler:
                 None, "Wczytaj wykres", "", "JSON Files (*.json)"
             )
             if file_path:
-                self.graphControler.load_graph(file_path)
+                self.graphControler.load_graph_from_file(file_path)
 
     # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
     # def fc500_zero(self):

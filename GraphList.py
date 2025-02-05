@@ -7,11 +7,13 @@ from PySide6.QtGui import QStandardItemModel, QStandardItem, QIcon
 from settings import Settings
 from gui_ui import Ui_Main
 from LoggingHandler import Logger
+from GraphControler import GraphControler
 
 class GraphList:
     def __init__(self, gui:Ui_Main, settings: Settings):
         self.settings = settings
         self.logger = Logger()
+        self.graph_controler = GraphControler(gui, settings)
         self.path = self.settings.get("graphSavePath")
         self.model = QStandardItemModel()
         self.default_icon = QIcon()
@@ -67,3 +69,7 @@ class GraphList:
         if selected.indexes():
             selected_index = selected.indexes()[0]
             self.current_index = selected_index.row()
+            self.graph_controler.load_graph(self.current_index)
+
+    def refresh_graph(self):
+        self.graph_controler.load_graph(self.current_index)
