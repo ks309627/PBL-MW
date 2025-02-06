@@ -361,7 +361,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="Screen_Logo">
        <widget class="QWidget" name="horizontalLayoutWidget_2">

@@ -97,7 +97,7 @@ class GraphControler(QMainWindow):
             if max(self.seconds) - min(self.seconds) > 5:
                 self.axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
 
-        #gui.dsp_graph.setChart(self.Graph)
+        gui.dsp_graph.setChart(self.Graph)
         gui.dsp_graph_2.setChart(self.Graph)
 
 

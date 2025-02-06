@@ -1058,7 +1058,7 @@ class Ui_Main(object):
         self.btn_Graphs.setDefault(False)
         self.btn_Settings.setDefault(False)
         self.btn_Errors.setDefault(False)
-        self.Screen.setCurrentIndex(1)
+        self.Screen.setCurrentIndex(3)
         self.SubScreens_Errors.setCurrentIndex(1)
 
 
