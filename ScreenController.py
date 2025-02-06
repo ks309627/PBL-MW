@@ -1,6 +1,5 @@
 from gui_ui import Ui_Main
 from PySide6.QtCore import QTimer
-from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
 from PySide6.QtWidgets import QCheckBox, QFileDialog, QMessageBox, QDialog, QPushButton
 from settings import Settings
 from LoginDialog import LoginDialog
@@ -19,12 +18,13 @@ from Measure_Lights import Measure_Lights
 
 
 class ScreenControler:
-    def __init__(self, gui:Ui_Main, settings:Settings):
+    def __init__(self, gui:Ui_Main, settings:Settings, measure_process:MeasureProcess):
 
         self.gui = gui
         #self.communicator = communicator
         self.graphControler = None
         self.settings = settings
+        self.measure_process = measure_process
 
         #self.measure1 = MeasureProcess_Steps1(gui, settings)
         #self.measure2 = MeasureProcess_Steps2(gui, settings)
@@ -46,7 +46,6 @@ class ScreenControler:
         #
         gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
         #gui.btn_StartMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureProgress), self.ScreenSwitch_CategoryMeasure(gui), self.BeginMeasure()))
-        gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
         
         
         gui.btn_StopMeasure.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_MeasureMain), self.ScreenSwitch_CategoryMeasure(gui), self.StopMeasure_Safety()))
@@ -54,7 +53,7 @@ class ScreenControler:
         gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), self.gotoStep2()))
 
         gui.btn_Measure_Step1_Error_Errors.clicked.connect(lambda:(self.StopMeasure(), gui.Screen.setCurrentWidget(gui.Screen_Errors), self.ScreenSwitch_CategoryErrors(gui), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
-        gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
+        gui.btn_Measure_Step1_Error_Refresh.clicked.connect(lambda:(self.MeasureComRefresh()))
 
         gui.btn_Measure_Step2_LockSafety.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step3), self.gotoStep3()))
         gui.btn_Measure_Step3.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step4), self.gotoStep4()))
@@ -102,6 +101,13 @@ class ScreenControler:
 
         gui.btn_Errors_Send_admin.clicked.connect(self.Errors_Command)
 
+        self.gui.btn_Measure_Step2_Right1.clicked.connect(lambda: self.measure_process.send_esp_command_r1())
+        self.gui.btn_Measure_Step2_Right2.clicked.connect(lambda: self.measure_process.send_esp_command_r2())
+        self.gui.btn_Measure_Step2_Right3.clicked.connect(lambda: self.measure_process.send_esp_command_r3())
+
+        self.gui.btn_Measure_Step2_Left1.clicked.connect(lambda: self.measure_process.send_esp_command_l1())
+        self.gui.btn_Measure_Step2_Left2.clicked.connect(lambda: self.measure_process.send_esp_command_l2())
+        self.gui.btn_Measure_Step2_Left3.clicked.connect(lambda: self.measure_process.send_esp_command_l3())
 
         #Additional Screen switch actions
     def ScreenSwitch_StartUp(self, gui:Ui_Main):
@@ -167,6 +173,7 @@ class ScreenControler:
     def StopMeasure(self):
         if self.measureProcess:
             self.measureProcess.StopCycle()
+            
             self.gui.btn_Measure.setEnabled(True)
             self.gui.btn_Graphs.setEnabled(True)
             self.gui.btn_Settings.setEnabled(True)
