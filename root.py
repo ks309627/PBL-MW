@@ -11,6 +11,7 @@ from TerminalControler import TerminalControler
 from Measure_Lights import Measure_Lights
 from FC500Com import FC500Com
 from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
+from MeasureProcess_v2 import MeasureProcess
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -25,7 +26,11 @@ class MainWindow(QWidget):
         self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
         self.graphControler = GraphControler(self.ui, self.settings)
 
-        self.screenControler = ScreenControler(self.ui, self.settings)
+        self.measure_process = MeasureProcess(self.ui, self.settings)
+
+        self.screenControler = ScreenControler(self.ui, self.settings, self.measure_process)
+
+        
 
         self.screenControler.set_graph_controler(self.graphControler)
 
@@ -39,7 +44,7 @@ class MainWindow(QWidget):
     
         #v30.11.24.2
     def closeEvent(self, event):
-        self.ESPCom.close()
+        self.ESPCom.connection_close()
         if hasattr(self.FC500Com, 'ser') and self.FC500Com.ser:
             self.FC500Com.connection_close()
         self.settings.save_settings()

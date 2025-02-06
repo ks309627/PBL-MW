@@ -64,7 +64,9 @@ class GraphControler(QMainWindow):
         self.Graph.addAxis(axis_y, Qt.AlignLeft)
         self.series.attachAxis(axis_y)
 
-        gui.dsp_graph.setChart(self.Graph)
+        #gui.dsp_graph.setChart(self.Graph)
+        gui.dsp_graph_2.setChart(self.Graph)
+
 
 # OLDDDDDD
 
@@ -92,7 +94,8 @@ class GraphControler(QMainWindow):
         self.Graph.addAxis(axis_y, Qt.AlignLeft)
         self.series.attachAxis(axis_y)
 
-        gui.dsp_graph.setChart(self.Graph)
+        #gui.dsp_graph.setChart(self.Graph)
+        #gui.dsp_graph_2.setChart(self.Graph)
 
     def save_graph(self):
 
