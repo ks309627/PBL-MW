@@ -58,7 +58,7 @@ class ScreenControler:
         gui.btn_Measure_Step1_ObjectReady.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step2), self.gotoStep2()))
 
         gui.btn_Measure_Step1_Error_Errors.clicked.connect(lambda:(self.StopMeasure(), gui.Screen.setCurrentWidget(gui.Screen_Errors), self.ScreenSwitch_CategoryErrors(gui), self.logger._clean_up_old_logs(), self.terminalControler.Perform_Refresh()))
-        gui.btn_Measure_Step1_Error_Refresh.clicked.connect(lambda:(self.MeasureComRefresh()))
+        gui.btn_Measure_Step1_Error_RefreshCOM.clicked.connect(lambda:(self.MeasureComRefresh()))
 
         gui.btn_Measure_Step2_LockSafety.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step3), self.gotoStep3()))
         gui.btn_Measure_Step3.clicked.connect(lambda:(gui.SubScreens_Measure.setCurrentWidget(gui.SubScreen_Measure_Step4), self.gotoStep4()))
