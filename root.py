@@ -39,7 +39,8 @@ class MainWindow(QWidget):
     
         #v30.11.24.2
     def closeEvent(self, event):
-        self.ESPCom.close()
+        if hasattr(self.ESPCom, 'ser') and self.ESPCom.ser:
+            self.ESPCom.connection_close()
         if hasattr(self.FC500Com, 'ser') and self.FC500Com.ser:
             self.FC500Com.connection_close()
         self.settings.save_settings()

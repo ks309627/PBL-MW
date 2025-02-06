@@ -1,5 +1,6 @@
 from LoggingHandler import Logger
 from FC500Com import FC500Com
+from ESPCom import ESPCom
 from settings import Settings
 from gui_ui import Ui_Main
 from GraphJsonHandler import GraphRecorder
@@ -8,6 +9,7 @@ class CommandInterpreter:
     def __init__(self, gui:Ui_Main, settings:Settings):
         self.settings = settings
         self.fc500Com = FC500Com(settings)
+        self.espCom = ESPCom(settings)
         self.logger = Logger()
         self.gui = gui
         self.graphRecoder = GraphRecorder(gui, settings)
@@ -52,13 +54,25 @@ class CommandInterpreter:
             return
 
         message = " ".join(args[1:])
-        try:
-            self.fc500Com.connection_create()
-        except Exception as e:
-            self.logger.log_critical(f"Command Handler: An error occured while trying to create an instance of FC500 class: {e}")
-            return
         self.logger.log_info(f"Sending to {device}: {message}")
-        self.fc500Com.cmd_custom(str(message))
+        if device == 'FC500':
+            try:
+                self.fc500Com.connection_create()
+                self.fc500Com.cmd_custom(str(message))
+            except Exception as e:
+                self.logger.log_critical(f"Command Handler: An error occured while trying to create an instance of FC500 class: {e}")
+                return
+        elif device == 'ESP':
+            try:
+                self.espCom.connection_create()
+                self.espCom.cmd_cmd_custom(str(message))
+            except Exception as e:
+                self.logger.log_critical(f"Command Handler: An error occured while trying to create an instance of ESP class: {e}")
+                return
+        else:
+            self.logger.log_info("Something went wrong when trying to interpret which device to connect to.")
+        
+        
 
 
     def handle_help(self, args):
@@ -107,7 +121,11 @@ class CommandInterpreter:
             try:
                 value = int(value)
                 if value > 0:
-                    self.graphRecoder.graphMeasure_process(value)
+                    try:
+                        self.fc500Com.connection_create()
+                        self.graphRecoder.graphMeasure_process(value)
+                    except Exception as e:
+                        self.logger.log_error(f"An error occured when running the measure command: {e}")
                     return
                 else:
                     self.logger.log_info("Please enter a positive integer.")
