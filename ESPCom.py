@@ -31,7 +31,7 @@ class ESPCom:
             except serial.SerialException as e:
                 self.logger.log_warning(f"Nie udało się otworzyć portu COM: {e}")
 
-            self.initialized = True
+            self.initialized = True  # Flaga inicjalizacji
 
 
 
