@@ -56,7 +56,7 @@ class GraphList:
         folders = [folder for folder in os.listdir(self.path) if os.path.isdir(os.path.join(self.path, folder))]
         for folder in reversed(folders):
             folder_path = os.path.join(self.path, folder)
-            if os.path.isdir(folder_path):
+            if os.path.isdir(folder_path) and any(file.endswith('.json') for file in os.listdir(folder_path)):
                 match = re.match(r'measurement_(\d{4}-\d{2}-\d{2})_(\d{2}-\d{2}-\d{2})', folder)
                 if match:
                     date_str = match.group(1)
@@ -238,46 +238,22 @@ class GraphList:
             shutil.copy2(import_path, file_path)
         except OSError as e:
             self.logger.log_error(f"Wystąpił błąd podczas kopiowania pliku do katalogu '{folder_name}': {e}")
-        
-        if file_path:
-            icon_name = f"measurement_{current_datetime}"
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-                seconds = data['seconds']
-                force = [float(re.search(r'-?\d{1,3}\.\d+', val).group()) for val in data['force']]
-                image_size = (160, 100)
-                dpi = 100
-                plt.figure(figsize=(image_size[0] / dpi, image_size[1] / dpi), dpi=dpi)
-                plt.xticks([])
-                plt.yticks([])
-                plt.axis('off')
-                
-                plt.plot(seconds, force)
-                plt.gca().invert_yaxis()  # Invert the y-axis
-                plt.savefig(os.path.join(folder_path, icon_name), bbox_inches="tight", dpi=100)
-                plt.close()
 
-        self.load_list()
+        self.refresh()
 
     
 
     def refresh(self):
         self.graph_controler.load_graph(self.current_index)
         try:
-            # Iterate through every folder in the graph save path
             for folder_name in os.listdir(self.path):
                 folder_path = os.path.join(self.path, folder_name)
-                # Check if the item is a folder
                 if os.path.isdir(folder_path):
-                    # Iterate through every file in the folder
                     for file_name in os.listdir(folder_path):
-                        # Check if the file is a JSON file
                         if file_name.endswith(".json"):
                             file_path = os.path.join(folder_path, file_name)
-                            # Load the JSON data
                             with open(file_path, 'r') as file:
                                 data = json.load(file)
-                            # Create an icon for the graph
                             image_size = (160, 100)
                             dpi = 100
                             plt.figure(figsize=(image_size[0] / dpi, image_size[1] / dpi), dpi=dpi)
