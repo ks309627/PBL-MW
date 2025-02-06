@@ -124,6 +124,8 @@ class CommandInterpreter:
                     try:
                         self.fc500Com.connection_create()
                         self.graphRecoder.graphMeasure_process(value)
+                    except AttributeError as e:
+                        self.logger.log_error(f"An error occured when calling the command! The measuring device is probably not plugged in. If it is, the program might require a restart.")
                     except Exception as e:
                         self.logger.log_error(f"An error occured when running the measure command: {e}")
                     return

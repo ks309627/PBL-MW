@@ -1,4 +1,6 @@
 import sys
+import subprocess
+import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 from PySide6.QtCore import Qt
 from gui_ui import Ui_Main
@@ -16,6 +18,15 @@ from MeasureProcess_v2 import MeasureProcess
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+
+        try:
+            import matplotlib
+        except ImportError:
+            print("Dependencies not installed. Running setup script...")
+            subprocess.check_call([sys.executable, "setup.py"])
+            print("Dependencies installed. Restarting program...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
         self.ui = Ui_Main()
         self.ui.setupUi(self)
 
@@ -24,7 +35,6 @@ class MainWindow(QWidget):
         self.setWindowTitle("Maszyna Wytrzymałościowa")
         self.setWindowIcon(QIcon(":/Menu/menu/Graph.png"))
         self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
-        self.graphControler = GraphControler(self.ui, self.settings)
 
         self.measure_process = MeasureProcess(self.ui, self.settings)
 
@@ -32,15 +42,13 @@ class MainWindow(QWidget):
 
         
 
-        self.screenControler.set_graph_controler(self.graphControler)
-
-        self.TerminalControler = TerminalControler(self.ui, self.settings)
-
         self.step_measure = Measure_Lights()
 
         self.FC500Com = FC500Com(self.settings)
 
         self.ESPCom = ESPCom(self.settings) #changed SerialCommunicator to ESPCom
+
+
     
         #v30.11.24.2
     def closeEvent(self, event):

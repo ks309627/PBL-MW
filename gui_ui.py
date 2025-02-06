@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,11 +16,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLayout, QLineEdit, QProgressBar,
-    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
-import Icons_rc
+from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplication, QFrame,
+    QGridLayout, QHBoxLayout, QLabel, QLayout,
+    QLineEdit, QListView, QProgressBar, QPushButton,
+    QSizePolicy, QSpacerItem, QStackedWidget, QTextEdit,
+    QVBoxLayout, QWidget)
+from icons import Icons_rc
 
 class Ui_Main(object):
     def setupUi(self, Main):
@@ -627,7 +628,7 @@ class Ui_Main(object):
         self.title_Graphs.setIndent(-1)
         self.dsp_graph = QChartView(self.Screen_Graphs)
         self.dsp_graph.setObjectName(u"dsp_graph")
-        self.dsp_graph.setGeometry(QRect(30, 160, 711, 351))
+        self.dsp_graph.setGeometry(QRect(20, 150, 731, 371))
         self.gridLayoutWidget = QWidget(self.Screen_Graphs)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
         self.gridLayoutWidget.setGeometry(QRect(540, 30, 201, 121))
@@ -688,37 +689,92 @@ class Ui_Main(object):
 
         self.gridLayout.addWidget(self.btn_Graph_zin, 0, 2, 1, 1)
 
-        self.btn_SaveGraph = QPushButton(self.Screen_Graphs)
-        self.btn_SaveGraph.setObjectName(u"btn_SaveGraph")
-        self.btn_SaveGraph.setGeometry(QRect(770, 30, 101, 61))
-        self.btn_SaveGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.verticalLayoutWidget_5 = QWidget(self.Screen_Graphs)
+        self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
+        self.verticalLayoutWidget_5.setGeometry(QRect(460, 30, 62, 121))
+        self.verticalLayout_4 = QVBoxLayout(self.verticalLayoutWidget_5)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.btn_Graph_refresh = QPushButton(self.verticalLayoutWidget_5)
+        self.btn_Graph_refresh.setObjectName(u"btn_Graph_refresh")
         icon24 = QIcon()
-        icon24.addFile(u"icons/graph/Save.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_SaveGraph.setIcon(icon24)
-        self.btn_SaveGraph.setIconSize(QSize(48, 48))
-        self.btn_LoadGraph = QPushButton(self.Screen_Graphs)
-        self.btn_LoadGraph.setObjectName(u"btn_LoadGraph")
-        self.btn_LoadGraph.setGeometry(QRect(890, 30, 101, 61))
-        self.btn_LoadGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon25 = QIcon()
-        icon25.addFile(u"icons/graph/Load.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_LoadGraph.setIcon(icon25)
-        self.btn_LoadGraph.setIconSize(QSize(48, 48))
-        self.btn_Graph_resetview = QPushButton(self.Screen_Graphs)
+        icon24.addFile(u"icons/graph/refresh_graph.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Graph_refresh.setIcon(icon24)
+        self.btn_Graph_refresh.setIconSize(QSize(48, 48))
+
+        self.verticalLayout_4.addWidget(self.btn_Graph_refresh)
+
+        self.btn_Graph_resetview = QPushButton(self.verticalLayoutWidget_5)
         self.btn_Graph_resetview.setObjectName(u"btn_Graph_resetview")
-        self.btn_Graph_resetview.setGeometry(QRect(470, 90, 60, 56))
-        icon26 = QIcon()
-        icon26.addFile(u"icons/graph/refresh_graph.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Graph_resetview.setIcon(icon26)
+        icon25 = QIcon()
+        icon25.addFile(u":/Graph/graph/reset_graph.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Graph_resetview.setIcon(icon25)
         self.btn_Graph_resetview.setIconSize(QSize(48, 48))
-        self.graph_graphs_list = QScrollArea(self.Screen_Graphs)
-        self.graph_graphs_list.setObjectName(u"graph_graphs_list")
-        self.graph_graphs_list.setGeometry(QRect(760, 110, 251, 401))
-        self.graph_graphs_list.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 249, 399))
-        self.graph_graphs_list.setWidget(self.scrollAreaWidgetContents)
+
+        self.verticalLayout_4.addWidget(self.btn_Graph_resetview)
+
+        self.list_graph = QListView(self.Screen_Graphs)
+        self.list_graph.setObjectName(u"list_graph")
+        self.list_graph.setGeometry(QRect(770, 100, 241, 411))
+        self.list_graph.setFont(font)
+        self.list_graph.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.list_graph.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.list_graph.setSizeAdjustPolicy(QAbstractScrollArea.AdjustIgnored)
+        self.list_graph.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.list_graph.setTabKeyNavigation(True)
+        self.list_graph.setDefaultDropAction(Qt.IgnoreAction)
+        self.list_graph.setAlternatingRowColors(False)
+        self.list_graph.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.list_graph.setIconSize(QSize(32, 32))
+        self.list_graph.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.list_graph.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.list_graph.setSpacing(2)
+        self.list_graph.setWordWrap(True)
+        self.list_graph.setSelectionRectVisible(True)
+        self.line = QFrame(self.Screen_Graphs)
+        self.line.setObjectName(u"line")
+        self.line.setGeometry(QRect(520, 30, 20, 121))
+        self.line.setFrameShape(QFrame.Shape.VLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+        self.horizontalLayoutWidget_3 = QWidget(self.Screen_Graphs)
+        self.horizontalLayoutWidget_3.setObjectName(u"horizontalLayoutWidget_3")
+        self.horizontalLayoutWidget_3.setGeometry(QRect(773, 29, 231, 61))
+        self.horizontalLayout_5 = QHBoxLayout(self.horizontalLayoutWidget_3)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.btn_SaveGraph = QPushButton(self.horizontalLayoutWidget_3)
+        self.btn_SaveGraph.setObjectName(u"btn_SaveGraph")
+        self.btn_SaveGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon26 = QIcon()
+        icon26.addFile(u"icons/graph/Save.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_SaveGraph.setIcon(icon26)
+        self.btn_SaveGraph.setIconSize(QSize(48, 48))
+
+        self.horizontalLayout_5.addWidget(self.btn_SaveGraph)
+
+        self.btn_LoadGraph = QPushButton(self.horizontalLayoutWidget_3)
+        self.btn_LoadGraph.setObjectName(u"btn_LoadGraph")
+        self.btn_LoadGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon27 = QIcon()
+        icon27.addFile(u"icons/graph/Load.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_LoadGraph.setIcon(icon27)
+        self.btn_LoadGraph.setIconSize(QSize(48, 48))
+
+        self.horizontalLayout_5.addWidget(self.btn_LoadGraph)
+
+        self.btn_DeleteGraph = QPushButton(self.horizontalLayoutWidget_3)
+        self.btn_DeleteGraph.setObjectName(u"btn_DeleteGraph")
+        self.btn_DeleteGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon28 = QIcon()
+        icon28.addFile(u"icons/graph/delete.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon28.addFile(u":/Graph/graph/delete_active.png", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        icon28.addFile(u":/Graph/graph/delete_active.png", QSize(), QIcon.Mode.Disabled, QIcon.State.On)
+        self.btn_DeleteGraph.setIcon(icon28)
+        self.btn_DeleteGraph.setIconSize(QSize(48, 48))
+        self.btn_DeleteGraph.setCheckable(True)
+
+        self.horizontalLayout_5.addWidget(self.btn_DeleteGraph)
+
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
@@ -852,9 +908,9 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_basic.setFont(font5)
         self.btn_Errors_InstanceHistory_basic.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.btn_Errors_InstanceHistory_basic.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        icon27 = QIcon()
-        icon27.addFile(u":/Errors/errors/current history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_InstanceHistory_basic.setIcon(icon27)
+        icon29 = QIcon()
+        icon29.addFile(u":/Errors/errors/current history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_InstanceHistory_basic.setIcon(icon29)
         self.btn_Errors_InstanceHistory_basic.setIconSize(QSize(48, 48))
         self.btn_Errors_InstanceHistory_basic.setCheckable(True)
         self.btn_Errors_InstanceHistory_basic.setChecked(True)
@@ -871,9 +927,9 @@ class Ui_Main(object):
         self.btn_Errors_AllHistory_basic.setMaximumSize(QSize(150, 60))
         self.btn_Errors_AllHistory_basic.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_Errors_AllHistory_basic.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        icon28 = QIcon()
-        icon28.addFile(u":/Errors/errors/all history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_AllHistory_basic.setIcon(icon28)
+        icon30 = QIcon()
+        icon30.addFile(u":/Errors/errors/all history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_AllHistory_basic.setIcon(icon30)
         self.btn_Errors_AllHistory_basic.setIconSize(QSize(48, 48))
         self.btn_Errors_AllHistory_basic.setCheckable(True)
         self.btn_Errors_AllHistory_basic.setAutoExclusive(True)
@@ -904,7 +960,7 @@ class Ui_Main(object):
 
         self.terminal_basic = QTextEdit(self.verticalLayoutWidget)
         self.terminal_basic.setObjectName(u"terminal_basic")
-        self.terminal_basic.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_basic.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_basic.setTabletTracking(True)
         self.terminal_basic.setAutoFillBackground(False)
         self.terminal_basic.setReadOnly(True)
@@ -951,7 +1007,7 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_admin.setFont(font5)
         self.btn_Errors_InstanceHistory_admin.setAutoFillBackground(False)
         self.btn_Errors_InstanceHistory_admin.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn_Errors_InstanceHistory_admin.setIcon(icon27)
+        self.btn_Errors_InstanceHistory_admin.setIcon(icon29)
         self.btn_Errors_InstanceHistory_admin.setIconSize(QSize(48, 48))
         self.btn_Errors_InstanceHistory_admin.setCheckable(True)
         self.btn_Errors_InstanceHistory_admin.setChecked(True)
@@ -966,7 +1022,7 @@ class Ui_Main(object):
         self.btn_Errors_AllHistory_admin.setMinimumSize(QSize(300, 60))
         self.btn_Errors_AllHistory_admin.setMaximumSize(QSize(150, 60))
         self.btn_Errors_AllHistory_admin.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn_Errors_AllHistory_admin.setIcon(icon28)
+        self.btn_Errors_AllHistory_admin.setIcon(icon30)
         self.btn_Errors_AllHistory_admin.setIconSize(QSize(48, 48))
         self.btn_Errors_AllHistory_admin.setCheckable(True)
         self.btn_Errors_AllHistory_admin.setAutoExclusive(True)
@@ -1021,9 +1077,9 @@ class Ui_Main(object):
         self.btn_Errors_Send_admin.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_Errors_Send_admin.setAutoFillBackground(True)
         self.btn_Errors_Send_admin.setStyleSheet(u"")
-        icon29 = QIcon()
-        icon29.addFile(u":/Errors/errors/send.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_Send_admin.setIcon(icon29)
+        icon31 = QIcon()
+        icon31.addFile(u":/Errors/errors/send.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_Send_admin.setIcon(icon31)
         self.btn_Errors_Send_admin.setIconSize(QSize(40, 40))
         self.btn_Errors_Send_admin.setFlat(True)
 
@@ -1034,7 +1090,7 @@ class Ui_Main(object):
 
         self.terminal_admin = QTextEdit(self.verticalLayoutWidget_2)
         self.terminal_admin.setObjectName(u"terminal_admin")
-        self.terminal_admin.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_admin.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_admin.setTabletTracking(True)
         self.terminal_admin.setAutoFillBackground(False)
         self.terminal_admin.setReadOnly(True)
@@ -1128,9 +1184,11 @@ class Ui_Main(object):
         self.btn_Graph_left.setText("")
         self.btn_Graph_down.setText("")
         self.btn_Graph_zin.setText("")
+        self.btn_Graph_refresh.setText("")
+        self.btn_Graph_resetview.setText("")
         self.btn_SaveGraph.setText("")
         self.btn_LoadGraph.setText("")
-        self.btn_Graph_resetview.setText("")
+        self.btn_DeleteGraph.setText("")
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
         self.devMode.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
         self.label_7.setText(QCoreApplication.translate("Main", u"\u015acie\u017cka do zapisu wykres\u00f3w", None))
