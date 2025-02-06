@@ -6,10 +6,8 @@ from PySide6.QtCore import Qt
 from gui_ui import Ui_Main
 from ScreenController import ScreenControler
 from PySide6.QtGui import QIcon
-from GraphControler import GraphControler
 from settings import Settings
 from LoggingHandler import Logger
-from TerminalControler import TerminalControler
 from Measure_Lights import Measure_Lights
 from FC500Com import FC500Com
 from ESPCom import ESPCom #changed SerialCommunicator to ESPCom
