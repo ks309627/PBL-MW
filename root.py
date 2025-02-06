@@ -34,13 +34,8 @@ class MainWindow(QWidget):
         self.setWindowTitle("Maszyna Wytrzymałościowa")
         self.setWindowIcon(QIcon(":/Menu/menu/Graph.png"))
         self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
-        self.graphControler = GraphControler(self.ui, self.settings)
 
         self.screenControler = ScreenControler(self.ui, self.settings)
-
-        self.screenControler.set_graph_controler(self.graphControler)
-
-        self.TerminalControler = TerminalControler(self.ui, self.settings)
 
         self.step_measure = Measure_Lights()
 

@@ -122,7 +122,7 @@ class GraphRecorder:
         
     def create_icon(self):
         try:
-            image_size = (80, 60)
+            image_size = (160, 100)
             dpi = 100
             plt.figure(figsize=(image_size[0] / dpi, image_size[1] / dpi), dpi=dpi)
             plt.xticks([])

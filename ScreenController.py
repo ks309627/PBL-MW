@@ -9,8 +9,8 @@ from FC500Com import FC500Com
 from ESPCom import ESPCom
 #from MeasureProcess import MeasureProcess
 
-from GraphControler import GraphControler
 from GraphList import GraphList
+from GraphControler import GraphControler
 
 from TerminalControler import TerminalControler
 from LoggingHandler import Logger
@@ -27,9 +27,9 @@ class ScreenControler:
 
         self.gui = gui
         #self.communicator = communicator
-        self.graphControler = GraphControler(gui, settings)
         self.settings = settings
         self.graphList = GraphList(gui, settings)
+        self.graphControler = GraphControler(gui, settings)
 
         #self.measure1 = MeasureProcess_Steps1(gui, settings)
         #self.measure2 = MeasureProcess_Steps2(gui, settings)
@@ -78,10 +78,13 @@ class ScreenControler:
         gui.btn_Graph_down.clicked.connect(self.move_graph_down)
         gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
+
+        gui.btn_Graph_refresh.clicked.connect(self.graph_refresh)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
 
         gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
         gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
+        gui.btn_DeleteGraph.toggled.connect(self.handle_delete)
 
         gui.devMode.clicked.connect(self.handle_dev_mode)
 
@@ -217,9 +220,6 @@ class ScreenControler:
     def graphUpdate(self):
         self.graphList.refresh_graph
 
-    def set_graph_controler(self, graphControler):
-        self.graphControler = graphControler
-
     def move_graph_left(self):
         if self.graphControler:
             self.graphControler.scroll_left()
@@ -244,6 +244,10 @@ class ScreenControler:
         if self.graphControler:
             self.graphControler.zoom_out()
 
+    def graph_refresh(self):
+        if self.graphControler:
+            self.graphList.refresh()
+
     def view_graph_reset(self):
         if self.graphControler:
             self.graphControler.reset()
@@ -267,18 +271,21 @@ class ScreenControler:
 
     def handle_save_graph(self):
         if self.graphControler:
-            file_path = self.graphControler.save_graph_to_file()
-            if file_path:
-                print(f"Graph successfully saved: {file_path}")
+            self.graphList.save_graph_to_file()
 
     def handle_load_graph(self):
         if self.graphControler:
             file_dialog = QFileDialog()
-            file_path, _ = file_dialog.getOpenFileName(
-                None, "Wczytaj wykres", "", "JSON Files (*.json)"
-            )
+            file_path, _ = file_dialog.getOpenFileName(None, "Wczytaj wykres", "", "JSON Files (*.json)")
             if file_path:
-                self.graphControler.load_graph_from_file(file_path)
+                self.graphList.load_graph_from_file(file_path)
+
+    def handle_delete(self, checked):
+        if self.graphControler:
+            if checked:
+                self.graphList.deleteMode_on()
+            else:
+                self.graphList.deleteMode_off()
 
     # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
     # def fc500_zero(self):

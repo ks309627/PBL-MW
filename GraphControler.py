@@ -1,30 +1,41 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
+from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
 from PySide6 import QtCharts
 from gui_ui import Ui_Main
 
 import json
 import os
+import shutil
 from datetime import datetime
 from settings import Settings
 
 from LoggingHandler import Logger
 
 class GraphControler(QMainWindow):
-    def __init__(self, gui:Ui_Main, settings: Settings):
-        super().__init__()
-        self.logger = Logger()
-        self.Graph = QtCharts.QChart()
-        self.Graph.setTitle("Wykres siły w czasie")
-        self.current_offset = 0
-        self.gui = gui
-        self.settings = settings
-        self.folder_path = self.settings.get("graphSavePath")
-        if not os.path.exists(self.folder_path):
-            os.makedirs(self.folder_path)
-        self.seconds = [0, 1]
-        self.force = [0, 0]
-        self.selected_graph = 0
+    _instance = None
+
+    def __new__(cls, gui: Ui_Main, settings: Settings):
+        if cls._instance is None:
+            cls._instance = super(GraphControler, cls).__new__(cls)
+            cls._instance.__init__(gui, settings)
+        return cls._instance
+
+    def __init__(self, gui: Ui_Main, settings: Settings):
+        if not hasattr(self, 'initialized'):
+            super().__init__()
+            self.logger = Logger()
+            self.Graph = QtCharts.QChart()
+            self.Graph.setTitle("Wykres siły w czasie")
+            self.current_offset = 0
+            self.gui = gui
+            self.settings = settings
+            self.folder_path = self.settings.get("graphSavePath")
+            if not os.path.exists(self.folder_path):
+                os.makedirs(self.folder_path)
+            self.seconds = [0, 1]
+            self.force = [0, 0]
+            self.selected_graph = 0
+            self.initialized = True
 
     def load_graph(self, selected_graph):
         self.selected_graph = selected_graph
@@ -61,10 +72,9 @@ class GraphControler(QMainWindow):
             self.logger.log_error(f"Invalid JSON format in file {most_recent_file}.")
 
     def default_update_graph(self, gui: Ui_Main):
-        self.logger.log_critical("A")
         self.Graph.removeAllSeries()
-        for axis in self.Graph.axes():
-            self.Graph.removeAxis(axis)
+        for self.axis in self.Graph.axes():
+            self.Graph.removeAxis(self.axis)
 
         self.series = QtCharts.QLineSeries()
         for i, s in enumerate(self.force):
@@ -72,11 +82,11 @@ class GraphControler(QMainWindow):
         self.Graph.addSeries(self.series)
 
         if self.seconds:
-            axis_x = QtCharts.QValueAxis()
-            axis_x.setRange(min(self.seconds), max(self.seconds))
-            axis_x.setTickCount(10)
-            self.Graph.addAxis(axis_x, Qt.AlignBottom)
-            self.series.attachAxis(axis_x)
+            self.axis_x = QtCharts.QValueAxis()
+            self.axis_x.setRange(min(self.seconds), max(self.seconds))
+            self.axis_x.setTickCount(10)
+            self.Graph.addAxis(self.axis_x, Qt.AlignBottom)
+            self.series.attachAxis(self.axis_x)
 
             axis_y = QtCharts.QValueAxis()
             axis_y.setRange(min(self.force) - 1, max(self.force) + 1)
@@ -84,19 +94,9 @@ class GraphControler(QMainWindow):
             self.series.attachAxis(axis_y)
 
             gui.dsp_graph.setChart(self.Graph)
-            self.logger.log_info("Graph axes initialized successfully.")
-            self.logger.log_info(f"Horizontal axes after initialization: {self.Graph.axes(Qt.Horizontal)}")
-
 
     def scroll_left(self):
-        self.logger.log_info(f"{self.Graph.axes(Qt.Horizontal)}")
-        axes = self.Graph.axes(Qt.Horizontal)
-        self.logger.log_info(f"Horizontal axes before scrolling: {axes}")
-        if not axes:
-            self.logger.log_error("No horizontal axes found in the graph.")
-            return
-
-        axis_x = axes[0]
+        axis_x = self.Graph.axes(Qt.Horizontal)[0]
         min_val = axis_x.min()
         max_val = axis_x.max()
         range_val = max_val - min_val
@@ -162,32 +162,3 @@ class GraphControler(QMainWindow):
         center_y = (min_y + max_y) / 2
         axis_x.setRange(center_x - range_x / 2 * 0.6, center_x + range_x / 2 * 0.6)
         axis_y.setRange(center_y - range_y / 2 * 1.2, center_y + range_y / 2 * 1.2)
-
-
-
-
-# OLDDDDDD
-
-    def save_graph_to_file(self):
-
-        graph_data = {"sekundy": self.seconds, "siła": self.force}
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        save_path = self.settings.get_graph_save_path()
-        file_path = os.path.join(save_path, f"{timestamp}.json")
-
-        try:
-            with open(file_path, "w") as file:
-                json.dump(graph_data, file, indent=4)
-            self.logger.log_info(f"Wykres zapisany do: {file_path}")
-
-        except Exception as e:
-            self.logger.log_error(f"Wystąpił błąd podczas zapisu wykresu: {e}")
-
-    def load_graph_from_file(self, file_path):
-        try:
-            with open(file_path, "r") as file:
-                graph_data = json.load(file)
-            self.update_graph_from_data(graph_data["sekundy"], graph_data["siła"])
-            self.logger.log_info(f"Wykres załadowany z: {file_path}")
-        except Exception as e:
-            self.logger.log_error(f"Wystąpił błąd podczas załadowania wykresu: {e}")

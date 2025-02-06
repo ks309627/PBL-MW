@@ -15,6 +15,7 @@
     <file>progress/Processing.png</file>
   </qresource>
   <qresource prefix="Graph">
+    <file>graph/delete_active.png</file>
     <file>graph/graph_down.png</file>
     <file>graph/graph_left.png</file>
     <file>graph/graph_right.png</file>

@@ -577,7 +577,7 @@ class Ui_Main(object):
         self.title_Graphs.setIndent(-1)
         self.dsp_graph = QChartView(self.Screen_Graphs)
         self.dsp_graph.setObjectName(u"dsp_graph")
-        self.dsp_graph.setGeometry(QRect(30, 160, 711, 351))
+        self.dsp_graph.setGeometry(QRect(20, 150, 731, 371))
         self.gridLayoutWidget = QWidget(self.Screen_Graphs)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
         self.gridLayoutWidget.setGeometry(QRect(540, 30, 201, 121))
@@ -716,8 +716,11 @@ class Ui_Main(object):
         self.btn_DeleteGraph.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         icon22 = QIcon()
         icon22.addFile(u"icons/graph/delete.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon22.addFile(u":/Graph/graph/delete_active.png", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        icon22.addFile(u":/Graph/graph/delete_active.png", QSize(), QIcon.Mode.Disabled, QIcon.State.On)
         self.btn_DeleteGraph.setIcon(icon22)
         self.btn_DeleteGraph.setIconSize(QSize(48, 48))
+        self.btn_DeleteGraph.setCheckable(True)
 
         self.horizontalLayout_5.addWidget(self.btn_DeleteGraph)
 

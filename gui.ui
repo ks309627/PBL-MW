@@ -1698,10 +1698,10 @@ nacisnąć przycisk</string>
        <widget class="QChartView" name="dsp_graph">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>160</y>
-          <width>711</width>
-          <height>351</height>
+          <x>20</x>
+          <y>150</y>
+          <width>731</width>
+          <height>371</height>
          </rect>
         </property>
        </widget>
@@ -1998,13 +1998,18 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/delete.png</normaloff>icons/graph/delete.png</iconset>
+             <normaloff>icons/graph/delete.png</normaloff>
+             <normalon>:/Graph/graph/delete_active.png</normalon>
+             <disabledon>:/Graph/graph/delete_active.png</disabledon>icons/graph/delete.png</iconset>
            </property>
            <property name="iconSize">
             <size>
              <width>48</width>
              <height>48</height>
             </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
