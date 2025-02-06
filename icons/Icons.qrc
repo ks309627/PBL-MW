@@ -14,6 +14,20 @@
     <file>progress/True.png</file>
     <file>progress/Processing.png</file>
   </qresource>
+  <qresource prefix="Graph">
+    <file>graph/delete_active.png</file>
+    <file>graph/graph_down.png</file>
+    <file>graph/graph_left.png</file>
+    <file>graph/graph_right.png</file>
+    <file>graph/graph_up.png</file>
+    <file>graph/graph_zoomin.png</file>
+    <file>graph/graph_zoomout.png</file>
+    <file>graph/Load.png</file>
+    <file>graph/refresh_graph.png</file>
+    <file>graph/Save.png</file>
+    <file>graph/delete.png</file>
+    <file>graph/reset_graph.png</file>
+  </qresource>
   <qresource prefix="Errors">
     <file>errors/refresh.png</file>
     <file>errors/all history.png</file>

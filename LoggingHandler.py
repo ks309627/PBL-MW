@@ -77,15 +77,31 @@ class Logger:
     def join_logs(self, output_file):
         if os.path.exists(output_file):
             os.remove(output_file)
+        
+        # Get all log files and sort them by creation time (newest first)
         log_files = [f for f in os.listdir(self.log_dir) if f.startswith('log_') and f.endswith('.log')]
-        log_files.sort(reverse=False)  # Set reverse to False explicitly
+        log_files.sort(key=lambda x: os.path.getctime(os.path.join(self.log_dir, x)), reverse=True)
+        
         with open(output_file, 'w') as output:
-            for i, file in enumerate(log_files[:self.join_files]):
-                with open(os.path.join(self.log_dir, file), 'r') as log_file:
-                    # Add a header line with the log file number and name
-                    output.write(f"--- {i+1}{'st' if i == 0 else 'nd' if i == 1 else 'rd' if i == 2 else 'th'} log file: {file} ---\n\n")
-                    output.write(log_file.read())
-                    if i < len(log_files[:self.join_files]) - 1:  # Only add newlines between log files
+            # Iterate over the log files in reverse order (oldest first, newest last)
+            for i, file in enumerate(reversed(log_files[:self.join_files])):
+                file_path = os.path.join(self.log_dir, file)
+                with open(file_path, 'r') as log_file:
+                    content = log_file.read()
+                    # Calculate the correct header number (most recent log is 1st)
+                    header_number = len(log_files[:self.join_files]) - i
+                    ordinal_suffix = (
+                        'st' if header_number == 1 else
+                        'nd' if header_number == 2 else
+                        'rd' if header_number == 3 else
+                        'th'
+                    )
+                    # Write the log file header
+                    output.write(f"--- {header_number}{ordinal_suffix} log file: {file} ---\n\n")
+                    # Write the content of the log file
+                    output.write(content)
+                    # Add a separator between log files (except after the last one)
+                    if i < len(log_files[:self.join_files]) - 1:
                         output.write('\n\n')
 
 

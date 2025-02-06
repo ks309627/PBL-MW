@@ -8,6 +8,9 @@ from FC500Com import FC500Com
 from ESPCom import ESPCom
 #from MeasureProcess import MeasureProcess
 
+from GraphList import GraphList
+from GraphControler import GraphControler
+
 from TerminalControler import TerminalControler
 from LoggingHandler import Logger
 
@@ -17,13 +20,15 @@ from MeasureProcess_v2 import MeasureProcess
 from Measure_Lights import Measure_Lights
 
 
+
 class ScreenControler:
     def __init__(self, gui:Ui_Main, settings:Settings, measure_process:MeasureProcess):
 
         self.gui = gui
         #self.communicator = communicator
-        self.graphControler = None
         self.settings = settings
+        self.graphList = GraphList(gui, settings)
+        self.graphControler = GraphControler(gui, settings)
         self.measure_process = measure_process
 
         #self.measure1 = MeasureProcess_Steps1(gui, settings)
@@ -72,10 +77,13 @@ class ScreenControler:
         gui.btn_Graph_down.clicked.connect(self.move_graph_down)
         gui.btn_Graph_zin.clicked.connect(self.zoom_graph_in)
         gui.btn_Graph_zout.clicked.connect(self.zoom_graph_out)
+
+        gui.btn_Graph_refresh.clicked.connect(self.graph_refresh)
         gui.btn_Graph_resetview.clicked.connect(self.view_graph_reset)
 
         gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
         gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
+        gui.btn_DeleteGraph.toggled.connect(self.handle_delete)
 
         gui.devMode.clicked.connect(self.handle_dev_mode)
 
@@ -217,10 +225,7 @@ class ScreenControler:
     #         print("[ERROR]: Nie znaleziono klucza 'COMPathESP' w ustawieniach.")
             
     def graphUpdate(self):
-        self.graphControler.default_load()
-
-    def set_graph_controler(self, graphControler):
-        self.graphControler = graphControler
+        self.graphList.refresh_graph
 
     def move_graph_left(self):
         if self.graphControler:
@@ -246,6 +251,10 @@ class ScreenControler:
         if self.graphControler:
             self.graphControler.zoom_out()
 
+    def graph_refresh(self):
+        if self.graphControler:
+            self.graphList.refresh()
+
     def view_graph_reset(self):
         if self.graphControler:
             self.graphControler.reset()
@@ -269,18 +278,21 @@ class ScreenControler:
 
     def handle_save_graph(self):
         if self.graphControler:
-            file_path = self.graphControler.save_graph()
-            if file_path:
-                print(f"Graph successfully saved: {file_path}")
+            self.graphList.save_graph_to_file()
 
     def handle_load_graph(self):
         if self.graphControler:
             file_dialog = QFileDialog()
-            file_path, _ = file_dialog.getOpenFileName(
-                None, "Wczytaj wykres", "", "JSON Files (*.json)"
-            )
+            file_path, _ = file_dialog.getOpenFileName(None, "Wczytaj wykres", "", "JSON Files (*.json)")
             if file_path:
-                self.graphControler.load_graph(file_path)
+                self.graphList.load_graph_from_file(file_path)
+
+    def handle_delete(self, checked):
+        if self.graphControler:
+            if checked:
+                self.graphList.deleteMode_on()
+            else:
+                self.graphList.deleteMode_off()
 
     # v30.12.24.1 - added test button to check if it connects with FC500 - needs further testing
     # def fc500_zero(self):

@@ -38,9 +38,8 @@ class FC500Com:
                 self.logger.log_info("FC500 Connection opened")
             else:
                 self.ser = serial.Serial(port = self.port, baudrate=self.baudrate, timeout=self.timeout)
-        except Exception as e:
-            self.logger.log_critical(f"Exception: {e}")
-            raise Exception({e})
+        except Exception:
+            raise
 
     def connection_check(self):
         self.logger.log_info("Performing connection check on FC500 through a ping:")
@@ -76,42 +75,66 @@ class FC500Com:
         return response
 
     def cmd_custom(self, command, silent=False):
-        self.ser.write((command+"\r\n").encode())
+        try:
+            self.ser.write((command+"\r\n").encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Set the baseline for measurement
     def cmd_zero(self, silent=False):
         command = 'ST\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Turn off FC500 (needs manual turning on) - DON'T USE
     def cmd_OFF(self, silent=False):
         command = 'SS\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Put FC500 to sleep or wake it up - preferable to cmd_OFF
     def cmd_sleep(self, silent=False):
         command = 'Ss\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Get a measurement
     def cmd_measure(self, silent=False):
         command = 'Sx1\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Ping FC500 if it is connected
     def cmd_ping(self, silent=False):
         command = 'SJ\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         data = self.read_data(silent)
         return data
 
@@ -119,7 +142,11 @@ class FC500Com:
     def cmd_setunit(self, silent=False):
         unit = 'N'
         command = 'Su\r\n' + unit
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
@@ -127,7 +154,11 @@ class FC500Com:
     def cmd_sethz(self, silent=False):
         hz = '1000'
         command = 'St\r\n' + hz
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
@@ -135,7 +166,11 @@ class FC500Com:
     def cmd_setgravity(self, silent=False):
         gravity = 9.81
         command = 'Sn\r\n' + gravity
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
     
@@ -143,27 +178,43 @@ class FC500Com:
     # def cmd_setclock(self, silent=False):
     #     clock = time.time
     #     command = 'Sd&t' + clock
-    #     self.ser.write(command.encode())
+    #     try:
+    #         self.ser.write(command.encode())
+    #     except Exception as e:
+    #         self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+    #         return
     #     self.read_data(silent)
     #     return
     
     #Check the clock
     def cmd_getclock(self, silent=False):
         command = 'Sd&t?\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Check hz of measurement
     def cmd_gethz(self, silent=False):
         command = 'St?\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return
 
     #Check battery level
     def cmd_getbattery(self, silent=False):
         command = 'Sb\r\n'
-        self.ser.write(command.encode())
+        try:
+            self.ser.write(command.encode())
+        except Exception as e:
+            self.logger.log_error(f"{e}. Probable cause: Connection closed before receiving a response.")
+            return
         self.read_data(silent)
         return

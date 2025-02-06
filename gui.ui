@@ -361,7 +361,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Screen_Logo">
        <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -755,7 +755,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            </size>
           </property>
          </widget>
-         <widget class="QPushButton" name="btn_Measure_Step1_Error_Refresh">
+         <widget class="QPushButton" name="btn_Measure_Step1_Error_RefreshCOM">
           <property name="geometry">
            <rect>
             <x>540</x>
@@ -1027,8 +1027,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
          <widget class="QProgressBar" name="dsp_Measure_Step2_TensionProgressBar">
           <property name="geometry">
            <rect>
-            <x>440</x>
-            <y>470</y>
+            <x>60</x>
+            <y>330</y>
             <width>571</width>
             <height>51</height>
            </rect>
@@ -1046,8 +1046,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
           </property>
           <property name="geometry">
            <rect>
-            <x>950</x>
-            <y>410</y>
+            <x>650</x>
+            <y>330</y>
             <width>60</width>
             <height>56</height>
            </rect>
@@ -1125,8 +1125,11 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <enum>QFrame::Sunken</enum>
           </property>
           <property name="text">
-           <string>Proszę nacisnąć przycisk OK aby
-rozpocząć główny pomiar</string>
+           <string>Umieść próbkę w komorze.
+Następnie po zamknięciu drzwi zablokuj je.
+Po upewnieniu się, że wszsytkie środki BHP 
+zostały zachowane, naciśnij przycisk aby 
+rozpocząć pomiar.</string>
           </property>
           <property name="textFormat">
            <enum>Qt::AutoText</enum>
@@ -1142,162 +1145,6 @@ rozpocząć główny pomiar</string>
           </property>
           <property name="indent">
            <number>-1</number>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Right1">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>410</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/right.png</normaloff>icons/progress/right.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Right2">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>520</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/right_2.png</normaloff>icons/progress/right_2.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Right3">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>630</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/right_3.png</normaloff>icons/progress/right_3.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Left1">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>280</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/left.png</normaloff>icons/progress/left.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Left2">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>170</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/left_2.png</normaloff>icons/progress/left_2.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_Measure_Step2_Left3">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>320</y>
-            <width>101</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/progress/left_3.png</normaloff>icons/progress/left_3.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>128</width>
-            <height>128</height>
-           </size>
           </property>
          </widget>
         </widget>
@@ -1655,16 +1502,6 @@ nacisnąć przycisk</string>
            <bool>false</bool>
           </property>
          </widget>
-         <widget class="QChartView" name="dsp_graph_2">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>140</y>
-            <width>711</width>
-            <height>351</height>
-           </rect>
-          </property>
-         </widget>
         </widget>
         <widget class="QWidget" name="SubScreen_Measure_Step4">
          <widget class="QLabel" name="title_MeasureProgress_Step2_Reset_3">
@@ -1861,10 +1698,10 @@ nacisnąć przycisk</string>
        <widget class="QChartView" name="dsp_graph">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>160</y>
-          <width>711</width>
-          <height>351</height>
+          <x>20</x>
+          <y>150</y>
+          <width>731</width>
+          <height>371</height>
          </rect>
         </property>
        </widget>
@@ -1982,103 +1819,201 @@ nacisnąć przycisk</string>
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="btn_SaveGraph">
+       <widget class="QWidget" name="verticalLayoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>30</y>
+          <width>62</width>
+          <height>121</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QPushButton" name="btn_Graph_refresh">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/refresh_graph.png</normaloff>icons/graph/refresh_graph.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_Graph_resetview">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="icons/Icons.qrc">
+             <normaloff>:/Graph/graph/reset_graph.png</normaloff>:/Graph/graph/reset_graph.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QListView" name="list_graph">
         <property name="geometry">
          <rect>
           <x>770</x>
-          <y>30</y>
-          <width>101</width>
-          <height>61</height>
+          <y>100</y>
+          <width>241</width>
+          <height>411</height>
          </rect>
         </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
+        <property name="font">
+         <font>
+          <family>Futura Std Book</family>
+         </font>
         </property>
-        <property name="text">
-         <string/>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>icons/graph/Save.png</normaloff>icons/graph/Save.png</iconset>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>48</width>
-          <height>48</height>
-         </size>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustIgnored</enum>
         </property>
-       </widget>
-       <widget class="QPushButton" name="btn_LoadGraph">
-        <property name="geometry">
-         <rect>
-          <x>890</x>
-          <y>30</y>
-          <width>101</width>
-          <height>61</height>
-         </rect>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
         </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>icons/graph/Load.png</normaloff>icons/graph/Load.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>48</width>
-          <height>48</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btn_Graph_resetview">
-        <property name="geometry">
-         <rect>
-          <x>470</x>
-          <y>90</y>
-          <width>60</width>
-          <height>56</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>icons/graph/refresh_graph.png</normaloff>icons/graph/refresh_graph.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>48</width>
-          <height>48</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QScrollArea" name="graph_graphs_list">
-        <property name="geometry">
-         <rect>
-          <x>760</x>
-          <y>110</y>
-          <width>251</width>
-          <height>401</height>
-         </rect>
-        </property>
-        <property name="widgetResizable">
+        <property name="tabKeyNavigation">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>249</width>
-           <height>399</height>
-          </rect>
-         </property>
-        </widget>
+        <property name="defaultDropAction">
+         <enum>Qt::IgnoreAction</enum>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="selectionRectVisible">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="Line" name="line">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>30</y>
+          <width>20</width>
+          <height>121</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>773</x>
+          <y>29</y>
+          <width>231</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="btn_SaveGraph">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/Save.png</normaloff>icons/graph/Save.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_LoadGraph">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/Load.png</normaloff>icons/graph/Load.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_DeleteGraph">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/graph/delete.png</normaloff>
+             <normalon>:/Graph/graph/delete_active.png</normalon>
+             <disabledon>:/Graph/graph/delete_active.png</disabledon>icons/graph/delete.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>48</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="Screen_Settings">
