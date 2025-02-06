@@ -110,7 +110,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="icons/Icons.qrc">
+        <iconset resource="PBL_MW/icons/Icons.qrc">
          <normaloff>:/Menu/menu/Measure.png</normaloff>:/Menu/menu/Measure.png</iconset>
        </property>
        <property name="iconSize">
@@ -166,7 +166,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="icons/Icons.qrc">
+        <iconset resource="PBL_MW/icons/Icons.qrc">
          <normaloff>:/Menu/menu/Graph.png</normaloff>:/Menu/menu/Graph.png</iconset>
        </property>
        <property name="iconSize">
@@ -222,7 +222,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="icons/Icons.qrc">
+        <iconset resource="PBL_MW/icons/Icons.qrc">
          <normaloff>:/Menu/menu/Settings.png</normaloff>:/Menu/menu/Settings.png</iconset>
        </property>
        <property name="iconSize">
@@ -278,7 +278,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="icons/Icons.qrc">
+        <iconset resource="PBL_MW/icons/Icons.qrc">
          <normaloff>:/Menu/menu/Error.png</normaloff>:/Menu/menu/Error.png</iconset>
        </property>
        <property name="iconSize">
@@ -361,7 +361,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Screen_Logo">
        <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -422,7 +422,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="icons/Icons.qrc">:/Logo/logo/polsl.png</pixmap>
+            <pixmap resource="PBL_MW/icons/Icons.qrc">:/Logo/logo/polsl.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -462,7 +462,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="icons/Icons.qrc">:/Logo/logo/mt.png</pixmap>
+            <pixmap resource="PBL_MW/icons/Icons.qrc">:/Logo/logo/mt.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -686,7 +686,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Checkmark.png</normaloff>:/Progress/progress/Checkmark.png</iconset>
           </property>
           <property name="iconSize">
@@ -745,7 +745,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Menu/menu/Error.png</normaloff>:/Menu/menu/Error.png</iconset>
           </property>
           <property name="iconSize">
@@ -755,7 +755,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            </size>
           </property>
          </widget>
-         <widget class="QPushButton" name="btn_Measure_Step1_Error_RefreshCOM">
+         <widget class="QPushButton" name="btn_Measure_Step1_Error_Refresh">
           <property name="geometry">
            <rect>
             <x>540</x>
@@ -768,7 +768,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Errors/errors/refresh.png</normaloff>:/Errors/errors/refresh.png</iconset>
           </property>
           <property name="iconSize">
@@ -828,7 +828,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Empty.png</normaloff>
             <normalon>:/Progress/progress/True.png</normalon>
             <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -860,7 +860,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Empty.png</normaloff>
             <normalon>:/Progress/progress/True.png</normalon>
             <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1015,7 +1015,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>icons/progress/Ok.png</normaloff>icons/progress/Ok.png</iconset>
+            <normaloff>PBL_MW/icons/progress/Ok.png</normaloff>PBL_MW/icons/progress/Ok.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1027,8 +1027,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
          <widget class="QProgressBar" name="dsp_Measure_Step2_TensionProgressBar">
           <property name="geometry">
            <rect>
-            <x>60</x>
-            <y>330</y>
+            <x>440</x>
+            <y>470</y>
             <width>571</width>
             <height>51</height>
            </rect>
@@ -1046,8 +1046,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
           </property>
           <property name="geometry">
            <rect>
-            <x>650</x>
-            <y>330</y>
+            <x>950</x>
+            <y>410</y>
             <width>60</width>
             <height>56</height>
            </rect>
@@ -1056,7 +1056,7 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Empty.png</normaloff>
             <normalon>:/Progress/progress/Empty.png</normalon>
             <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1125,11 +1125,8 @@ Po upewnieniu się o poprawnym włożeniu próbki,
            <enum>QFrame::Sunken</enum>
           </property>
           <property name="text">
-           <string>Umieść próbkę w komorze.
-Następnie po zamknięciu drzwi zablokuj je.
-Po upewnieniu się, że wszsytkie środki BHP 
-zostały zachowane, naciśnij przycisk aby 
-rozpocząć pomiar.</string>
+           <string>Proszę nacisnąć przycisk OK aby
+rozpocząć główny pomiar</string>
           </property>
           <property name="textFormat">
            <enum>Qt::AutoText</enum>
@@ -1145,6 +1142,162 @@ rozpocząć pomiar.</string>
           </property>
           <property name="indent">
            <number>-1</number>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Right1">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>410</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/right.png</normaloff>PBL_MW/icons/progress/right.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Right2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>520</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/right_2.png</normaloff>PBL_MW/icons/progress/right_2.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Right3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>630</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/right_3.png</normaloff>PBL_MW/icons/progress/right_3.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Left1">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/left.png</normaloff>PBL_MW/icons/progress/left.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Left2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/left_2.png</normaloff>PBL_MW/icons/progress/left_2.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_Measure_Step2_Left3">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>320</y>
+            <width>101</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>PBL_MW/icons/progress/left_3.png</normaloff>PBL_MW/icons/progress/left_3.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
           </property>
          </widget>
         </widget>
@@ -1199,7 +1352,7 @@ rozpocząć pomiar.</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Unlocked.png</normaloff>:/Progress/progress/Unlocked.png</iconset>
           </property>
           <property name="iconSize">
@@ -1222,7 +1375,7 @@ rozpocząć pomiar.</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Errors/errors/refresh.png</normaloff>
             <normalon>:/Progress/progress/Locked.png</normalon>
             <disabledoff>:/Progress/progress/Unlocked.png</disabledoff>
@@ -1295,7 +1448,7 @@ W przypadku gdy próbka jest poprawnie ułożona,
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Empty.png</normaloff>
             <normalon>:/Progress/progress/True.png</normalon>
             <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1405,7 +1558,7 @@ nacisnąć przycisk</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Unlocked.png</normaloff>
             <normalon>:/Progress/progress/Locked.png</normalon>
             <disabledoff>:/Progress/progress/Unlocked.png</disabledoff>
@@ -1489,7 +1642,7 @@ nacisnąć przycisk</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="icons/Icons.qrc">
+           <iconset resource="PBL_MW/icons/Icons.qrc">
             <normaloff>:/Progress/progress/Checkmark.png</normaloff>:/Progress/progress/Checkmark.png</iconset>
           </property>
           <property name="iconSize">
@@ -1500,6 +1653,16 @@ nacisnąć przycisk</string>
           </property>
           <property name="flat">
            <bool>false</bool>
+          </property>
+         </widget>
+         <widget class="QChartView" name="dsp_graph_2">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>140</y>
+            <width>711</width>
+            <height>351</height>
+           </rect>
           </property>
          </widget>
         </widget>
@@ -1562,7 +1725,7 @@ nacisnąć przycisk</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="icons/Icons.qrc">
+            <iconset resource="PBL_MW/icons/Icons.qrc">
              <normaloff>:/Progress/progress/Empty.png</normaloff>
              <normalon>:/Progress/progress/True.png</normalon>
              <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1588,7 +1751,7 @@ nacisnąć przycisk</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="icons/Icons.qrc">
+            <iconset resource="PBL_MW/icons/Icons.qrc">
              <normaloff>:/Progress/progress/Empty.png</normaloff>
              <normalon>:/Progress/progress/True.png</normalon>
              <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1614,7 +1777,7 @@ nacisnąć przycisk</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="icons/Icons.qrc">
+            <iconset resource="PBL_MW/icons/Icons.qrc">
              <normaloff>:/Progress/progress/Empty.png</normaloff>
              <normalon>:/Progress/progress/True.png</normalon>
              <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1640,7 +1803,7 @@ nacisnąć przycisk</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="icons/Icons.qrc">
+            <iconset resource="PBL_MW/icons/Icons.qrc">
              <normaloff>:/Progress/progress/Empty.png</normaloff>
              <normalon>:/Progress/progress/True.png</normalon>
              <disabledoff>:/Progress/progress/Empty.png</disabledoff>
@@ -1698,10 +1861,10 @@ nacisnąć przycisk</string>
        <widget class="QChartView" name="dsp_graph">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>150</y>
-          <width>731</width>
-          <height>371</height>
+          <x>30</x>
+          <y>160</y>
+          <width>711</width>
+          <height>351</height>
          </rect>
         </property>
        </widget>
@@ -1722,7 +1885,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_right.png</normaloff>icons/graph/graph_right.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_right.png</normaloff>PBL_MW/icons/graph/graph_right.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1739,7 +1902,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_zoomout.png</normaloff>icons/graph/graph_zoomout.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_zoomout.png</normaloff>PBL_MW/icons/graph/graph_zoomout.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1756,7 +1919,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_up.png</normaloff>icons/graph/graph_up.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_up.png</normaloff>PBL_MW/icons/graph/graph_up.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1773,7 +1936,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_left.png</normaloff>icons/graph/graph_left.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_left.png</normaloff>PBL_MW/icons/graph/graph_left.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1790,7 +1953,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_down.png</normaloff>icons/graph/graph_down.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_down.png</normaloff>PBL_MW/icons/graph/graph_down.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1807,7 +1970,7 @@ nacisnąć przycisk</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>icons/graph/graph_zoomin.png</normaloff>icons/graph/graph_zoomin.png</iconset>
+             <normaloff>PBL_MW/icons/graph/graph_zoomin.png</normaloff>PBL_MW/icons/graph/graph_zoomin.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1819,201 +1982,103 @@ nacisnąć przycisk</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>460</x>
-          <y>30</y>
-          <width>62</width>
-          <height>121</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QPushButton" name="btn_Graph_refresh">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/graph/refresh_graph.png</normaloff>icons/graph/refresh_graph.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_Graph_resetview">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="icons/Icons.qrc">
-             <normaloff>:/Graph/graph/reset_graph.png</normaloff>:/Graph/graph/reset_graph.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QListView" name="list_graph">
+       <widget class="QPushButton" name="btn_SaveGraph">
         <property name="geometry">
          <rect>
           <x>770</x>
-          <y>100</y>
-          <width>241</width>
-          <height>411</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Futura Std Book</family>
-         </font>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOn</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustIgnored</enum>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="tabKeyNavigation">
-         <bool>true</bool>
-        </property>
-        <property name="defaultDropAction">
-         <enum>Qt::IgnoreAction</enum>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>false</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="verticalScrollMode">
-         <enum>QAbstractItemView::ScrollPerPixel</enum>
-        </property>
-        <property name="horizontalScrollMode">
-         <enum>QAbstractItemView::ScrollPerPixel</enum>
-        </property>
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="selectionRectVisible">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="Line" name="line">
-        <property name="geometry">
-         <rect>
-          <x>520</x>
           <y>30</y>
-          <width>20</width>
-          <height>121</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QWidget" name="horizontalLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>773</x>
-          <y>29</y>
-          <width>231</width>
+          <width>101</width>
           <height>61</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QPushButton" name="btn_SaveGraph">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/graph/Save.png</normaloff>icons/graph/Save.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_LoadGraph">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/graph/Load.png</normaloff>icons/graph/Load.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_DeleteGraph">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/graph/delete.png</normaloff>
-             <normalon>:/Graph/graph/delete_active.png</normalon>
-             <disabledon>:/Graph/graph/delete_active.png</disabledon>icons/graph/delete.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>PBL_MW/icons/graph/Save.png</normaloff>PBL_MW/icons/graph/Save.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_LoadGraph">
+        <property name="geometry">
+         <rect>
+          <x>890</x>
+          <y>30</y>
+          <width>101</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>PBL_MW/icons/graph/Load.png</normaloff>PBL_MW/icons/graph/Load.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_Graph_resetview">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>90</y>
+          <width>60</width>
+          <height>56</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>PBL_MW/icons/graph/refresh_graph.png</normaloff>PBL_MW/icons/graph/refresh_graph.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QScrollArea" name="graph_graphs_list">
+        <property name="geometry">
+         <rect>
+          <x>760</x>
+          <y>110</y>
+          <width>251</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>249</width>
+           <height>399</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="Screen_Settings">
@@ -2325,7 +2390,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/current history.png</normaloff>:/Errors/errors/current history.png</iconset>
                </property>
                <property name="iconSize">
@@ -2378,7 +2443,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/all history.png</normaloff>:/Errors/errors/all history.png</iconset>
                </property>
                <property name="iconSize">
@@ -2438,7 +2503,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/refresh.png</normaloff>:/Errors/errors/refresh.png</iconset>
                </property>
                <property name="iconSize">
@@ -2608,7 +2673,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/current history.png</normaloff>:/Errors/errors/current history.png</iconset>
                </property>
                <property name="iconSize">
@@ -2655,7 +2720,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/all history.png</normaloff>:/Errors/errors/all history.png</iconset>
                </property>
                <property name="iconSize">
@@ -2718,7 +2783,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/refresh.png</normaloff>:/Errors/errors/refresh.png</iconset>
                </property>
                <property name="iconSize">
@@ -2816,7 +2881,7 @@ nacisnąć przycisk</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="icons/Icons.qrc">
+                <iconset resource="PBL_MW/icons/Icons.qrc">
                  <normaloff>:/Errors/errors/send.png</normaloff>:/Errors/errors/send.png</iconset>
                </property>
                <property name="iconSize">
@@ -2869,7 +2934,7 @@ nacisnąć przycisk</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons/Icons.qrc"/>
+  <include location="PBL_MW/icons/Icons.qrc"/>
  </resources>
  <connections/>
 </ui>
