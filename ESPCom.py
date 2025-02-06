@@ -31,7 +31,7 @@ class ESPCom:
             except serial.SerialException as e:
                 self.logger.log_warning(f"Nie udało się otworzyć portu COM: {e}")
 
-            self.initialized = True  # Flaga inicjalizacji
+            self.initialized = True
 
 
 
@@ -42,11 +42,10 @@ class ESPCom:
                 self.serial_connection.close()
 
             self.serial_connection = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
-            time.sleep(2)  # Daje czas ESP na inicjalizację
+            time.sleep(2)
             self.logger.log_info(f"Połączono z {self.port} przy {self.baudrate} bps")
             self.initialized = True
 
-            # Sprawdzenie, czy ESP odpowiada
             self.serial_connection.write(b"test\n")
             response = self.serial_connection.readline().decode('utf-8', errors='ignore').strip()
             if response:
