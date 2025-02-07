@@ -131,6 +131,7 @@ class GraphList:
                         self.graph_controler.load_graph(0)
                     except Exception as e:
                         self.logger.log_error(f"An error occured during graph deletion: {str(e)}")
+                self.refresh()
                 self.listView.clearSelection()
                 return
             else:
