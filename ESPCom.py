@@ -80,4 +80,8 @@ class ESPCom:
             self.logger.log_info("Połączenie z ESP zamknięte")
 
     def getLastResponse(self):
-        return self.cur_esp_pos
+        if not self.cur_esp_pos == "":
+            response = self.cur_esp_pos
+        else:
+            raise ValueError("Couldn't retrive a response.")
+        return response

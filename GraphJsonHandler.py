@@ -8,6 +8,7 @@ from PySide6.QtCore import QTimer
 from GraphControler import GraphControler
 from GraphList import GraphList
 from FC500Com import FC500Com
+from ESPCom import ESPCom
 from LoggingHandler import Logger
 from settings import Settings
 from gui_ui import Ui_Main
@@ -21,20 +22,23 @@ class GraphRecorder:
     def __init__(self, gui:Ui_Main, settings:Settings):
         self.settings = settings
         self.fc500 = FC500Com(settings)
+        self.esp = ESPCom(settings)
         self.logger = Logger()
         self.graph_controler = GraphControler(gui, settings)
         self.graph_list = GraphList(gui, settings)
         self.start_time = None
         self.data = {
             "seconds": [],
-            "force": []
+            "force": [],
+            "distance": []
         }
         self.file_path = self.settings.get("graphSavePath")
         
     def graphMeasure_process(self, Limit=1):
         self.data = {
             "seconds": [],
-            "force": []
+            "force": [],
+            "distance": []
         }
 
         self.current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -59,7 +63,8 @@ class GraphRecorder:
             self.paused = True
             self.data = {
                 "seconds": [],
-                "force": []
+                "force": [],
+                "distance": []
             }
             if hasattr(self, 'start_time'):
                 del self.start_time
@@ -94,10 +99,12 @@ class GraphRecorder:
             if self.Limit == 'unlimited' or time.time() - self.start_time < self.Limit:
                 self.fc500.cmd_measure(silent=True)
                 measurement = self.fc500.getLastResponse()
+                distance = self.esp.getLastResponse()
 
                 elapsed_time = round(time.time() - self.start_time, 1000)
                 self.data["seconds"].append(elapsed_time)
                 self.data["force"].append(measurement.strip())
+                self.data["distance"].append(distance.strip())
 
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
