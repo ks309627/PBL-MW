@@ -102,7 +102,7 @@ class GraphRecorder:
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
     
-                self.graph_controler.load_graph()
+                self.graph_controler.load_graph(0)
                 QTimer.singleShot(1, lambda: (self.timeLimit()))
 
             else:

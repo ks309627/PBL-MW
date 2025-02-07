@@ -25,6 +25,7 @@ class GraphControler(QMainWindow):
             super().__init__()
             self.logger = Logger()
             self.Graph = QtCharts.QChart()
+            self.Graph_copy = QtCharts.QChart()
             self.Graph.setTitle("Wykres siły w czasie")
             self.current_offset = 0
             self.gui = gui
@@ -77,9 +78,12 @@ class GraphControler(QMainWindow):
             self.Graph.removeAxis(self.axis)
 
         self.series = QtCharts.QLineSeries()
+        self.series2 = QtCharts.QLineSeries()
         for i, s in enumerate(self.force):
             self.series.append(self.seconds[i], s)
+            self.series2.append(self.seconds[i], s)
         self.Graph.addSeries(self.series)
+        self.Graph_copy.addSeries(self.series2)
 
         if self.seconds:
             self.axis_x = QtCharts.QValueAxis()
@@ -88,17 +92,28 @@ class GraphControler(QMainWindow):
             self.Graph.addAxis(self.axis_x, Qt.AlignBottom)
             self.series.attachAxis(self.axis_x)
 
+            self.axis_x2 = QtCharts.QValueAxis()
+            self.axis_x2.setRange(min(self.seconds), max(self.seconds))
+            self.axis_x2.setTickCount(10)
+            self.Graph_copy.addAxis(self.axis_x2, Qt.AlignBottom)
+            self.series2.attachAxis(self.axis_x2)
+
             axis_y = QtCharts.QValueAxis()
             axis_y.setRange(min(self.force) - 1, max(self.force) + 1)
             self.Graph.addAxis(axis_y, Qt.AlignLeft)
             self.series.attachAxis(axis_y)
 
-            # Set the visible range of the x-axis to the last 5 seconds
+            axis_y2 = QtCharts.QValueAxis()
+            axis_y2.setRange(min(self.force) - 1, max(self.force) + 1)
+            self.Graph_copy.addAxis(axis_y2, Qt.AlignLeft)
+            self.series2.attachAxis(axis_y2)
+
             if max(self.seconds) - min(self.seconds) > 5:
                 self.axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
+                self.axis_x2.setRange(max(self.seconds) - 5, max(self.seconds))
 
         gui.dsp_graph.setChart(self.Graph)
-        #gui.dsp_graph_2.setChart(self.Graph)
+        gui.dsp_graph_2.setChart(self.Graph_copy)
 
 
     def scroll_left(self):
