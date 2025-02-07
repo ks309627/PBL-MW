@@ -98,7 +98,8 @@ class GraphControler(QMainWindow):
                 self.axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
 
         gui.dsp_graph.setChart(self.Graph)
-        #gui.dsp_graph_2.setChart(self.Graph)
+        self.Graph_measure = self.Graph
+        gui.dsp_graph_2.setChart(self.Graph_measure)
 
 
     def scroll_left(self):

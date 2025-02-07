@@ -9,10 +9,23 @@ class ForceChecker:
         self.file_extension = '.json'
 
     def get_most_recent_file(self):
-        files = [self.directory + f for f in os.listdir(self.directory) if f.endswith(self.file_extension)]
-        if not files:
-            raise FileNotFoundError("No JSON files found in the directory")
-        return max(files, key=os.path.getctime)
+        """Znajduje najnowszy folder w 'graphs/' i wyszukuje w nim plik JSON o tej samej nazwie."""
+        
+        # Pobranie listy wszystkich folderów w 'graphs/' posortowanych po dacie utworzenia
+        folders = [f for f in os.listdir(self.directory) if os.path.isdir(os.path.join(self.directory, f))]
+        if not folders:
+            raise FileNotFoundError("Brak folderów w katalogu 'graphs/'")
+
+        # Znalezienie najnowszego folderu
+        latest_folder = max(folders, key=lambda f: os.path.getctime(os.path.join(self.directory, f)))
+        folder_path = os.path.join(self.directory, latest_folder)
+
+        # Sprawdzenie, czy w folderze znajduje się plik JSON o tej samej nazwie co folder
+        json_file_path = os.path.join(folder_path, f"{latest_folder}.json")
+        if not os.path.exists(json_file_path):
+            raise FileNotFoundError(f"Nie znaleziono pliku {latest_folder}.json w folderze {folder_path}")
+
+        return json_file_path  # Zwraca pełną ścieżkę do pliku JSON
 
     def force_check(self, limit=None):
         """Sprawdza, czy w przeciągu ostatnich `limit` sekund wartość force się zmieniła."""
