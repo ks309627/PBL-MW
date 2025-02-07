@@ -131,7 +131,6 @@ class GraphList:
                         self.graph_controler.load_graph(0)
                     except Exception as e:
                         self.logger.log_error(f"An error occured during graph deletion: {str(e)}")
-                self.refresh()
                 self.listView.clearSelection()
                 return
             else:
@@ -250,17 +249,6 @@ class GraphList:
             for folder_name in os.listdir(self.path):
                 folder_path = os.path.join(self.path, folder_name)
                 if os.path.isdir(folder_path):
-                    # Delete existing icon files
-                    for file_name in os.listdir(folder_path):
-                        if file_name.startswith("icon_") and file_name.endswith(".jpeg"):
-                            icon_path = os.path.join(folder_path, file_name)
-                            try:
-                                os.remove(icon_path)
-                            except Exception as e:
-                                print(f"Failed to delete icon file: {e}")
-                                self.logger.log_error(f"Failed to delete icon file: {e}")
-
-                    # Create new icon files
                     for file_name in os.listdir(folder_path):
                         if file_name.endswith(".json"):
                             file_path = os.path.join(folder_path, file_name)

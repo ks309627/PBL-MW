@@ -122,7 +122,7 @@ class MeasureProcess:
         self.Step_Light.Set_Processing(1, self.gui.LightIndicatorContainer.parentWidget(), toggle=False)
         self.Step_Light.Set_True(1, self.gui.LightIndicatorContainer.parentWidget())
         self.Step_Light.Set_Processing(2, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)
-        self.ESP.cmd_custom(str(40))
+        #self.ESP.cmd_custom(str(40))
 
         QTimer.singleShot(3000, lambda:(self.gui.btn_Measure_Step2_LockSafety.setEnabled(True)))
 
@@ -132,7 +132,8 @@ class MeasureProcess:
         self.Step_Light.Set_True(2, self.gui.LightIndicatorContainer.parentWidget())
         self.Step_Light.Set_Processing(3, self.gui.LightIndicatorContainer.parentWidget(), toggle=True)      
 
-        self.FC500_command.graphMeasure_process(15)
+        self.FC500_command.graphMeasure_process(120)
+        self.ESP.cmd_custom(str(-40))
         self.start_force_check()
 
     def Step4(self):
@@ -191,14 +192,14 @@ class MeasureProcess:
             print("nie wykryto elementu")
 
     def send_esp_command_r1(self):
-        self.ESP.cmd_custom(str(1))
+        self.ESP.cmd_custom(str(2))
     def send_esp_command_r2(self):
         self.ESP.cmd_custom(str(5))
     def send_esp_command_r3(self):
-        self.ESP.cmd_custom(str(20))
+        self.ESP.cmd_custom(str(50))
     def send_esp_command_l1(self):
-        self.ESP.cmd_custom(str(-1))
+        self.ESP.cmd_custom(str(-2))
     def send_esp_command_l2(self):
         self.ESP.cmd_custom(str(-5))
     def send_esp_command_l3(self):
-        self.ESP.cmd_custom(str(-20))
+        self.ESP.cmd_custom(str(-50))

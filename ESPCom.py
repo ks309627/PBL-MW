@@ -21,6 +21,7 @@ class ESPCom:
             self.baudrate = baudrate
             self.timeout = timeout
             self.serial_connection = None
+            self.cur_esp_pos = "Current Position: 50.00"
 
             try:
                 self.serial_connection = serial.Serial(
@@ -30,9 +31,12 @@ class ESPCom:
                 )
                 self.logger.log_info(f"Połączono z ESP na porcie {self.port}")
             except serial.SerialException as e:
-                self.logger.log_warning(f"Nie udaÅo siÄ otworzyÄ portu COM: {e}")
+                self.logger.log_warning(f"Nie udało się otworzyć portu COM: {e}")
 
             self.initialized = True  # Flaga inicjalizacji
+
+
+
 
     def connect(self):
         try:
@@ -44,44 +48,45 @@ class ESPCom:
             self.logger.log_info(f"Połączono z {self.port} przy {self.baudrate} bps")
             self.initialized = True
 
-            self.serial_connection.write(b"1\r\n")
+            self.serial_connection.write(b"-0.01\r\n")
             time.sleep(1)
             response = self.serial_connection.readline().decode('utf-8', errors='ignore').strip()
             if response:
-                self.logger.log_info(f"ESP odpowiedziaÅ: {response}")
+                self.logger.log_info(f"ESP odpowiedział: {response}")
                 return True, f"Connected to {self.port} at {self.baudrate} bps"
             else:
                 self.logger.log_warning("Brak odpowiedzi od ESP")
                 return False, "ESP nie odpowiada"
         except serial.SerialException as e:
-            self.logger.log_warning(f"Nie udaÅo siÄ otworzyÄ portu COM: {e}")
+            self.logger.log_warning(f"Nie udało się otworzyć portu COM: {e}")
             return False, str(e)
         
     def cmd_custom(self, command, silent=False):
 
         if not self.initialized or not self.serial_connection or not self.serial_connection.is_open:
-            self.logger.log_error("ESP nie jest poÅÄczone")
+            self.logger.log_error("ESP nie jest połączone")
             return None
 
         full_command = f"{command}\n"
         self.serial_connection.write(full_command.encode('utf-8'))
-        self.logger.log_info(f"WysÅano: {full_command.strip()}")
+        self.logger.log_info(f"Wysłano: {full_command.strip()}")
 
         response = self.serial_connection.readline().decode('utf-8', errors='ignore').strip()
         if response:
             print(f"Odpowiedź ESP: {response}")
             self.cur_esp_pos = response
-            return response  
+            return response
+        
         return None
+
+    def getLastResponse(self):
+        response = self.serial_connection.readline().decode('utf-8', errors='ignore').strip()
+        if response:
+            print(f"Odpowiedź ESP: {response}")
+            self.cur_esp_pos = response
+        return self.cur_esp_pos
 
     def connection_close(self):
         if self.serial_connection and self.serial_connection.is_open:
             self.serial_connection.close()
             self.logger.log_info("Połączenie z ESP zamknięte")
-
-    def getLastResponse(self):
-        if not self.cur_esp_pos == "":
-            response = self.cur_esp_pos
-        else:
-            raise ValueError("Couldn't retrive a response.")
-        return response
