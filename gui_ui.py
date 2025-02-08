@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'gui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+## Created by: Qt User Interface Compiler version 6.7.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -775,6 +775,35 @@ class Ui_Main(object):
 
         self.horizontalLayout_5.addWidget(self.btn_DeleteGraph)
 
+        self.verticalLayoutWidget_6 = QWidget(self.Screen_Graphs)
+        self.verticalLayoutWidget_6.setObjectName(u"verticalLayoutWidget_6")
+        self.verticalLayoutWidget_6.setGeometry(QRect(389, 30, 62, 120))
+        self.verticalLayout_5 = QVBoxLayout(self.verticalLayoutWidget_6)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.btn_Graph_relative = QPushButton(self.verticalLayoutWidget_6)
+        self.btn_Graph_relative.setObjectName(u"btn_Graph_relative")
+        icon29 = QIcon()
+        icon29.addFile(u"icons/graph/relative.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Graph_relative.setIcon(icon29)
+        self.btn_Graph_relative.setIconSize(QSize(48, 48))
+        self.btn_Graph_relative.setCheckable(True)
+        self.btn_Graph_relative.setAutoExclusive(True)
+
+        self.verticalLayout_5.addWidget(self.btn_Graph_relative)
+
+        self.btn_Graph_mode = QPushButton(self.verticalLayoutWidget_6)
+        self.btn_Graph_mode.setObjectName(u"btn_Graph_mode")
+        icon30 = QIcon()
+        icon30.addFile(u"icons/graph/time.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon30.addFile(u"icons/graph/step.png", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btn_Graph_mode.setIcon(icon30)
+        self.btn_Graph_mode.setIconSize(QSize(48, 48))
+        self.btn_Graph_mode.setCheckable(True)
+        self.btn_Graph_mode.setAutoExclusive(False)
+
+        self.verticalLayout_5.addWidget(self.btn_Graph_mode)
+
         self.Screen.addWidget(self.Screen_Graphs)
         self.Screen_Settings = QWidget()
         self.Screen_Settings.setObjectName(u"Screen_Settings")
@@ -908,9 +937,9 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_basic.setFont(font5)
         self.btn_Errors_InstanceHistory_basic.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.btn_Errors_InstanceHistory_basic.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        icon29 = QIcon()
-        icon29.addFile(u":/Errors/errors/current history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_InstanceHistory_basic.setIcon(icon29)
+        icon31 = QIcon()
+        icon31.addFile(u":/Errors/errors/current history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_InstanceHistory_basic.setIcon(icon31)
         self.btn_Errors_InstanceHistory_basic.setIconSize(QSize(48, 48))
         self.btn_Errors_InstanceHistory_basic.setCheckable(True)
         self.btn_Errors_InstanceHistory_basic.setChecked(True)
@@ -927,9 +956,9 @@ class Ui_Main(object):
         self.btn_Errors_AllHistory_basic.setMaximumSize(QSize(150, 60))
         self.btn_Errors_AllHistory_basic.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_Errors_AllHistory_basic.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        icon30 = QIcon()
-        icon30.addFile(u":/Errors/errors/all history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_AllHistory_basic.setIcon(icon30)
+        icon32 = QIcon()
+        icon32.addFile(u":/Errors/errors/all history.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_AllHistory_basic.setIcon(icon32)
         self.btn_Errors_AllHistory_basic.setIconSize(QSize(48, 48))
         self.btn_Errors_AllHistory_basic.setCheckable(True)
         self.btn_Errors_AllHistory_basic.setAutoExclusive(True)
@@ -960,7 +989,7 @@ class Ui_Main(object):
 
         self.terminal_basic = QTextEdit(self.verticalLayoutWidget)
         self.terminal_basic.setObjectName(u"terminal_basic")
-        self.terminal_basic.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_basic.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_basic.setTabletTracking(True)
         self.terminal_basic.setAutoFillBackground(False)
         self.terminal_basic.setReadOnly(True)
@@ -1007,7 +1036,7 @@ class Ui_Main(object):
         self.btn_Errors_InstanceHistory_admin.setFont(font5)
         self.btn_Errors_InstanceHistory_admin.setAutoFillBackground(False)
         self.btn_Errors_InstanceHistory_admin.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn_Errors_InstanceHistory_admin.setIcon(icon29)
+        self.btn_Errors_InstanceHistory_admin.setIcon(icon31)
         self.btn_Errors_InstanceHistory_admin.setIconSize(QSize(48, 48))
         self.btn_Errors_InstanceHistory_admin.setCheckable(True)
         self.btn_Errors_InstanceHistory_admin.setChecked(True)
@@ -1022,7 +1051,7 @@ class Ui_Main(object):
         self.btn_Errors_AllHistory_admin.setMinimumSize(QSize(300, 60))
         self.btn_Errors_AllHistory_admin.setMaximumSize(QSize(150, 60))
         self.btn_Errors_AllHistory_admin.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn_Errors_AllHistory_admin.setIcon(icon30)
+        self.btn_Errors_AllHistory_admin.setIcon(icon32)
         self.btn_Errors_AllHistory_admin.setIconSize(QSize(48, 48))
         self.btn_Errors_AllHistory_admin.setCheckable(True)
         self.btn_Errors_AllHistory_admin.setAutoExclusive(True)
@@ -1077,9 +1106,9 @@ class Ui_Main(object):
         self.btn_Errors_Send_admin.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btn_Errors_Send_admin.setAutoFillBackground(True)
         self.btn_Errors_Send_admin.setStyleSheet(u"")
-        icon31 = QIcon()
-        icon31.addFile(u":/Errors/errors/send.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_Errors_Send_admin.setIcon(icon31)
+        icon33 = QIcon()
+        icon33.addFile(u":/Errors/errors/send.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_Errors_Send_admin.setIcon(icon33)
         self.btn_Errors_Send_admin.setIconSize(QSize(40, 40))
         self.btn_Errors_Send_admin.setFlat(True)
 
@@ -1090,7 +1119,7 @@ class Ui_Main(object):
 
         self.terminal_admin = QTextEdit(self.verticalLayoutWidget_2)
         self.terminal_admin.setObjectName(u"terminal_admin")
-        self.terminal_admin.viewport().setProperty(u"cursor", QCursor(Qt.CursorShape.SizeVerCursor))
+        self.terminal_admin.viewport().setProperty("cursor", QCursor(Qt.CursorShape.SizeVerCursor))
         self.terminal_admin.setTabletTracking(True)
         self.terminal_admin.setAutoFillBackground(False)
         self.terminal_admin.setReadOnly(True)
@@ -1189,6 +1218,8 @@ class Ui_Main(object):
         self.btn_SaveGraph.setText("")
         self.btn_LoadGraph.setText("")
         self.btn_DeleteGraph.setText("")
+        self.btn_Graph_relative.setText("")
+        self.btn_Graph_mode.setText("")
         self.title_Settings.setText(QCoreApplication.translate("Main", u"Ustawienia", None))
         self.devMode.setText(QCoreApplication.translate("Main", u"Tryb deweloperski", None))
         self.label_7.setText(QCoreApplication.translate("Main", u"\u015acie\u017cka do zapisu wykres\u00f3w", None))

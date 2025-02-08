@@ -41,6 +41,9 @@ class ScreenControler:
         self.FC500 = FC500Com(settings)
         self.ESP = ESPCom(settings)
 
+        self.graph_mode = 0
+        self.graph_relative_mode = 0
+
 
         gui.btn_Measure.clicked.connect(lambda: gui.Screen.setCurrentWidget(gui.Screen_MeasureMain))
         gui.btn_Graphs.clicked.connect(lambda: (gui.Screen.setCurrentWidget(gui.Screen_Graphs), self.graphUpdate()))
@@ -84,6 +87,10 @@ class ScreenControler:
         gui.btn_SaveGraph.clicked.connect(self.handle_save_graph)
         gui.btn_LoadGraph.clicked.connect(self.handle_load_graph)
         gui.btn_DeleteGraph.toggled.connect(self.handle_delete)
+
+        gui.btn_Graph_mode.clicked.connect(self.change_graph_mode)
+        gui.btn_Graph_relative.clicked.connect(self.change_graph_relative_mode)
+        self.gui.btn_Graph_relative.setEnabled(False)
 
         gui.devMode.clicked.connect(self.handle_dev_mode)
 
@@ -350,3 +357,23 @@ class ScreenControler:
     def Errors_Command(self):
         if self.terminalControler:
             self.terminalControler.Send_Command_admin()
+
+
+
+    def change_graph_mode(self):
+        self.graph_mode = 1 - self.graph_mode  # Przełączanie między 0 i 1
+        
+        if self.graph_mode == 1:
+            print("step mode")
+            self.gui.btn_Graph_relative.setEnabled(True)
+        else:
+            print("time mode")
+            self.gui.btn_Graph_relative.setEnabled(False)
+
+    def change_graph_relative_mode(self):
+        self.graph_relative_mode = 1 - self.graph_relative_mode # Przełączanie między 0 i 1
+        
+        if self.graph_relative_mode == 1:
+            print("relative mode on")
+        else:
+            print("relative mode off")

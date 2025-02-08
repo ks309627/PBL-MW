@@ -1,14 +1,10 @@
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Qt
 from PySide6 import QtCharts
-from gui_ui import Ui_Main
-
 import json
 import os
-import shutil
-from datetime import datetime
+from gui_ui import Ui_Main
 from settings import Settings
-
 from LoggingHandler import Logger
 
 class GraphControler(QMainWindow):
@@ -25,81 +21,138 @@ class GraphControler(QMainWindow):
             super().__init__()
             self.logger = Logger()
             self.Graph = QtCharts.QChart()
-            self.Graph.setTitle("Wykres siły w czasie")
-            self.current_offset = 0
             self.gui = gui
             self.settings = settings
             self.folder_path = self.settings.get("graphSavePath")
-            if not os.path.exists(self.folder_path):
-                os.makedirs(self.folder_path)
-            self.seconds = [0, 1]
-            self.force = [0, 0]
+            self.graph_mode = 0  # Tryb 0: Siła w czasie, Tryb 1: Siła w przemieszczeniu
+            self.graph_relative_mode = 0
+            self.seconds = []
+            self.force = []
+            self.distance = []
             self.selected_graph = 0
+
+            # Połączenie przycisku z metodą przełączania wykresu
+            self.gui.btn_Graph_mode.clicked.connect(self.change_graph_mode)
+            self.gui.btn_Graph_relative.clicked.connect(self.change_graph_relative_mode)
+
+
             self.initialized = True
 
+    def change_graph_mode(self):
+        """Przełącza tryb wykresu między siłą w czasie a siłą w przemieszczeniu."""
+        self.graph_mode = 1 - self.graph_mode  # Zamiana 0 ↔ 1
+        self.update_graph()
+
+    def change_graph_relative_mode(self):
+        """Przełącza tryb relatywny dla osi X."""
+        self.graph_relative_mode = 1 - self.graph_relative_mode  # Przełączanie między 0 i 1
+        self.update_graph()
+        
+        if self.graph_relative_mode == 1:
+            print("Tryb relatywny WŁĄCZONY")
+        else:
+            print("Tryb relatywny WYŁĄCZONY")
+
+
     def load_graph(self, selected_graph):
+        """Ładuje dane z najnowszego pliku JSON w folderze wykresów."""
         self.selected_graph = selected_graph
 
         try:
+            # Pobranie najnowszego folderu
             subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
             if not subdirectories:
-                self.logger.log_warning(f"No subdirectories found in folder {self.folder_path}.")
-                return
-            subdirectories.sort(key=os.path.getctime, reverse=True)
-            if self.selected_graph < 0 or self.selected_graph >= len(subdirectories):
-                self.logger.log_error(f"Invalid graph index {self.selected_graph}.")
+                self.logger.log_warning(f"Brak folderów w {self.folder_path}.")
                 return
 
+            subdirectories.sort(key=os.path.getctime, reverse=True)
             selected_subdirectory = subdirectories[self.selected_graph]
 
-            files = [os.path.join(selected_subdirectory, f) for f in os.listdir(selected_subdirectory) if os.path.isfile(os.path.join(selected_subdirectory, f))]
-
-            json_files = [file for file in files if file.endswith('.json')]
-            if json_files:
-                most_recent_file = max(json_files, key=os.path.getctime)
-            else:
-                self.logger.log_warning(f"No graph file found in subdirectory {selected_subdirectory}.")
+            # Znalezienie pliku JSON w folderze
+            json_files = [os.path.join(selected_subdirectory, f) for f in os.listdir(selected_subdirectory) if f.endswith('.json')]
+            if not json_files:
+                self.logger.log_warning(f"Brak plików JSON w folderze {selected_subdirectory}.")
                 return
 
+            most_recent_file = max(json_files, key=os.path.getctime)
+
+            # Odczytanie pliku JSON
             with open(most_recent_file, 'r') as file:
                 data = json.load(file)
                 self.seconds = data['seconds']
                 self.force = [float(value.replace(" ", "").replace("N", "")) for value in data['force']]
-                self.default_update_graph(self.gui)
+                self.distance = [float(value.split(":")[-1]) for value in data['distance']]  # Pobranie wartości liczbowych
+
+                self.update_graph()
+
+                # Wymuszenie natychmiastowego odświeżenia wykresu
+                self.gui.dsp_graph.repaint()
+                self.gui.dsp_graph.update()
+                self.gui.dsp_graph.setChart(self.Graph)  # Ponowne przypisanie wykresu
+
         except json.JSONDecodeError:
-            self.logger.log_error(f"Failed to parse JSON in file {most_recent_file}.")
-        except KeyError:
-            self.logger.log_error(f"Invalid JSON format in file {most_recent_file}.")
+            self.logger.log_error(f"Błąd parsowania JSON w pliku {most_recent_file}.")
+        except KeyError as e:
+            self.logger.log_error(f"Błąd: brak klucza {e} w pliku {most_recent_file}.")
 
-    def default_update_graph(self, gui: Ui_Main):
+    def update_graph(self):
+        """Aktualizuje wykres w zależności od trybu."""
         self.Graph.removeAllSeries()
-        for self.axis in self.Graph.axes():
-            self.Graph.removeAxis(self.axis)
+        for axis in self.Graph.axes():
+            self.Graph.removeAxis(axis)
 
-        self.series = QtCharts.QLineSeries()
-        for i, s in enumerate(self.force):
-            self.series.append(self.seconds[i], s)
-        self.Graph.addSeries(self.series)
+        series = QtCharts.QLineSeries()
 
-        if self.seconds:
-            self.axis_x = QtCharts.QValueAxis()
-            self.axis_x.setRange(min(self.seconds), max(self.seconds))
-            self.axis_x.setTickCount(10)
-            self.Graph.addAxis(self.axis_x, Qt.AlignBottom)
-            self.series.attachAxis(self.axis_x)
+        if self.graph_mode == 0:
+            # Wykres siły w czasie
+            self.Graph.setTitle("Wykres siły w czasie")
+            x_data, x_label = self.seconds, "Czas (s)"
+        else:
+            # Wykres siły w funkcji przemieszczenia (X maleje od lewej do prawej)
+            self.Graph.setTitle("Wykres siły w przemieszczeniu")
 
-            axis_y = QtCharts.QValueAxis()
-            axis_y.setRange(min(self.force) - 1, max(self.force) + 1)
-            self.Graph.addAxis(axis_y, Qt.AlignLeft)
-            self.series.attachAxis(axis_y)
+            x_data = sorted(self.distance, reverse=True)  # Odwrócone wartości
 
-            # Set the visible range of the x-axis to the last 5 seconds
-            if max(self.seconds) - min(self.seconds) > 5:
-                self.axis_x.setRange(max(self.seconds) - 5, max(self.seconds))
+            # if self.graph_relative_mode == 1:
+            #     min_distance = x_data[-1]  # Najmniejsza wartość (koniec zakresu)
+            #     x_data = [abs(val - min_distance) for val in x_data]  # Przesunięcie do 0
+            #     x_data = x_data[::-1]
 
-        gui.dsp_graph.setChart(self.Graph)
-        self.Graph_measure = self.Graph
-        gui.dsp_graph_2.setChart(self.Graph_measure)
+            # x_label = "Przemieszczenie (mm)"
+
+            if self.graph_relative_mode == 1:
+                max_distance = min(x_data)  # Maksymalna wartość przemieszczenia
+                x_data = [max_distance - dist for dist in x_data]  # Przemieszczenie względem maksimum
+
+            # Odwrócenie danych osi X: zaczynamy od największej wartości
+            x_data = sorted(x_data, reverse=True)
+
+            x_label = "Przemieszczenie (mm)"
+
+        n = min(len(x_data), len(self.force))
+        for i in range(n):
+            series.append(x_data[i], self.force[i])
+
+        self.Graph.addSeries(series)
+
+        # Konfiguracja osi X
+        axis_x = QtCharts.QValueAxis()
+        axis_x.setTitleText(x_label)
+        axis_x.setRange(min(x_data), max(x_data))
+        axis_x.setTickCount(10)
+        self.Graph.addAxis(axis_x, Qt.AlignBottom)
+        series.attachAxis(axis_x)
+
+        # Konfiguracja osi Y
+        axis_y = QtCharts.QValueAxis()
+        axis_y.setTitleText("Siła (N)")
+        axis_y.setRange(min(self.force) - 1, max(self.force) + 1)
+        self.Graph.addAxis(axis_y, Qt.AlignLeft)
+        series.attachAxis(axis_y)
+
+        self.gui.dsp_graph.setChart(self.Graph)
+
+
 
 
     def scroll_left(self):
@@ -169,3 +222,5 @@ class GraphControler(QMainWindow):
         center_y = (min_y + max_y) / 2
         axis_x.setRange(center_x - range_x / 2 * 0.6, center_x + range_x / 2 * 0.6)
         axis_y.setRange(center_y - range_y / 2 * 1.2, center_y + range_y / 2 * 1.2)
+
+
