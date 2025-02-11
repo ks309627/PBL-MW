@@ -1,1 +1,2 @@
 matplotlib
+libxcb-cursor0
