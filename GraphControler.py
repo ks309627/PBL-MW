@@ -64,13 +64,16 @@ class GraphControler(QMainWindow):
                         self.Graph.removeAxis(axis)
                 return
             
-            subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
-            if not subdirectories:
+            valid_folders = [folder for folder in os.listdir(self.folder_path) 
+                            if os.path.isdir(os.path.join(self.folder_path, folder)) 
+                            and any(file.endswith('.json') for file in os.listdir(os.path.join(self.folder_path, folder)))]
+
+            if not valid_folders:
                 self.logger.log_warning(f"Brak zapisanych wykresów w {self.folder_path}.")
                 return
 
-            subdirectories.sort(key=os.path.getctime, reverse=True)
-            selected_subdirectory = subdirectories[self.selected_graph]
+            valid_folders.sort(key=lambda folder: os.path.getctime(os.path.join(self.folder_path, folder)), reverse=True)
+            selected_subdirectory = os.path.join(self.folder_path, valid_folders[self.selected_graph])
 
             # Znalezienie pliku JSON w folderze
             json_files = [os.path.join(selected_subdirectory, f) for f in os.listdir(selected_subdirectory) if f.endswith('.json')]
