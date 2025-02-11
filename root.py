@@ -70,10 +70,6 @@ error_logger.log_debug("=====================")
 app = QApplication(sys.argv)
 
 font_id = QFontDatabase.addApplicationFont("Futura Std Book.ttf")
-if font_id == -1:
-    print("Failed to load font")
-else:
-    print("Font loaded successfully")
 
 default_font = QFont("Futura Std Book", 10)
 app.setFont(default_font)
