@@ -33,6 +33,7 @@ class GraphRecorder:
             "distance": []
         }
         self.file_path = self.settings.get("graphSavePath")
+        self.distance_error = 0
         
     def graphMeasure_process(self, Limit=1):
         self.data = {
@@ -97,28 +98,44 @@ class GraphRecorder:
     def timeLimit(self):
         if not hasattr(self, 'paused') or not self.paused:
             if self.Limit == 'unlimited' or time.time() - self.start_time < self.Limit:
-                self.fc500.cmd_measure(silent=True)
-                measurement = self.fc500.getLastResponse()
-                distance = self.esp.getLastResponse()
+                try:
+                    self.fc500.cmd_measure(silent=True)
+                    measurement = self.fc500.getLastResponse()
+                except Exception as e:
+                    self.logger.log_error(f"Błąd podczas pobierania pomiaru: {e}")
+                    measurement = "0.0 N"  # Domyślna wartość, jeśli brak danych z siłomierza
+
+                try:
+                    distance = self.esp.getLastResponse()
+                    if distance == "" or distance is None:
+                        distance = "0.0"  # Domyślna wartość, jeśli brak dystansu
+                except Exception as e:
+                    if self.distance_error == 0:
+                        self.logger.log_error(f"Błąd podczas pobierania dystansu: {e}")
+                        self.distance_error = 1
+                    #self.logger.log_error(f"Błąd podczas pobierania dystansu: {e}")
+                    distance = "0.0"  # Domyślnie brak dystansu
 
                 elapsed_time = round(time.time() - self.start_time, 1000)
                 self.data["seconds"].append(elapsed_time)
                 self.data["force"].append(measurement.strip())
-                self.data["distance"].append(distance.strip())
+                self.data["distance"].append(distance.strip())  # Zawsze dodajemy dystans
 
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
-    
-                self.graph_controler.load_graph(0)
+
+                self.graph_controler.load_graph(0)  # Zawsze ładujemy wykresy
                 QTimer.singleShot(1, lambda: (self.timeLimit()))
 
             else:
                 self.logger.log_info("Measurment process finished.")
+                self.distance_error = 0
                 self.create_icon()
                 self.graph_list.load_list()
+                self.graph_list.refresh()
         else:
             if hasattr(self, 'start_time'):
-                del self.start_time  # Remove the start time attribute
+                del self.start_time  # Usuń atrybut start_time
             QTimer.singleShot(100, lambda: (self.check_status()))
 
     def check_status(self):

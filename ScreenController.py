@@ -233,6 +233,8 @@ class ScreenControler:
             
     def graphUpdate(self):
         self.graphList.refresh_graph
+        self.graphList.refresh()
+
 
     def move_graph_left(self):
         if self.graphControler:
