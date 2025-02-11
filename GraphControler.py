@@ -55,14 +55,18 @@ class GraphControler(QMainWindow):
 
 
     def load_graph(self, selected_graph):
-        """Ładuje dane z najnowszego pliku JSON w folderze wykresów."""
         self.selected_graph = selected_graph
-
         try:
-            # Pobranie najnowszego folderu
+            if self.selected_graph == -1:
+                self.Graph.removeAllSeries()
+                for axis in [self.Graph.axisX(), self.Graph.axisY()]:
+                    if axis:
+                        self.Graph.removeAxis(axis)
+                return
+            
             subdirectories = [os.path.join(self.folder_path, d) for d in os.listdir(self.folder_path) if os.path.isdir(os.path.join(self.folder_path, d))]
             if not subdirectories:
-                self.logger.log_warning(f"Brak folderów w {self.folder_path}.")
+                self.logger.log_warning(f"Brak zapisanych wykresów w {self.folder_path}.")
                 return
 
             subdirectories.sort(key=os.path.getctime, reverse=True)

@@ -131,7 +131,7 @@ class GraphList:
                         self.delete_index = -1
                         self.listView.clearSelection()
                         self.load_list()
-                        self.graph_controler.load_graph(0)
+                        self.graph_controler.load_graph(-1)
                     except Exception as e:
                         self.logger.log_error(f"An error occured during graph deletion: {str(e)}")
                 self.listView.clearSelection()
@@ -146,6 +146,7 @@ class GraphList:
     def deleteMode_on(self):
         self.deleteMode = True
         self.listView.clearSelection()
+        self.graph_controler.load_graph(-1)
 
     def deleteMode_off(self):
         self.deleteMode = False
@@ -199,7 +200,7 @@ class GraphList:
 
 
     def load_graph_from_file(self, import_path):
-        required_keys = ['seconds', 'force']
+        required_keys = ['seconds', 'force', 'distance']
         try:
             with open(import_path, 'r') as file:
                 data = json.load(file)
@@ -222,7 +223,7 @@ class GraphList:
         ]
 
         if not all(conditions):
-            self.logger.log_error(f"Plik nie może zostać wczytany. Wybrany plik ze ścieżki {import_path} jest w nieprawidłowym formacie.")
+            self.logger.log_error(f"Plik nie może zostać wczytany. Wybrany plik ze ścieżki {import_path} jest w nieprawidłowym formacie lub jest w starej wersji")
             return
 
         current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
