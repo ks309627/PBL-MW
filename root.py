@@ -4,8 +4,8 @@ import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 from PySide6.QtCore import Qt
 from gui_ui import Ui_Main
+from PySide6.QtGui import QIcon, QFontDatabase, QFont
 from ScreenController import ScreenControler
-from PySide6.QtGui import QIcon
 from settings import Settings
 from LoggingHandler import Logger
 from Measure_Lights import Measure_Lights
@@ -32,7 +32,9 @@ class MainWindow(QWidget):
    
         self.setWindowTitle("Maszyna Wytrzymałościowa")
         self.setWindowIcon(QIcon(":/Menu/menu/Graph.png"))
-        self.ui.Screen.setCurrentWidget(self.ui.Screen_Logo)
+        self.ui.Screen.setCurrentWidget(self.ui.Screen_MeasureMain)
+
+    
 
         self.measure_process = MeasureProcess(self.ui, self.settings)
 
@@ -66,6 +68,15 @@ error_logger.log_debug("Uruchomienie Programu")
 error_logger.log_debug("=====================")
 
 app = QApplication(sys.argv)
+
+font_id = QFontDatabase.addApplicationFont("Futura Std Book.ttf")
+if font_id == -1:
+    print("Failed to load font")
+else:
+    print("Font loaded successfully")
+
+default_font = QFont("Futura Std Book", 10)
+app.setFont(default_font)
 MyApp = MainWindow()
 MyApp.show()
 
