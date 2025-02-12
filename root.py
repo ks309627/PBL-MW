@@ -50,8 +50,8 @@ class MainWindow(QWidget):
     
         #v30.11.24.2
     def closeEvent(self, event):
-        if hasattr(self.ESPCom, 'ser') and self.ESPCom.ser:
-            self.ESPCom.connection_connection_close()
+        if hasattr(self.ESPCom, 'ser') and self.ESPCom.serial_connection:
+            self.ESPCom.connection_close()
         if hasattr(self.FC500Com, 'ser') and self.FC500Com.ser:
             self.FC500Com.connection_close()
         self.settings.save_settings()
