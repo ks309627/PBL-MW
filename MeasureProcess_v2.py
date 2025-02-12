@@ -101,6 +101,7 @@ class MeasureProcess:
                     self.logger.log_info("Pomiar: Połączenie nawiązane z FC500")
                 self.Step_Light.Set_True("1_1", self.gui.dsp_MeasureProgress_Step_1_1.parentWidget())
                 self.fc500_connected = True
+                self.FC500.cmd_zero()
             else:
                 self.logger.log_error("Pomiar: Brak połączenia z FC500")
         except Exception as e:
