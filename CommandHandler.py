@@ -64,8 +64,8 @@ class CommandInterpreter:
                 return
         elif device == 'ESP':
             try:
-                self.espCom.connection_create()
-                self.espCom.cmd_cmd_custom(str(message))
+                self.espCom.connect()
+                self.espCom.cmd_custom(str(message))
             except Exception as e:
                 self.logger.log_critical(f"Command Handler: An error occured while trying to create an instance of ESP class: {e}")
                 return
