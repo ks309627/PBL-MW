@@ -34,6 +34,7 @@ class GraphRecorder:
         }
         self.file_path = self.settings.get("graphSavePath")
         self.distance_error = 0
+        self.old_distance = "Current Positon: 0.0"
         
     def graphMeasure_process(self, Limit=1):
         self.data = {
@@ -102,19 +103,26 @@ class GraphRecorder:
                     self.fc500.cmd_measure(silent=True)
                     measurement = self.fc500.getLastResponse()
                 except Exception as e:
-                    self.logger.log_error(f"Błąd podczas pobierania pomiaru: {e}")
-                    measurement = "0.0 N"  # Domyślna wartość, jeśli brak danych z siłomierza
+                    self.logger.log_error(f"B??d podczas pobierania pomiaru: {e}")
+                    measurement = "0.0 N"  # Domy?lna warto??, je?li brak danych z si?omierza
 
                 try:
                     distance = self.esp.getLastResponse()
+                    print(distance)
+                    print(self.old_distance)
+                    if distance == "EMERGENCY STOP ACTIVATED" or distance == "EMERGENCY STOP RELEASED":
+                        distance = self.old_distance
+                        self.logger.log_warning("Emergency stop pressed!")
+                    self.old_distance = distance
                     if distance == "" or distance is None:
-                        distance = "0.0"  # Domyślna wartość, jeśli brak dystansu
+                        distance = "0.0"  # Domy?lna warto??, je?li brak dystansu
+                        
                 except Exception as e:
                     if self.distance_error == 0:
-                        self.logger.log_error(f"Błąd podczas pobierania dystansu: {e}")
+                        self.logger.log_error(f"B??d podczas pobierania dystansu: {e}")
                         self.distance_error = 1
-                    #self.logger.log_error(f"Błąd podczas pobierania dystansu: {e}")
-                    distance = "0.0"  # Domyślnie brak dystansu
+                    #self.logger.log_error(f"B??d podczas pobierania dystansu: {e}")
+                    distance = "0.0"  # Domy?lnie brak dystansu
 
                 elapsed_time = round(time.time() - self.start_time, 1000)
                 self.data["seconds"].append(elapsed_time)
@@ -124,7 +132,9 @@ class GraphRecorder:
                 with open(self.full_file_path, 'w') as f:
                     json.dump(self.data, f, indent=4)
 
-                self.graph_controler.load_graph(0)  # Zawsze ładujemy wykresy
+                
+
+                self.graph_controler.load_graph(0)  # Zawsze ?adujemy wykresy
                 QTimer.singleShot(1, lambda: (self.timeLimit()))
 
             else:
@@ -135,7 +145,7 @@ class GraphRecorder:
                 self.graph_list.refresh()
         else:
             if hasattr(self, 'start_time'):
-                del self.start_time  # Usuń atrybut start_time
+                del self.start_time  # Usu? atrybut start_time
             QTimer.singleShot(100, lambda: (self.check_status()))
 
     def check_status(self):
